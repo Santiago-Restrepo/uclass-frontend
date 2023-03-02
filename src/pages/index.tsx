@@ -1,11 +1,21 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
-
-const inter = Inter({ subsets: ['latin'] })
-
+import { useGoogleLogin } from '@react-oauth/google'
+import axios from 'axios';
 export default function Home() {
+  const googleLogin = useGoogleLogin({
+    flow: 'auth-code',
+    onSuccess: async (codeResponse) => {
+        console.log(codeResponse);
+        const tokens = await axios.post(
+            'http://localhost:3000/api/auth/google', {
+                code: codeResponse.code,
+            });
+
+        console.log(tokens);
+    },
+    onError: errorResponse => console.log(errorResponse),
+  });
   return (
     <>
       <Head>
@@ -15,9 +25,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <h1 className="font-bold text-green-300 bg-green-500">
-          Hello world!
+        <h1 className={styles.title}>
+          Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <button onClick={googleLogin}>Login with Google</button>
       </main>
     </>
   )
