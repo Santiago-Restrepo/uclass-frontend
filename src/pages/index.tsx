@@ -1,21 +1,12 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
-import { useGoogleLogin } from '@react-oauth/google'
-import axios from 'axios';
 export default function Home() {
-  const googleLogin = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async (codeResponse) => {
-        console.log(codeResponse);
-        const tokens = await axios.post(
-            'http://localhost:3000/api/auth/google', {
-                code: codeResponse.code,
-            });
-
-        console.log(tokens);
-    },
-    onError: errorResponse => console.log(errorResponse),
-  });
+  const googleLogin = () =>{
+    window.open('http://localhost:3000/api/auth/google', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
+    window.addEventListener('message', (event) => {
+      console.log(event.data)
+    }, false)
+  }
   return (
     <>
       <Head>
