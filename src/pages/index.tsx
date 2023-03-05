@@ -1,12 +1,8 @@
 import Head from 'next/head'
 import styles from '@/styles/Home.module.css'
+import { useUser } from '@/hooks/useUser'
 export default function Home() {
-  const googleLogin = () =>{
-    window.open('http://localhost:3000/api/auth/google', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
-    window.addEventListener('message', (event) => {
-      console.log(event.data)
-    }, false)
-  }
+  const { user } = useUser()
   return (
     <>
       <Head>
@@ -17,9 +13,8 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Hola {user?.name}
         </h1>
-        <button onClick={googleLogin}>Login with Google</button>
       </main>
     </>
   )
