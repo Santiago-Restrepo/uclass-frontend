@@ -3,31 +3,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { UserState } from '@/types/user';
 
 const initialState: UserState = {
-    user: null,
-    loading: false,
-    error: null,
+    token: '',
 };
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,   
     reducers: {
-        loginRequest: (state) => {
-            state.loading = true;
+        setUser: (state, action: PayloadAction<UserState>) => {
+            state.token = action.payload.token;
         },
-        loginSuccess: (state, action: PayloadAction<UserState['user']>) => {
-            state.loading = false;
-            state.user = action.payload;
-        },
-        loginFailure: (state, action: PayloadAction<string>) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        logout: (state) => {
-            state.user = null;
-        },
+        setToken: (state, action: PayloadAction<string>) => {
+            state.token = action.payload;
+        }
     },
 });
 
-export const { loginRequest, loginSuccess, loginFailure, logout } = userSlice.actions;
+export const { setUser, setToken } = userSlice.actions;
 export default userSlice.reducer;

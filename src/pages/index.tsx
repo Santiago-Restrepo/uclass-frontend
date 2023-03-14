@@ -1,8 +1,16 @@
 import Head from 'next/head'
-import styles from '@/styles/Home.module.css'
 import { useUser } from '@/hooks/useUser'
+import { useAuthFetch } from '@/hooks/useAuthFetch'
 export default function Home() {
-  const { user } = useUser()
+  const { logout } = useUser();
+  const { data, loading, error} = useAuthFetch("http://localhost:3000/api/users/logged");
+  if(loading){
+    return <h1>Loading...</h1>
+  }
+  if(error){
+    return <h1>Error</h1>
+  }
+  console.log(data);
   return (
     <>
       <Head>
@@ -11,10 +19,13 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Hola {user?.name}
+      <main>
+        <h1>
+          Hola
         </h1>
+        <button onClick={logout}>
+          Logout
+        </button>
       </main>
     </>
   )

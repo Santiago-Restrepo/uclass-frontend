@@ -1,16 +1,24 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 import Image from 'next/image'
 import Link from 'next/link'
 //Components
 import { Screen } from '@/components/Screen'
+//Redux
+import { useDispatch } from 'react-redux'
+import { setUser } from '@/features/userSlice'
+import { useUser } from '@/hooks/useUser'
 function login() {
+    const dispatch = useDispatch();
     const googleLogin = () =>{
         window.open('http://localhost:3000/api/auth/google', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
         window.addEventListener('message', (event) => {
-            console.log(event.data)
+            const {token} = event.data
+            if (token) {
+                dispatch(setUser({token}))
+            }
         }, false)
     }
+    useUser();
     return (
         <Screen>
             <div className="topBanner w-full h-20 absolute top-0">
