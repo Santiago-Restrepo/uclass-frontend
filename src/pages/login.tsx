@@ -7,14 +7,14 @@ import { Screen } from '@/components/Screen'
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/features/userSlice'
 import { useUser } from '@/hooks/useUser'
-function login() {
+export default function Login() {
     const dispatch = useDispatch();
     const googleLogin = () =>{
         window.open('http://localhost:3000/api/auth/google', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
         window.addEventListener('message', (event) => {
-            const {token} = event.data
+            const {token, name} = event.data
             if (token) {
-                dispatch(setUser({token}))
+                dispatch(setUser({token, name}))
             }
         }, false)
     }
@@ -40,5 +40,3 @@ function login() {
         </Screen>
     )
 }
-
-export default login

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import React from 'react'
-function teacher() {
+function Teacher() {
     const router = useRouter()
     const { id } = router.query
     return (
@@ -8,4 +8,4 @@ function teacher() {
     )
 }
 
-export default teacher
+export default Teacher

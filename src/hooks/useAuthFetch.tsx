@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useUser } from './useUser';
-export const useAuthFetch = (url:any, options:any = {}) => {
-    const {token} = useUser();
+import { useCallback, useState } from 'react';
+import { useSelector } from 'react-redux';
+export const useAuthFetch = () => {
+    const { token } = useSelector((state: any) => state.user);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
-    const refetch = async (url:any, options:any) => {
+    const authFetch = useCallback(async (url:any, options:any) => {
         setLoading(true);
         try {
             const res = await fetch(url, {
@@ -16,17 +16,18 @@ export const useAuthFetch = (url:any, options:any = {}) => {
                 }
             });
             const data = await res.json();
+            if(data.message === "jwt expired"){
+                // logout();
+                console.log("logout")
+            }
             setData(data);
             setLoading(false);
         } catch (error: any) {
             setError(error);
             setLoading(false);
         }
-    }
-    useEffect(() => {
-        if (token && url) {
-            refetch(url, options)
-        }
-    }, [token])
-    return { data, loading, error, refetch }
+    }, [token]);
+    
+    return { data, loading, error, authFetch };
+    
 }

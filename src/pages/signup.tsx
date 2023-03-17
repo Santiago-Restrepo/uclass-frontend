@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 //Components
 import { Screen } from '@/components/Screen'
-function signup() {
+export default function Signup() {
     return (
         <Screen>
             <div className="topBanner w-full h-20 absolute top-0">
@@ -33,5 +33,3 @@ function signup() {
         </Screen>
     )
 }
-
-export default signup

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 
-function review() {
+function Review() {
     const router = useRouter()
     const { id } = router.query
     return (
@@ -9,4 +9,4 @@ function review() {
     )
 }
 
-export default review
+export default Review

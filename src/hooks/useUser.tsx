@@ -1,38 +1,38 @@
 import { setUser } from '@/features/userSlice';
 import { useRouter } from 'next/router';
-import { useEffect, useLayoutEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useCallback, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {RootState} from '../app/store';
 export const useUser = () => {
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
     const dispatch = useDispatch();
-    const logout = () => {
-        dispatch(setUser({token: ''}))
+    const logout = useCallback(() => {
+        dispatch(setUser({token: '', name: ''}))
         if (window) {
             window.localStorage.removeItem('token')
         }
-    }
+    }, [])
     useEffect(() => {
         if (!user.token) {
-            router.push('/login')
-        }else{
-            router.push('/')
-        }
-    }, [user.token])
-    useLayoutEffect(() => {
-        if (!user.token) {
-            //Search for token in localstorage
+            router.push('/login');
             if(window){
                 const token = localStorage.getItem('token');
                 if (token) {
                     //Set token in redux
-                    dispatch(setUser({token}))
+                    dispatch(setUser({...user, token}))
                 }
             }
         }else{
-            //Save token in localstorage
-            localStorage.setItem('token', user.token)
+            if(window) {
+                localStorage.setItem('token', user.token)
+            }
+            router.push('/')
+        }
+        return () => {
+            if (window) {
+                window.localStorage.removeItem('token')
+            }
         }
     }, [user.token])
     return { ...user, logout }

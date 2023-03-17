@@ -1,5 +1,6 @@
 export interface UserState {
     token: string;
+    name: string;
 }
 
 export interface User {
