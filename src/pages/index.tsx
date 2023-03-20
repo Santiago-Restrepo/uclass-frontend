@@ -24,11 +24,8 @@ export default function Home() {
       <Screen>
         <NavBar />
         <h1>
-          Hola {name}
+          Home
         </h1>
-        <button onClick={logout}>
-          Logout
-        </button>
       </Screen>
     </>
   )

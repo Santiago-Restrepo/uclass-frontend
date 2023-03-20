@@ -27,7 +27,9 @@ export const useUser = () => {
             if(window) {
                 localStorage.setItem('token', user.token)
             }
-            router.push('/')
+            if(router.pathname === '/login'){
+                router.push('/')
+            }
         }
         return () => {
             if (window) {
