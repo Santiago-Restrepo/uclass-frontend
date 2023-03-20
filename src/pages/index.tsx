@@ -4,15 +4,10 @@ import { useAuthFetch } from '@/hooks/useAuthFetch'
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
+import { Searchers } from '@/components/Searchers';
+import { Best } from '@/components/Best';
 export default function Home() {
-  const { name, logout } = useUser();
-  const { data, loading, error, authFetch} = useAuthFetch();
-  if(loading){
-    return <h1>Loading...</h1>
-  }
-  if(error){
-    return <h1>Error</h1>
-  }
+  useUser();
   return (
     <>
       <Head>
@@ -23,9 +18,10 @@ export default function Home() {
       </Head>
       <Screen>
         <NavBar />
-        <h1>
-          Home
-        </h1>
+        <div className='w-full h-full py-5'>
+          <Searchers />
+          <Best />
+        </div>
       </Screen>
     </>
   )
