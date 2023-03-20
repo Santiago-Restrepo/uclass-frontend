@@ -15,7 +15,7 @@ export const BestCard = ({
     rating
 }: BestCardProps) => {
     return (
-        <div className="flex flex-col items-center justify-center w-1/2 max-w-sm h-full p-5 bg-white rounded-md shadow-xl">
+        <div className="flex flex-col items-center justify-center w-1/2 max-w-sm h-full p-5 bg-white rounded-md shadow-md">
             <Image
                 src={imgUrl}
                 alt={name}
