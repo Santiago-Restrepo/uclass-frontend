@@ -1,5 +1,3 @@
-import {IconType} from 'react-icons';
-
 export interface SearcherState {
     searchers: Searcher[];
     activeSearcher: String | null;
@@ -8,7 +6,13 @@ export interface SearcherState {
 export interface Searcher {
     title: string;
     placeholder: string;
-    Icon: IconType;
+    path: string;
+    iconName: IconName;
     iconColor: string;
     query: string;
+}
+
+export enum IconName {
+    teacher = 'FaChalkboardTeacher',
+    subject = 'BsBook'
 }

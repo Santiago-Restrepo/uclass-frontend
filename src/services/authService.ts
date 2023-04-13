@@ -1,4 +1,5 @@
-const API_URL = 'http://localhost:3000/api';
+import { config } from '../config';
+const { API_URL } = config;
 import axios from 'axios';
 export const login = async (email: string, password: string) => {
     return axios.post(`${API_URL}/auth/signin`, { user: { email, password } }).catch((error) => {

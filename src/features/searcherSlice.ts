@@ -1,22 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {SearcherState} from '@/types/searcher';
-import {FaChalkboardTeacher} from 'react-icons/fa';
-import {BsBook} from 'react-icons/bs';
+import {IconName, SearcherState} from '@/types/searcher';
 import { colors } from '@/styles/colors';
-
 const initialState: SearcherState = {
     searchers: [
         {
             title: 'Profesores',
             placeholder: 'Buscar profesor',
-            Icon: FaChalkboardTeacher,
+            path: 'teachers/search',
+            iconName: IconName.teacher,
             iconColor: colors.green500,
             query: ''
         },
         {
             title: 'Asignaturas',
             placeholder: 'Buscar asignatura',
-            Icon: BsBook,
+            path: 'subjects/search',
+            iconName: IconName.subject,
             iconColor: colors.yellow500,
             query: ''
         }
