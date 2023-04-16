@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import Link from 'next/link';
 import { IconName, Searcher as SearcherProps } from '@/types/searcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery, setActiveSearcher } from '@/features/searcherSlice';
@@ -51,7 +52,7 @@ export const Searcher = ({
                     method: 'POST',
                     body: JSON.stringify({query})
                 })
-            }, 1500)
+            }, 1000)
             return () => clearTimeout(delayDebounceFn)
         }
     }, [query])
@@ -73,9 +74,12 @@ export const Searcher = ({
     }, [fetchLoading, query])
     return (
         <div className={`flex flex-col w-full mb-5 ${activeSearcher && activeSearcher !== title ? 'hidden' : ''}`}>
-            <div className='flex justify-center items-center'>
+            <div className='flex justify-center items-end'>
                 <Icon className={`text-4xl text-${iconColor}-500`} color={iconColor}/>
                 <h1 className='ml-5 text-3xl text-gray-600 font-normal'>{title}</h1>
+                <Link href={appPath}>
+                    <span className='ml-5 text-gray-500 hover:text-gray-600 underline'>Ver todos</span>
+                </Link>
             </div>
             <input 
                 type="text" 

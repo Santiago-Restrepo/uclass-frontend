@@ -8,8 +8,8 @@ interface ScreenProps {
 }
 export const Screen = ({contentClassname, wrapperClassname, children}: ScreenProps) => {
     return (
-        <div className={`screen relative flex flex-col items-center justify-center h-screen w-full sm:p-2 bg-gradient-to-tl from-gray-100 via-gray-200 to-gray-100 ${wrapperClassname}`}>
-            <div className={`relative flex flex-col items-center justify-between h-full w-full sm:max-w-md sm:rounded-2xl p-5 bg-slate-50 overflow-y-scroll scrollbar-hide shadow-xl ${contentClassname}`}>
+        <div className={`screen relative flex flex-col items-center justify-center h-screen w-full p-2 bg-gradient-to-tl from-gray-100 via-gray-200 to-gray-100 ${wrapperClassname}`}>
+            <div className={`relative flex flex-col items-center justify-between h-full w-11/12 max-w-md rounded-2xl p-5 bg-slate-50 overflow-y-scroll scrollbar-hide shadow-xl ${contentClassname}`}>
                 {children}
                 <p className="text-xs text-gray-500">© Uclass 2023 - Todos los derechos reservados</p>
             </div>
