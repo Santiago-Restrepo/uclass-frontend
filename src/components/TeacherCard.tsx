@@ -1,6 +1,14 @@
 import React from 'react'
 
-export const TeacherCard = () => {
+//Types
+import { Teacher } from '@/types/teacher';
+
+interface TeacherCardProps {
+    teacher: Teacher
+}
+export const TeacherCard = ({
+    teacher
+}:TeacherCardProps) => {
     return (
         <div>TeacherCard</div>
     )

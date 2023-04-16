@@ -6,7 +6,8 @@ export interface SearcherState {
 export interface Searcher {
     title: string;
     placeholder: string;
-    path: string;
+    apiPath: string;
+    appPath: string;
     iconName: IconName;
     iconColor: string;
     query: string;

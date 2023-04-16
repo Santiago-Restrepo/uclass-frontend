@@ -6,7 +6,8 @@ const initialState: SearcherState = {
         {
             title: 'Profesores',
             placeholder: 'Buscar profesor',
-            path: 'teachers/search',
+            apiPath: 'teachers/search',
+            appPath: '/teacher',
             iconName: IconName.teacher,
             iconColor: colors.green500,
             query: ''
@@ -14,7 +15,8 @@ const initialState: SearcherState = {
         {
             title: 'Asignaturas',
             placeholder: 'Buscar asignatura',
-            path: 'subjects/search',
+            apiPath: 'subjects/search',
+            appPath: '/subject',
             iconName: IconName.subject,
             iconColor: colors.yellow500,
             query: ''
