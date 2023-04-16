@@ -1,23 +1,37 @@
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import { useUser } from '@/hooks/useUser'
-import { useAuthFetch } from '@/hooks/useAuthFetch'
+import { RootState } from '@/app/store';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
-import { Searchers } from '@/components/Searchers';
-import { Best } from '@/components/Best';
-import { useEffect, useState } from 'react';
+import { Searcher } from '@/components/Searcher';
+//Others
 import { config } from '@/config';
+import { useAuthFetch } from '@/hooks/useAuthFetch';
+const { API_URL } = config;
 //Types
 import { Teacher } from '@/types/teacher';
-import { Resource } from '@/types/resource';
-const { API_URL } = config;
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
-
-export default function Home() {
+import { useSelector } from 'react-redux';
+export default function Teachers() {
     useUser();
+    const {data, error, loading, authFetch} = useAuthFetch();
+    const [teachers, setTeachers] = useState<Teacher[]>([]);
+    const { searchers } = useSelector((state: RootState) => state.searcher);
+    const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');
 
+    useEffect(() => {
+        authFetch(`${API_URL}/teachers`, {
+            method: 'GET',
+        });
+    }, [])
+    useEffect(() => {
+        if(data) {
+            setTeachers(data);
+        }
+    }, [data])
     return (
         <>
             <Head>
@@ -29,7 +43,36 @@ export default function Home() {
             <Screen>
                 <NavBar />
                 <div className='w-full h-full py-5'>
-                    Teachers
+                    {
+                        teacherSearcher && (
+                            <Searcher {...teacherSearcher} />
+                        )
+                    }
+                    {
+                        loading && (
+                            <div className='flex justify-center items-center'>
+                                <AiOutlineLoading3Quarters className='animate-spin text-4xl' size={20} color='gray'/>
+                            </div>
+                        )
+                    }
+                    {
+                        error && (
+                            <div className='flex justify-center items-center'>
+                                <h1>Error</h1>
+                            </div>
+                        )
+                    }
+                    {
+                        data && (
+                            <div className='flex justify-center items-center'>
+                                {
+                                    teachers.map((teacher) => (
+                                        <h1 key={teacher._id}>{teacher.name}</h1>
+                                    ))
+                                }
+                            </div>
+                        )
+                    }
                 </div>
             </Screen>
         </>
