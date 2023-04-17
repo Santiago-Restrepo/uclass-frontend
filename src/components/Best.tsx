@@ -19,7 +19,7 @@ export const Best = ({
                 {
                     teacher && (
                         <BestCard
-                            imgUrl={teacher.imgUrl || "/jhon.jpg"}
+                            imgUrl={teacher.photo || "/jhon.jpg"}
                             name={teacher.name}
                             rating={teacher.rating}
                         />
