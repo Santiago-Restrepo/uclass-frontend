@@ -3,6 +3,7 @@ import Head from 'next/head'
 import { useUser } from '@/hooks/useUser'
 import { RootState } from '@/app/store';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
@@ -15,6 +16,8 @@ const { API_URL } = config;
 import { Subject } from '@/types/subject';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
+import {IoIosPaper} from 'react-icons/io';
+import { colors } from '@/styles/colors';
 
 export default function Subjects() {
     useUser();
@@ -23,7 +26,7 @@ export default function Subjects() {
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const {data, error, loading, authFetch} = useAuthFetch();
     useEffect(() => {
-        authFetch(`${API_URL}/subjects`, {
+        authFetch(`${API_URL}/subjects/populated`, {
             method: 'GET',
         });
     }, [])
@@ -64,11 +67,31 @@ export default function Subjects() {
                     }
                     {
                         data && (
-                            <div className='flex justify-center items-center'>
+                            <div className='flex flex-col justify-center items-center'>
                                 {
-                                    subjects.map((teacher) => (
-                                        <h1 key={teacher._id}>{teacher.name}</h1>
+                                    
+                                    subjects?.map((subject) => (
+                                        <Link href={`/subject/${subject._id}`} key={subject._id} className='mb-2 p-3 shadow-lg w-full'>
+                                            <div className='flex justify-between items-center'>
+                                                <div className="flex flex-col w-2/3">
+                                                    <h3 className='text-md font-semibold text-gray-900 leading-none'>{subject.name}</h3>
+                                                    <h3 className='text-md font-normal text-gray-500 truncate w-full'>{subject.description}</h3>
+                                                    {
+                                                        //If type of subject.teacher is teacher
+                                                        typeof subject.teacher === 'object' ? (
+                                                            <h3 className='text-md text-gray-400'>{subject.teacher.name}</h3>
+                                                        ): (
+                                                            <h3 className='text-md text-gray-400'>teacher {subject.teacher}</h3>
+                                                        )
+                                                    }
+                                                </div>
+                                                <div className="flex justify-center items-center w-1/3">
+                                                    <IoIosPaper className='text-4xl' size={40} color={colors.gray700}/>
+                                                </div>
+                                            </div>
+                                        </Link>
                                     ))
+                                    
                                 }
                             </div>
                         )

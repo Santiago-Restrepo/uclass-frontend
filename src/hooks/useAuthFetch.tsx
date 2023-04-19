@@ -4,6 +4,9 @@ import { useSelector } from 'react-redux';
 
 export const useAuthFetch = () => {
     const { token } = useSelector((state: any) => state.user);
+    if(!token) {
+        return { data: null, loading: false, error: null, authFetch: () => {} };
+    }
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
