@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import Head from 'next/head'
 import { useUser } from '@/hooks/useUser'
 import { RootState } from '@/app/store';
@@ -22,14 +22,17 @@ import { colors } from '@/styles/colors';
 export default function Subjects() {
     useUser();
     const { searchers } = useSelector((state: RootState) => state.searcher);
+    const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');
     const [subjects, setSubjects] = useState<Subject[]>([]);
-    const {data, error, loading, authFetch} = useAuthFetch();
+    const {data, error, loading, authFetch} = useAuthFetch([]);
     useEffect(() => {
-        authFetch(`${API_URL}/subjects/populated`, {
-            method: 'GET',
-        });
-    }, [])
+        if(token){
+            authFetch(`${API_URL}/subjects/populated`, {
+                method: 'GET',
+            });
+        }
+    }, [token])
     useEffect(() => {
         if(data) {
             setSubjects(data);
