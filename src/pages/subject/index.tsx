@@ -27,17 +27,25 @@ export default function Subjects() {
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const {data, error, loading, authFetch} = useAuthFetch([]);
     useEffect(() => {
-        if(token){
+        // if(token){
             authFetch(`${API_URL}/subjects/populated`, {
                 method: 'GET',
             });
-        }
+        // }
     }, [token])
     useEffect(() => {
         if(data) {
             setSubjects(data);
         }
     }, [data])
+
+    if(error){
+        return (
+            <div className='flex justify-center items-center'>
+                <h1>Error</h1>
+            </div>
+        )
+    }
     return (
         <>
             <Head>

@@ -10,21 +10,26 @@ export const useAuthFetch = (initialData: any = null) => {
     const authFetch = useCallback(async (url:any, options:any) => {
         setLoading(true);
         try {
-            const res = await fetch(url, {
-                ...options,
-                headers: {
-                    ...options?.headers,
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
+            if(!token) {
+                setData(initialData);
+                setLoading(false);
+            }else{
+                const res = await fetch(url, {
+                    ...options,
+                    headers: {
+                        ...options?.headers,
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                const data = await res.json();
+                if(data.message === "jwt expired"){
+                    // logout();
+                    console.log("logout")
                 }
-            });
-            const data = await res.json();
-            if(data.message === "jwt expired"){
-                // logout();
-                console.log("logout")
+                setData(data);
+                setLoading(false);
             }
-            setData(data);
-            setLoading(false);
         } catch (error: any) {
             setError(error);
             setLoading(false);
