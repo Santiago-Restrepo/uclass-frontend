@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 //Props
-export const useAuthFetch = (initialData: any = null) => {
+export const useAuthFetch = <T,>(initialData: any = null) => {
     const { token } = useSelector((state: any) => state.user);
-    const [data, setData] = useState(initialData);
+    const [data, setData] = useState<T>(initialData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const authFetch = useCallback(async (url:any, options:any) => {
