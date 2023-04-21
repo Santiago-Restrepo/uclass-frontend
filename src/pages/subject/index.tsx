@@ -24,21 +24,12 @@ export default function Subjects() {
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');
-    const [subjects, setSubjects] = useState<Subject[]>([]);
-    const {data, error, loading, authFetch} = useAuthFetch([]);
+    const {data, error, loading, authFetch} = useAuthFetch<Subject[]>([]);
     useEffect(() => {
-        // if(token){
             authFetch(`${API_URL}/subjects/populated`, {
                 method: 'GET',
             });
-        // }
     }, [token])
-    useEffect(() => {
-        if(data) {
-            setSubjects(data);
-        }
-    }, [data])
-
     if(error){
         return (
             <div className='flex justify-center items-center'>
@@ -81,7 +72,7 @@ export default function Subjects() {
                             <div className='flex flex-col justify-center items-center'>
                                 {
                                     
-                                    subjects?.map((subject) => (
+                                    data.map((subject: Subject) => (
                                         <Link href={`/subject/${subject._id}`} key={subject._id} className='mb-2 p-3 shadow-lg w-full'>
                                             <div className='flex justify-between items-center'>
                                                 <div className="flex flex-col w-2/3">

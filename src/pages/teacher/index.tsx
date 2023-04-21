@@ -4,6 +4,7 @@ import { useUser } from '@/hooks/useUser'
 import { RootState } from '@/app/store';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useSelector } from 'react-redux';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
@@ -14,15 +15,13 @@ import { useAuthFetch } from '@/hooks/useAuthFetch';
 const { API_URL } = config;
 import { colors } from '@/styles/colors';
 //Types
-import { Teacher } from '@/types/teacher';
+import { Teacher as TeacherType } from '@/types/teacher';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
-import { useSelector } from 'react-redux';
 
 export default function Teachers() {
     useUser();
-    const {data, error, loading, authFetch} = useAuthFetch();
-    const [teachers, setTeachers] = useState<Teacher[]>([]);
+    const {data, error, loading, authFetch} = useAuthFetch<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');
 
@@ -31,12 +30,6 @@ export default function Teachers() {
             method: 'GET',
         });
     }, [])
-    useEffect(() => {
-        if(data) {
-            console.log(data)
-            setTeachers(data);
-        }
-    }, [data])
     return (
         <>
             <Head>
@@ -71,7 +64,7 @@ export default function Teachers() {
                         data && (
                             <div className='flex flex-col justify-center items-center'>
                                 {
-                                    teachers.map((teacher) => (
+                                    data.map((teacher:TeacherType) => (
                                         <Link key={teacher._id} href={`/teacher/${teacher._id}`} className='w-full'>
                                             <div className='flex justify-between items-center gap-2 w-full border-t-2 border-gray-200 py-4'>
                                                 <div className='flex gap-4'>
@@ -91,7 +84,7 @@ export default function Teachers() {
                                                     </div>
                                                 </div>
                                                 <div className='flex flex-col justify-center items-center'>
-                                                    <AiFillStar color={colors.yellow500} size={50}/>
+                                                    <AiFillStar className='text-yellow-500' size={50}/>
                                                     <span className='text-2xl font-semibold text-yellow-500'>{teacher.rating}</span>
                                                 </div>
                                             </div>
