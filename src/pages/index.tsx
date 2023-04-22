@@ -32,12 +32,12 @@ export default function Home() {
   }, []);
   useEffect(() => {
     if (bestTeacherData) {
-      setBestTeachers(bestTeacherData);
+      setBestTeachers(bestTeacherData as Teacher[]);
     }
   }, [bestTeacherData]);
   useEffect(() => {
     if (bestResourceData) {
-      setBestResources(bestResourceData);
+      setBestResources(bestResourceData as Resource[]);
     }
   }, [bestResourceData]);
 

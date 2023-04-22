@@ -11,6 +11,7 @@ import { Review } from '@/types/review';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
+import { ReviewCard } from '@/components/ReviewCard';
 //Others
 import { config } from '@/config';
 const { API_URL } = config;
@@ -79,11 +80,11 @@ export default function Teacher() {
                                 </div>
                                 <div className='flex justify-between items-end w-full'>
                                     <div className='flex justify-center items-center'>
-                                        <AiFillStar className='text-yellow-500' size={40}/>
-                                        <h1 className='text-4xl font-semibold text-yellow-500 ml-2'>{teacher.rating}</h1>
+                                        <AiFillStar className='text-yellow-500' size={30}/>
+                                        <h1 className='text-2xl font-semibold text-yellow-500 ml-2'>{teacher.rating}</h1>
                                     </div>
                                     <button
-                                        className='mt-5 px-2 py-2 text-lg font-semibold text-white bg-green-600 rounded-md sm:px-5'
+                                        className='mt-5 px-2 py-2 text-sm font-semibold text-white bg-green-600 rounded-md sm:px-5'
                                     >
                                         Crear reseña
                                     </button>
@@ -93,14 +94,19 @@ export default function Teacher() {
                     }
                     {
                         reviews && (
-                            <div className='flex flex-col gap-5 mt-5'>
+                            <div className='flex flex-wrap justify-center gap-5 mt-5 w-full'>
+                                {
+                                    reviews.length === 0 && (
+                                        <div className='flex justify-center items-center'>
+                                            <h1 className='text-xl font-semibold text-gray-500'>
+                                                No hay reseñas
+                                            </h1>
+                                        </div>
+                                    )
+                                }
                                 {
                                     reviews.map((review, index) => (
-                                        <div key={index} className='flex flex-col gap-5 border-b-2 border-gray-200 rounded-md p-5'>
-                                            {
-                                                JSON.stringify(review)
-                                            }
-                                        </div>
+                                        <ReviewCard key={index} review={review} />
                                     ))
                                 }
                             </div>

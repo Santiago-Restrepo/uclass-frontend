@@ -4,7 +4,7 @@ export interface Review {
     content: string;
     subjectId: string;
     teacherId: string;
-    user: String | User;
+    user: User;
     rating: {
         clarity: number;
         demanding: number;
