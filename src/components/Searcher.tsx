@@ -61,7 +61,7 @@ export const Searcher = ({
         if(query === ''){
             setIterableData([]);
         }else if (data) {
-            setIterableData(data);
+            setIterableData(data as (Subject | Teacher)[])
         }
     }, [data, query])
     useEffect(() => {
