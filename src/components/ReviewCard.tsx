@@ -55,9 +55,9 @@ export const ReviewCard = ({
                 {review.content}
             </p>
             <div className='flex justify-center'>
-                <button className="flex justify-center items-center gap-2 mt-5 px-2 py-1 text-sm font-semibold text-white bg-green-600 rounded-md sm:px-5">
+                <button className="group flex justify-center items-center gap-2 mt-5 px-2 py-1 text-sm font-semibold border-2 border-green-600 rounded-md text-green-600 hover:bg-green-600 hover:text-white">
                     Comentar
-                    <BiCommentDetail size={30} className='text-white'/>
+                    <BiCommentDetail size={20} className='text-green-600 group-hover:text-white'/>
                 </button>
             </div>
         </div>
