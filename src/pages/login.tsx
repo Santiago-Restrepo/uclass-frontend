@@ -15,6 +15,8 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@/schemas/authSchemas'
 //Services
 import { login } from '@/services/authService'
+import { config } from '@/config'
+const { API_URL } = config;
 export default function Login() {
     const dispatch = useDispatch();
     const {
@@ -25,7 +27,7 @@ export default function Login() {
         resolver: yupResolver(loginSchema)
     });
     const googleLogin = () =>{
-        window.open('http://localhost:3000/api/auth/google', 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
+        window.open(`${API_URL}/auth/google`, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
         window.addEventListener('message', (event) => {
             const {token, name} = event.data
             if (token) {
