@@ -89,7 +89,16 @@ export default function Subject() {
                     }
                     {
                         resources && (
-                            <div className='grid grid-cols-1 gap-5 mt-5 sm:grid-cols-2 lg:grid-cols-3'>
+                            <div className='flex flex-wrap justify-center gap-5 mt-5 w-full'>
+                                {
+                                    resources.length === 0 && (
+                                        <div className='flex justify-center items-center'>
+                                            <h1 className='text-xl font-semibold text-gray-500'>
+                                                No hay recursos
+                                            </h1>
+                                        </div>
+                                    )
+                                }
                                 {
                                     resources.map(resource => (
                                         <ResourceCard key={resource._id} resource={resource} />

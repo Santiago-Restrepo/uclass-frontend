@@ -1,9 +1,10 @@
+import { User } from "./user";
 export interface Resource {
     _id: number;
     name: string;
     description: string;
-    subjectId: number;
-    userId: number;
+    subject: number;
+    user: number | User;
     resourceUrl: string;
     imgUrl: string;
     rating: number;
