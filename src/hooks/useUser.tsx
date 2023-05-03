@@ -14,28 +14,26 @@ export const useUser = () => {
         }
     }, [])
     useEffect(() => {
-        if (!user.token) {
-            router.push('/login');
-            if(window){
-                const token = localStorage.getItem('token');
-                if (token) {
-                    //Set token in redux
-                    dispatch(setUser({...user, token}))
-                }
+        const token = localStorage.getItem('token') || user.token;
+        if (token) {
+            //Set token in redux
+
+            dispatch(setUser({...user, token}))
+            if (window) {
+                window.localStorage.setItem('token', token)
+            }
+            if(router.pathname === '/'){
+                router.push('/home')
             }
         }else{
-            if(window) {
-                localStorage.setItem('token', user.token)
-            }
-            if(router.pathname === '/login'){
+            if(router.pathname !== '/' && router.pathname !== '/signup'){
                 router.push('/')
             }
         }
         return () => {
-            if (window) {
-                window.localStorage.removeItem('token')
-            }
+            // cleanup
         }
-    }, [user.token])
+
+    }, [user.token, router.pathname])
     return { ...user, logout }
 }

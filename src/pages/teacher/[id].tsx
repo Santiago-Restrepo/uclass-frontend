@@ -1,7 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image';
 //Hooks
-import { useUser } from '@/hooks/useUser'
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
@@ -18,7 +17,6 @@ const { API_URL } = config;
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 export default function Teacher() {
-    useUser();
     const router = useRouter()
     //Call authFetch hook with a generic type
     const {data: teacher, error: teacherError, loading: teacherLoading, authFetch: teacherAuthFetch} = useAuthFetch<TeacherType>(null);
@@ -26,13 +24,14 @@ export default function Teacher() {
     
     const { id } = router.query
     useEffect(() => {
+        if(!id) return;
         teacherAuthFetch(`${API_URL}/teachers/${id}`, {
             method: 'GET',
         });
         reviewsAuthFetch(`${API_URL}/reviews/teacher/${id}`, {
             method: 'GET',
         });
-    }, [])
+    }, [id])
 
     return (
         <>

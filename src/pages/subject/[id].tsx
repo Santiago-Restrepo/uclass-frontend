@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { useUser } from '@/hooks/useUser'
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
@@ -19,7 +18,6 @@ import { IoDocumentText } from 'react-icons/io5';
 export default function Subject() {
     const router = useRouter()
     const { id } = router.query
-    useUser();
     const {data: subject, error: subjectError, loading: subjectLoading, authFetch: subjectAuthFetch} = useAuthFetch<SubjectType>(null);
     const {data: resources, error: resourcesError, loading: resourcesLoading, authFetch: resourcesAuthFetch} = useAuthFetch<Resource[]>([]);
     const resourcesCount = useMemo(() => {
@@ -27,13 +25,14 @@ export default function Subject() {
     }, [resources])
 
     useEffect(() => {
+        if(!id) return;
         subjectAuthFetch(`${API_URL}/subjects/${id}`, {
             method: 'GET',
         });
         resourcesAuthFetch(`${API_URL}/resources/subject/${id}`, {
             method: 'GET',
         });
-    }, [])
+    }, [id])
     return (
         <>
             <Head>

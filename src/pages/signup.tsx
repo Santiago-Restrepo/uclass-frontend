@@ -42,7 +42,7 @@ export default function Signup() {
                     }
                 }
             ).then((response) => {
-                router.push('/login')
+                router.push('/')
             }).catch((error) => {
                 console.log(error)
             })
@@ -94,7 +94,7 @@ export default function Signup() {
                 />
                 {errors.repeatPassword && <p className='text-red-500'>{errors.repeatPassword.message?.toString()}</p>}
                 <button className='mt-5 p-2 w-full bg-yellow-500 text-white font-bold rounded-md'>Registrarse</button>
-                <Link href='/login' className='mt-5 p-2 text-gray-500 w-full font-light text-center leading-none'>
+                <Link href='/' className='mt-5 p-2 text-gray-500 w-full font-light text-center leading-none'>
                     O si ya tienes una cuenta, inicia sesión
                 </Link>   
             </form>

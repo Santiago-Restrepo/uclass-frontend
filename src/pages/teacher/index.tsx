@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head'
-import { useUser } from '@/hooks/useUser'
 import { RootState } from '@/app/store';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -20,7 +19,6 @@ import { Teacher as TeacherType } from '@/types/teacher';
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 
 export default function Teachers() {
-    useUser();
     const {data, error, loading, authFetch} = useAuthFetch<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');

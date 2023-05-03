@@ -1,6 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
 import Head from 'next/head'
-import { useUser } from '@/hooks/useUser'
 import { RootState } from '@/app/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -20,7 +19,6 @@ import {IoIosPaper} from 'react-icons/io';
 import { colors } from '@/styles/colors';
 
 export default function Subjects() {
-    useUser();
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');

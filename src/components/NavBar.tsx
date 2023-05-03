@@ -25,7 +25,7 @@ export const NavBar = () => {
         {
             Icon: ({color}:iconProps) => <FiHome size={30} color={color}/>,
             label: 'Inicio',
-            to: '/'
+            to: '/home'
         },
 
         {
