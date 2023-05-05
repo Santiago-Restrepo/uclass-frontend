@@ -1,11 +1,13 @@
 import Head from 'next/head'
+//Hooks
 import { useAuthFetch } from '@/hooks/useAuthFetch'
+import { useEffect, useState } from 'react';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
 import { Searchers } from '@/components/Searchers';
 import { Best } from '@/components/Best';
-import { useEffect, useState } from 'react';
 import { config } from '@/config';
 //Types
 import { Teacher } from '@/types/teacher';
@@ -19,6 +21,7 @@ export default function Home() {
   const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useAuthFetch(null, `${API_URL}/resources/best`);
   const [bestTeachers, setBestTeachers] = useState<Teacher[]>([]);
   const [bestResources, setBestResources] = useState<Resource[]>([]);
+  useNavigationPath([]);
 
   // useEffect(() => {
   //   bestTeacherFetch(`${API_URL}/teachers/best`, {

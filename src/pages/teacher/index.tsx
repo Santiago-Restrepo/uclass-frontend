@@ -1,18 +1,19 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import Head from 'next/head'
 import { RootState } from '@/app/store';
 import Link from 'next/link';
 import Image from 'next/image';
+//Hooks
 import { useSelector } from 'react-redux';
+import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
 import { Searcher } from '@/components/Searcher';
 //Others
 import { config } from '@/config';
-import { useAuthFetch } from '@/hooks/useAuthFetch';
 const { API_URL } = config;
-import { colors } from '@/styles/colors';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
 //Icons
@@ -22,7 +23,7 @@ export default function Teachers() {
     const {data, error, loading, authFetch} = useAuthFetch<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');
-
+    useNavigationPath(['/home' ]);
     useEffect(() => {
         authFetch(`${API_URL}/teachers`, {
             method: 'GET',

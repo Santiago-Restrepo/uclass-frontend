@@ -8,7 +8,6 @@ type LayoutProps = {
 
 export const Layout = ({children}: LayoutProps) => {
     useUser();
-    useNavigationPath();
     return (
         <>
             {children}

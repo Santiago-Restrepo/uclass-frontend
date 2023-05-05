@@ -9,7 +9,9 @@ import { NavBar } from '@/components/NavBar';
 import { Searcher } from '@/components/Searcher';
 //Others
 import { config } from '@/config';
+//Hooks
 import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
 const { API_URL } = config;
 import { Subject } from '@/types/subject';
@@ -23,6 +25,7 @@ export default function Subjects() {
     const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');
     const {data, error, loading, authFetch} = useAuthFetch<Subject[]>([]);
+    useNavigationPath(['/home' ]);
     useEffect(() => {
             authFetch(`${API_URL}/subjects/populated`, {
                 method: 'GET',

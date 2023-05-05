@@ -1,7 +1,9 @@
 import Head from 'next/head'
+//Hooks
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
@@ -23,6 +25,7 @@ export default function Subject() {
     const resourcesCount = useMemo(() => {
         return resources?.length;
     }, [resources])
+    useNavigationPath(['/home', '/subject']);
 
     useEffect(() => {
         if(!id) return;

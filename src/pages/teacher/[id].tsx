@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
 import { Review } from '@/types/review';
@@ -21,6 +22,7 @@ import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 export default function Teacher() {
     const router = useRouter();
     const [createMode, setCreateMode] = useState(false);
+    useNavigationPath(['/home', '/teacher' ]);
     //Call authFetch hook with a generic type
     const {data: teacher, error: teacherError, loading: teacherLoading, authFetch: teacherAuthFetch} = useAuthFetch<TeacherType>(null);
     const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useAuthFetch<Review[]>([]);
