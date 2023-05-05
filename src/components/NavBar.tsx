@@ -45,34 +45,48 @@ export const NavBar = () => {
         }
     ], [])
     return (
-        <div className="flex justify-between w-full px-5 py-2 bg-white shadow-md rounded-md">
-            {
-                items.map((item, index) => {
-                    const Icon = item.Icon;
-                    const active = router.pathname === item.to;
-                    return (
-                        item.onClick ?
-                        <button onClick={item.onClick} key={`item ${index}`}>
-                            <div className="flex flex-col items-center justify-center">
-                                <div className={`rounded-xl p-2`}>
-                                    <Icon color={colors.gray500}/>
+        <>
+            <div className="flex justify-between w-full px-5 py-2 bg-white shadow-md rounded-md">
+                {
+                    items.map((item, index) => {
+                        const Icon = item.Icon;
+                        const active = router.pathname === item.to;
+                        return (
+                            item.onClick ?
+                            <button onClick={item.onClick} key={`item ${index}`}>
+                                <div className="flex flex-col items-center justify-center">
+                                    <div className={`rounded-xl p-2`}>
+                                        <Icon color={colors.gray500}/>
+                                    </div>
+                                    <span className="text-md font-medium text-gray-500">{item.label}</span>
                                 </div>
-                                <span className="text-md font-medium text-gray-500">{item.label}</span>
-                            </div>
-                        </button>
-                        :
-                        <Link href={item.to} key={`item ${index}`}>
-                            <div className="flex flex-col items-center justify-center">
-                                <div className={`${active ? 'bg-green-500' : 'bg-transparent'} rounded-xl p-2`}>
-                                    <Icon color={active ? colors.gray100 : colors.gray500}/>
+                            </button>
+                            :
+                            <Link href={item.to} key={`item ${index}`}>
+                                <div className="flex flex-col items-center justify-center">
+                                    <div className={`${active ? 'bg-green-500' : 'bg-transparent'} rounded-xl p-2`}>
+                                        <Icon color={active ? colors.gray100 : colors.gray500}/>
+                                    </div>
+                                    <span className={`text-md font-medium transition-colors ${active ? 'text-green-500' : 'text-gray-500'}`}>{item.label}</span>
                                 </div>
-                                <span className={`text-md font-medium transition-colors ${active ? 'text-green-500' : 'text-gray-500'}`}>{item.label}</span>
-                            </div>
-                        </Link>
-                    )
-                })
-            }
-        </div>
+                            </Link>
+                        )
+                    })
+                }
+            </div>
+            <div className='w-full mt-2'>
+                <div className='w-full flex justify-start'>
+                    <Link
+                        href={router.query.previus as string || '/'}
+                        className='flex items-center gap-2 bg-gray-400 text-gray-100 p-1 rounded-sm text-sm font-medium'
+                    >
+                        <span>Atrás</span>
+                    </Link>
+                
+
+                </div>
+            </div>
+        </>
 
     )
 }
