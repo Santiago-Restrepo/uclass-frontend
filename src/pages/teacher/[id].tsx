@@ -2,25 +2,29 @@ import Head from 'next/head'
 import Image from 'next/image';
 //Hooks
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
 import { Review } from '@/types/review';
+import { Subject } from '@/types/subject';
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
-import { ReviewCard } from '@/components/ReviewCard';
+import { ReviewCardList } from '@/components/ReviewCardList';
+import { CreateReviewForm } from '@/components/CreateReviewForm';
 //Others
 import { config } from '@/config';
 const { API_URL } = config;
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 export default function Teacher() {
-    const router = useRouter()
+    const router = useRouter();
+    const [createMode, setCreateMode] = useState(false);
     //Call authFetch hook with a generic type
     const {data: teacher, error: teacherError, loading: teacherLoading, authFetch: teacherAuthFetch} = useAuthFetch<TeacherType>(null);
     const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useAuthFetch<Review[]>([]);
+    const {data: subjects, error: subjectsError, loading: subjectsLoading, authFetch: subjectsAuthFetch} = useAuthFetch<Subject[]>([]);
     
     const { id } = router.query
     useEffect(() => {
@@ -29,6 +33,9 @@ export default function Teacher() {
             method: 'GET',
         });
         reviewsAuthFetch(`${API_URL}/reviews/teacher/${id}`, {
+            method: 'GET',
+        });
+        subjectsAuthFetch(`${API_URL}/subjects/teacher/${id}`, {
             method: 'GET',
         });
     }, [id])
@@ -83,32 +90,23 @@ export default function Teacher() {
                                         <h1 className='text-2xl font-semibold text-yellow-500 ml-2'>{teacher.rating}</h1>
                                     </div>
                                     <button
-                                        className='mt-5 px-2 py-2 text-sm font-semibold text-white bg-green-600 rounded-md sm:px-5'
+                                        className={`mt-5 px-2 py-2 text-sm font-semibold text-white rounded-md sm:px-5 ${createMode ? 'bg-gray-500' : 'bg-green-600'} hover:bg-opacity-90`}
+                                        onClick={() => setCreateMode(!createMode)}
                                     >
-                                        Crear reseña
+                                        {
+                                            createMode ? 'Cancelar' : 'Crear reseña'
+                                        }
                                     </button>
                                 </div>
                             </div>
                         )
                     }
                     {
-                        reviews && (
-                            <div className='flex flex-wrap justify-center gap-5 mt-5 w-full'>
-                                {
-                                    reviews.length === 0 && (
-                                        <div className='flex justify-center items-center'>
-                                            <h1 className='text-xl font-semibold text-gray-500'>
-                                                No hay reseñas
-                                            </h1>
-                                        </div>
-                                    )
-                                }
-                                {
-                                    reviews.map((review, index) => (
-                                        <ReviewCard key={index} review={review} />
-                                    ))
-                                }
-                            </div>
+                        createMode ? (
+                            <CreateReviewForm  subjects={subjects} teacherId={id as string}/>
+                        )
+                        : (
+                            <ReviewCardList reviews={reviews}/>
                         )
                     }
                 </div>

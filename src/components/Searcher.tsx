@@ -52,7 +52,7 @@ export const Searcher = ({
                     method: 'POST',
                     body: JSON.stringify({query})
                 })
-            }, 1000)
+            }, 300)
             return () => clearTimeout(delayDebounceFn)
         }
     }, [query])
@@ -73,7 +73,7 @@ export const Searcher = ({
 
     }, [fetchLoading, query])
     return (
-        <div className={`flex flex-col w-full mb-5 ${activeSearcher && activeSearcher !== title ? 'hidden' : ''}`}>
+        <div className={`flex flex-col w-full mb-5`}>
             <div className='flex justify-center items-end'>
                 <Icon className={`text-4xl text-${iconColor}-500`} color={iconColor}/>
                 <h1 className='ml-5 text-3xl text-gray-600 font-normal'>{title}</h1>

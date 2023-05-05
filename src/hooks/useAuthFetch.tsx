@@ -1,7 +1,9 @@
+import { setUser } from '@/features/userSlice';
 import { useCallback, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 //Props
 export const useAuthFetch = <T,>(initialData: any = null) => {
+    const dispatch = useDispatch();
     const { token } = useSelector((state: any) => state.user);
     const [data, setData] = useState<T>(initialData);
     const [loading, setLoading] = useState(false);
@@ -25,6 +27,10 @@ export const useAuthFetch = <T,>(initialData: any = null) => {
                 if(data.message === "jwt expired"){
                     // logout();
                     console.log("logout")
+                    dispatch(setUser({
+                        name: '',
+                        token: ''
+                    }));
                 }
                 setData(data);
                 setLoading(false);

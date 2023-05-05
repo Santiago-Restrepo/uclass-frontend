@@ -14,7 +14,13 @@ export default function Settings() {
         </Head>
         <Screen>
             <NavBar />
-            Settings
+            <ul>
+                <li>Soporte técnico</li>
+                <li>Política de privacidad</li>
+                <li>Terminos y condiciones</li>
+                <li>Normas de comportamiento</li>
+                <li>Eliminar cuenta</li>
+            </ul>
         </Screen>
         </>
     )
