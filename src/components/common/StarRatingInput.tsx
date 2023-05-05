@@ -18,7 +18,7 @@ export function StarRatingInput({
     const [rating, setRating] = useState(0);
     return (
         <div className='flex flex-col gap-2'>
-            <label className='text-gray-500 font-semibold' htmlFor={name}>{label}</label>
+            <label className='text-gray-400 font-medium' htmlFor={name}>{label}</label>
             <div className='flex gap-2'>
                 {
                     values.map((value, index) => (

@@ -27,24 +27,29 @@ export function CreateReviewForm({
     return (
         <div className='w-full'>
             <form className='flex flex-col gap-5' onSubmit={handleSubmit(onSubmit)}>
-                <Select
-                    label='Asignatura'
-                    name='subject'
-                    options={subjects.map((subject) => ({
-                        label: subject.name,
-                        value: subject._id
-                    }))}
-                    register={register}
-                    errors={errors}
-                />
-                <Input
-                    label='Comentario'
-                    name='comment'
-                    type='text'
-                    register={register}
-                    errors={errors}
-                />
-                <div className='ratingInputs'>
+                <div className='border-t border-gray-200 pt-3'>
+                    <Select
+                        label='Asignatura'
+                        name='subject'
+                        options={subjects.map((subject) => ({
+                            label: subject.name,
+                            value: subject._id
+                        }))}
+                        register={register}
+                        errors={errors}
+                    />
+                    <Input
+                        label='Comentario'
+                        name='comment'
+                        type='text'
+                        register={register}
+                        errors={errors}
+                    />
+                </div>
+                <div className='ratingInputs border-t border-gray-200 pt-3'>
+                    <h2 className='text-2xl text-gray-500 font-semibold mb-2'>
+                        Puntuación
+                    </h2>
                     <StarRatingInput
                         label='Claridad'
                         name='clarity'
@@ -64,6 +69,11 @@ export function CreateReviewForm({
                         errors={errors}
                     />
                 </div>
+                <button
+                    className='bg-green-600 text-white font-semibold py-2 rounded-md'
+                >
+                    Publicar
+                </button>
             </form>
         </div>
     )
