@@ -15,19 +15,20 @@ const { API_URL } = config;
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 
 export default function Home() {
-  const { data: bestTeacherData, loading: bestTeacherLoading, error: bestTeacherError, authFetch: bestTeacherFetch } = useAuthFetch();
-  const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useAuthFetch();
+  const { data: bestTeacherData, loading: bestTeacherLoading, error: bestTeacherError, authFetch: bestTeacherFetch } = useAuthFetch(null, `${API_URL}/teachers/best`);
+  const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useAuthFetch(null, `${API_URL}/resources/best`);
   const [bestTeachers, setBestTeachers] = useState<Teacher[]>([]);
   const [bestResources, setBestResources] = useState<Resource[]>([]);
 
-  useEffect(() => {
-    bestTeacherFetch(`${API_URL}/teachers/best`, {
-      method: 'GET'
-    })
-    bestResourceFetch(`${API_URL}/resources/best`, {
-      method: 'GET'
-    })
-  }, []);
+  // useEffect(() => {
+  //   bestTeacherFetch(`${API_URL}/teachers/best`, {
+  //     method: 'GET'
+  //   })
+  //   bestResourceFetch(`${API_URL}/resources/best`, {
+  //     method: 'GET'
+  //   })
+  //   console.log("bestTeacherData")
+  // }, []);
   useEffect(() => {
     if (bestTeacherData) {
       setBestTeachers(bestTeacherData as Teacher[]);
@@ -38,7 +39,6 @@ export default function Home() {
       setBestResources(bestResourceData as Resource[]);
     }
   }, [bestResourceData]);
-
   return (
     <>
       <Head>

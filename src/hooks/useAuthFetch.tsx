@@ -1,8 +1,8 @@
 import { setUser } from '@/features/userSlice';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 //Props
-export const useAuthFetch = <T,>(initialData: any = null) => {
+export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?: any) => {
     const dispatch = useDispatch();
     const { token } = useSelector((state: any) => state.user);
     const [data, setData] = useState<T>(initialData);
@@ -12,6 +12,7 @@ export const useAuthFetch = <T,>(initialData: any = null) => {
         setLoading(true);
         try {
             if(!token) {
+                console.log("no token")
                 setData(initialData);
                 setLoading(false);
             }else{
@@ -40,6 +41,13 @@ export const useAuthFetch = <T,>(initialData: any = null) => {
             setLoading(false);
         }
     }, [token]);
+
+    useEffect(() => {
+        if (token && url) {
+            authFetch(url, options);
+        }
+    }, [token]);
+    
     
     return { data, loading, error, authFetch };
     
