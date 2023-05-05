@@ -1,3 +1,4 @@
+import { useNavigationPath } from '@/hooks/useNavigationPath'
 import { useUser } from '@/hooks/useUser'
 import React from 'react'
 //Props
@@ -7,6 +8,7 @@ type LayoutProps = {
 
 export const Layout = ({children}: LayoutProps) => {
     useUser();
+    useNavigationPath();
     return (
         <>
             {children}

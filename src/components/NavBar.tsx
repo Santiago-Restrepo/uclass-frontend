@@ -5,16 +5,19 @@ import React, {useMemo, useCallback} from 'react'
 import {FiHome, FiUser, FiLogOut} from 'react-icons/fi'
 import {GoSettings} from 'react-icons/go'
 //Redux
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/features/userSlice'
 //Constants
 import {colors} from '../styles/colors'
+//Hooks
+import { RootState } from '../app/store';
 interface iconProps {
     color: string
 }
 export const NavBar = () => {
     const router = useRouter();
     const dispatch = useDispatch();
+    const {navigation} = useSelector((state: RootState) => state.navigation);
     const logout = useCallback(() => {
         dispatch(setUser({token: '', name: ''}))
         if (window) {
@@ -74,14 +77,20 @@ export const NavBar = () => {
                     })
                 }
             </div>
-            <div className='w-full mt-2'>
+            <div className='w-full mt-2 pl-5'>
                 <div className='w-full flex justify-start'>
-                    <Link
-                        href={router.query.previus as string || '/'}
-                        className='flex items-center gap-2 bg-gray-400 text-gray-100 p-1 rounded-sm text-sm font-medium'
-                    >
-                        <span>Atrás</span>
-                    </Link>
+                    {
+                        navigation.map((item, index) => {
+                            return (
+                                <Link
+                                    href={item}
+                                    className='flex items-center gap-2 text-gray-400 hover:text-gray-500'
+                                >
+                                    <span>{item}</span>
+                                </Link>
+                            )
+                        })
+                    }
                 
 
                 </div>
