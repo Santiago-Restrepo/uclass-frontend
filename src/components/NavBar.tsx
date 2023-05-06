@@ -19,7 +19,7 @@ export const NavBar = () => {
     const dispatch = useDispatch();
     const {navigation} = useSelector((state: RootState) => state.navigation);
     const logout = useCallback(() => {
-        dispatch(setUser({token: '', name: ''}))
+        dispatch(setUser({token: '', name: '', id: ''}))
         if (window) {
             window.localStorage.removeItem('token')
         }
@@ -85,6 +85,7 @@ export const NavBar = () => {
                                 <Link
                                     href={item}
                                     className='flex items-center gap-2 text-gray-400 hover:text-gray-500'
+                                    key={`path ${index}`}
                                 >
                                     <span>{item}</span>
                                 </Link>

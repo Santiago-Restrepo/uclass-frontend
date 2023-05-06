@@ -22,16 +22,6 @@ export default function Home() {
   const [bestTeachers, setBestTeachers] = useState<Teacher[]>([]);
   const [bestResources, setBestResources] = useState<Resource[]>([]);
   useNavigationPath([]);
-
-  // useEffect(() => {
-  //   bestTeacherFetch(`${API_URL}/teachers/best`, {
-  //     method: 'GET'
-  //   })
-  //   bestResourceFetch(`${API_URL}/resources/best`, {
-  //     method: 'GET'
-  //   })
-  //   console.log("bestTeacherData")
-  // }, []);
   useEffect(() => {
     if (bestTeacherData) {
       setBestTeachers(bestTeacherData as Teacher[]);

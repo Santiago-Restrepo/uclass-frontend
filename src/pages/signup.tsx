@@ -14,7 +14,6 @@ import { signup } from '@/services/authService'
 //Toast
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { setUser } from '@/features/userSlice'
 export default function Signup() {
     const dispatch = useDispatch();
     const router = useRouter();

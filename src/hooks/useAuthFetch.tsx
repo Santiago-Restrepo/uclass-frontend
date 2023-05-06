@@ -30,11 +30,13 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
                     console.log("logout")
                     dispatch(setUser({
                         name: '',
-                        token: ''
+                        token: '',
+                        id: ''
                     }));
                 }
                 setData(data);
                 setLoading(false);
+                return data;
             }
         } catch (error: any) {
             setError(error);

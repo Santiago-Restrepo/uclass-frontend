@@ -1,8 +1,8 @@
-import { useAuthFetch } from "@/hooks/useAuthFetch"
-import { BestCard } from "./BestCard"
 //Types
 import { Teacher } from "@/types/teacher"
 import { Resource } from "@/types/resource"
+//Components
+import { BestCard } from "./BestCard"
 //Props
 interface BestProps {
     teacher: Teacher;

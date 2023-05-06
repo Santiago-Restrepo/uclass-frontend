@@ -1,24 +1,30 @@
-import { setUser } from '@/features/userSlice';
+//hooks
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import {RootState} from '../app/store';
+import { useAuthFetch } from './useAuthFetch';
+//Redux
+import {RootState} from '@/app/store';
+import { setUser } from '@/features/userSlice';
+//Others
+import { config } from '@/config';
+import { User, UserState } from '@/types/user';
+const { API_URL } = config;
 export const useUser = () => {
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
+    const {data: userResponse, authFetch} = useAuthFetch<UserState>();
     const dispatch = useDispatch();
     const logout = useCallback(() => {
-        dispatch(setUser({token: '', name: ''}))
+        dispatch(setUser({token: '', name: '', id: ''}))
         if (window) {
             window.localStorage.removeItem('token')
         }
     }, [])
-    useEffect(() => {
+    useEffect(() => {//Effect to check if user is logged in and if not redirect to login page
         const token = localStorage.getItem('token') || user.token;
         if (token) {
             //Set token in redux
-
-            dispatch(setUser({...user, token}))
             if (window) {
                 window.localStorage.setItem('token', token)
             }
@@ -33,7 +39,30 @@ export const useUser = () => {
         return () => {
             // cleanup
         }
+    }, [user.token, router.pathname]);
+    useEffect(() => {//Effect to get user data from token
+        const token = localStorage.getItem('token') || user.token;
+        if(token){
+            if(userResponse){
+                dispatch(setUser({
+                    name: userResponse.name,
+                    id: userResponse.id,
+                    email: userResponse.email,
+                    token
+                }))
+            }else{
+                authFetch(`${API_URL}/users/logged`, {
+                    method: 'GET',
+                })
+                dispatch(setUser({
+                    token
+                }))
+            }
+        }
+        return () => {
+            // cleanup
+        }
+    }, [user.token, userResponse])
 
-    }, [user.token, router.pathname])
     return { ...user, logout }
 }

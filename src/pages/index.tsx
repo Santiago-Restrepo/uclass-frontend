@@ -1,7 +1,7 @@
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //Components
 import { Screen } from '@/components/Screen'
@@ -102,8 +102,7 @@ export default function Login() {
             <button onClick={googleLogin} className='flex items-center justify-center mt-5 p-2 w-fit border-2 border-gray-400 border-solid text-gray-500 font-bold rounded-md'>
                 <Image src='/google.svg' width={20} height={20} alt="Logo Google" className='mr-3'/>
                 Iniciar sesión con Google
-            </button>    
-            <ToastContainer />
+            </button>
         </Screen>
     )
 }

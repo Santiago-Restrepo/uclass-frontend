@@ -1,6 +1,8 @@
 export interface UserState {
     token: string;
-    name: string;
+    name?: string;
+    id?: string;
+    email?: string;
 }
 
 export interface User {

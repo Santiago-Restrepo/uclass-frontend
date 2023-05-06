@@ -26,7 +26,6 @@ export default function Subject() {
         return resources?.length;
     }, [resources])
     useNavigationPath(['/home', '/subject']);
-
     useEffect(() => {
         if(!id) return;
         subjectAuthFetch(`${API_URL}/subjects/${id}`, {

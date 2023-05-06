@@ -1,19 +1,17 @@
 import React from 'react'
+import { useFormContext } from 'react-hook-form'
 //props
 interface SelectProps {
     label: string,
     name: string,
-    options: any[],
-    register: any,
-    errors: any
+    options: any[]
 }
 export function Select({
     label,
     name,
-    options,
-    register,
-    errors
+    options
 }: SelectProps) {
+    const { register, formState:{errors} } = useFormContext();
     return (
         <div className='flex flex-col gap-2 mb-2'>
             <label className='text-gray-500 font-semibold' htmlFor={name}>{label}</label>
@@ -29,7 +27,11 @@ export function Select({
             </select>
             {
                 errors[name] && (
-                    <span className='text-red-500 text-sm font-semibold'>{errors[name].message}</span>
+                    <span className='text-red-500 text-sm font-semibold'>
+                        {
+                            JSON.stringify(errors[name])
+                        }
+                    </span>
                 )
             }
         </div>

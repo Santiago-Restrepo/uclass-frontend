@@ -3,7 +3,10 @@ import { useAuthFetch } from '@/hooks/useAuthFetch'
 //components
 import { Screen } from '@/components/Screen';
 import { NavBar } from '@/components/NavBar';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 export default function Profile() {
+    const user = useSelector((state: RootState) => state.user);
     return (
         <>
         <Head>
@@ -14,7 +17,9 @@ export default function Profile() {
         </Head>
         <Screen>
             <NavBar />
-            Profile
+            {
+                JSON.stringify(user)
+            }
         </Screen>
         </>
     )
