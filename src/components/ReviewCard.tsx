@@ -29,7 +29,7 @@ export const ReviewCard = ({
                     className='relative w-16 h-16 rounded-full overflow-hidden'
                 >
                     <Image
-                        src={review.user?.photo || '/user.png'}
+                        src={typeof review.user === 'string' ? review.user : review.user.photo || '/user.png'}
                         alt="Picture of the author"
                         fill={true}
                         sizes='100%'
@@ -37,7 +37,11 @@ export const ReviewCard = ({
                     />
                 </div>
                 <div className='flex flex-col justify-center items-start ml-3 w-1/2'>
-                    <h2 className='text-md font-medium text-gray-800'>{review.user?.name}</h2>
+                    <h2 className='text-md font-medium text-gray-800'>
+                        {
+                            typeof review.user === 'string' ? review.user : review.user.name
+                        }
+                    </h2>
                     <div className="flex">
                         {
                             Array(5).fill(0).map((_, index) => {
