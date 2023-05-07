@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
 //Hooks
-import { useMemo } from 'react';
 //Types
 import { Resource } from '@/types/resource';
 //Props
@@ -10,7 +9,6 @@ interface ResourceProps {
 }
 //Icons
 import {AiFillStar, AiOutlineStar} from 'react-icons/ai';
-import {BiCommentDetail} from 'react-icons/bi';
 export const ResourceCard = ({
     resource,
 }: ResourceProps) => {

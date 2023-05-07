@@ -4,8 +4,8 @@ import { RootState } from '@/app/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 import { Searcher } from '@/components/Searcher';
 //Others
 import { config } from '@/config';

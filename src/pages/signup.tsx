@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useDispatch } from 'react-redux'
 //Components
-import { Screen } from '@/components/Screen'
+import { Screen } from '@/components/layout/Screen'
 //React hook form
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';

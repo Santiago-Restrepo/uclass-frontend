@@ -8,8 +8,8 @@ import { useSelector } from 'react-redux';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 import { Searcher } from '@/components/Searcher';
 //Others
 import { config } from '@/config';

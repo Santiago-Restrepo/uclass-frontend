@@ -5,8 +5,8 @@ import { useEffect, useMemo } from 'react';
 import { useAuthFetch } from '@/hooks/useAuthFetch';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 import { ResourceCard } from '@/components/ResourceCard';
 //Others
 import { config } from '@/config';

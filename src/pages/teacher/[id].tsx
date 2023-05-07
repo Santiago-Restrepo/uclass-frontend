@@ -10,8 +10,8 @@ import { Teacher as TeacherType } from '@/types/teacher';
 import { Review } from '@/types/review';
 import { Subject } from '@/types/subject';
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 import { ReviewCardList } from '@/components/ReviewCardList';
 import { CreateReviewForm } from '@/components/CreateReviewForm';
 //Others

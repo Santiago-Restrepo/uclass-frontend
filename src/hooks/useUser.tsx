@@ -8,12 +8,12 @@ import {RootState} from '@/app/store';
 import { setUser } from '@/features/userSlice';
 //Others
 import { config } from '@/config';
-import { User, UserState } from '@/types/user';
+import { User } from '@/types/user';
 const { API_URL } = config;
 export const useUser = () => {
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
-    const {data: userResponse, authFetch} = useAuthFetch<UserState>();
+    const {data: userResponse, authFetch} = useAuthFetch<User>();
     const dispatch = useDispatch();
     const logout = useCallback(() => {
         dispatch(setUser({token: '', name: '', id: ''}))
@@ -48,7 +48,8 @@ export const useUser = () => {
                     name: userResponse.name,
                     id: userResponse.id,
                     email: userResponse.email,
-                    token
+                    token,
+                    roles: userResponse.roles
                 }))
             }else{
                 authFetch(`${API_URL}/users/logged`, {
@@ -63,6 +64,9 @@ export const useUser = () => {
             // cleanup
         }
     }, [user.token, userResponse])
+    // useEffect(()=>{
+    //     console.log("user", user)
+    // },[user])
 
     return { ...user, logout }
 }

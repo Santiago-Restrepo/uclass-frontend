@@ -25,15 +25,6 @@ export function Select({
                     ))
                 }
             </select>
-            {
-                errors[name] && (
-                    <span className='text-red-500 text-sm font-semibold'>
-                        {
-                            JSON.stringify(errors[name])
-                        }
-                    </span>
-                )
-            }
         </div>
     )
 }

@@ -4,8 +4,8 @@ import { useAuthFetch } from '@/hooks/useAuthFetch'
 import { useEffect, useState } from 'react';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 import { Searchers } from '@/components/Searchers';
 import { Best } from '@/components/Best';
 import { config } from '@/config';

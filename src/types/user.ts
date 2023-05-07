@@ -1,14 +1,8 @@
-export interface UserState {
+export interface User {
     token: string;
     name?: string;
     id?: string;
     email?: string;
-}
-
-export interface User {
-    id: number;
-    name: string;
-    email: string;
-    token: string;
+    roles?: string[];
     photo?: string;
 }

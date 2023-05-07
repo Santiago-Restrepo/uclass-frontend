@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 //Components
-import { Screen } from '@/components/Screen'
+import { Screen } from '@/components/layout/Screen'
 //Redux
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/features/userSlice'

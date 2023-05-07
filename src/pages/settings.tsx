@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { useAuthFetch } from '@/hooks/useAuthFetch'
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
 export default function Settings() {
     return (
         <>

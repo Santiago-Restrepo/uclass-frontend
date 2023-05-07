@@ -8,9 +8,9 @@ import {GoSettings} from 'react-icons/go'
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/features/userSlice'
 //Constants
-import {colors} from '../styles/colors'
+import {colors} from '../../styles/colors'
 //Hooks
-import { RootState } from '../app/store';
+import { RootState } from '../../app/store';
 interface iconProps {
     color: string
 }

@@ -60,7 +60,9 @@ export function CreateReviewForm({
         toast.promise(createReview(review), {
             pending: 'Creando reseña...',
             success: 'Reseña creada exitosamente, pronto será revisada por un administrador',
-            error: 'Error al crear la reseña'
+            error: 'Error al crear la reseña',
+        }).then(response =>{
+            methods.reset();
         })
     }
     function onError(errors: any) {

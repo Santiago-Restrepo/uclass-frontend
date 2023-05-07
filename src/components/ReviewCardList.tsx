@@ -25,7 +25,7 @@ export function ReviewCardList({
                 }
                 {
                     reviews.map((review, index) => (
-                        <ReviewCard key={index} review={review} />
+                        <ReviewCard key={index} review={review} comment={true}/>
                     ))
                 }
             </div>

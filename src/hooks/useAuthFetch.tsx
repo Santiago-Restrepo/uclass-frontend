@@ -8,6 +8,12 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
     const [data, setData] = useState<T>(initialData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const logout = useCallback(() => {
+        dispatch(setUser({token: '', name: '', id: ''}))
+        if (window) {
+            window.localStorage.removeItem('token')
+        }
+    }, [])
     const authFetch = useCallback(async (url:any, options:any) => {
         setLoading(true);
         try {
@@ -15,6 +21,7 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
                 console.log("no token")
                 setData(initialData);
                 setLoading(false);
+                logout();
             }else{
                 const res = await fetch(url, {
                     ...options,
@@ -26,13 +33,8 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
                 });
                 const data = await res.json();
                 if(data.message === "jwt expired"){
-                    // logout();
+                    logout();
                     console.log("logout")
-                    dispatch(setUser({
-                        name: '',
-                        token: '',
-                        id: ''
-                    }));
                 }
                 setData(data);
                 setLoading(false);
@@ -44,7 +46,7 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
         }
     }, [token]);
 
-    useEffect(() => {
+    useEffect(() => {//Make fetch at the beginning if token and url are provided
         if (token && url) {
             authFetch(url, options);
         }

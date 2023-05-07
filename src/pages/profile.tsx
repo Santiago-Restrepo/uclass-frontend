@@ -1,12 +1,15 @@
 import Head from 'next/head'
-import { useAuthFetch } from '@/hooks/useAuthFetch'
 //components
-import { Screen } from '@/components/Screen';
-import { NavBar } from '@/components/NavBar';
+import { Screen } from '@/components/layout/Screen';
+import { NavBar } from '@/components/layout/NavBar';
+import { ProfileCard } from '@/components/profile/ProfileCard';
+//hooks
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 export default function Profile() {
     const user = useSelector((state: RootState) => state.user);
+    useNavigationPath(['']);
     return (
         <>
         <Head>
@@ -17,9 +20,7 @@ export default function Profile() {
         </Head>
         <Screen>
             <NavBar />
-            {
-                JSON.stringify(user)
-            }
+            <ProfileCard user={user}/>
         </Screen>
         </>
     )
