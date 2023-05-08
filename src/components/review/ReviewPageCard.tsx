@@ -17,7 +17,7 @@ export function ReviewPageCard({
         return ratingAverage;
     }, [review.rating]);
     return (
-        <div>
+        <div className='w-full mt-3'>
             <div className='flex gap-2 mb-2'>
                 <div className="relative w-20 h-20 rounded-full overflow-hidden">
                     <Image
@@ -27,7 +27,7 @@ export function ReviewPageCard({
                         sizes='100%'
                     />
                 </div>
-                <div className='flex flex-col justify-center items-start'>
+                <div className='flex flex-col items-start'>
                     <h2 className='text-md font-medium text-gray-800'>
                         {
                             typeof user === 'string' ? user : user.name
@@ -64,9 +64,9 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.clarity){
-                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
                                 }
                             })
                         }
@@ -78,9 +78,9 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.demanding){
-                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
                                 }
                             })
                         }
@@ -92,9 +92,9 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.fairness){
-                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
                                 }
                             })
                         }
