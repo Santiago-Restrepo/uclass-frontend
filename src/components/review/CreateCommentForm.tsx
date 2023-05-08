@@ -7,7 +7,8 @@ import { Comment } from '@/types/comment';
 //props
 interface CreateCommentFormProps {
     reviewId?: string
-    resourceId?: string
+    resourceId?: string,
+    refreshComments: () => Promise<void>
 }
 interface CreateCommentFormValues {
     content: string,
@@ -23,7 +24,8 @@ import { createCommentSchema } from '@/schemas/commentSchemas';
 
 export function CreateCommentForm({
     reviewId,
-    resourceId
+    resourceId,
+    refreshComments
 }: CreateCommentFormProps) {
     const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch} = useApi();
@@ -51,6 +53,7 @@ export function CreateCommentForm({
             error: 'Error al crear el comentario',
         }).then(response =>{
             methods.reset();
+            refreshComments();
         })
     }
     function onError(errors: any) {

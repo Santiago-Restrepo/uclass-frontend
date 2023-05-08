@@ -4,10 +4,19 @@ export interface Resource {
     _id: number;
     name: string;
     description: string;
-    subject: number | Subject;
-    user: number | User;
+    subject: string | Subject;
+    user: string | User;
     resourceUrl: string;
     imgUrl: string;
     rating: number;
     ratingCount: number;
+}
+
+export interface ResourceInput {
+    name: string;
+    description: string;
+    subject: string | Subject;
+    user: string | User;
+    resourceUrl: string;
+    imgUrl?: string;
 }

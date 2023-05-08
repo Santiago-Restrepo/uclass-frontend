@@ -71,7 +71,7 @@ export function ReviewPageCard({
                             })
                         }
                     </div>
-                    <p className='text-sm text-yellow-500 opacity-90'>Claridad</p>
+                    <p className='text-sm text-gray-500 opacity-90'>Claridad</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
@@ -85,7 +85,7 @@ export function ReviewPageCard({
                             })
                         }
                     </div>
-                    <p className='text-sm text-yellow-500 opacity-90'>Exigencia</p>
+                    <p className='text-sm text-gray-500 opacity-90'>Exigencia</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
@@ -99,7 +99,7 @@ export function ReviewPageCard({
                             })
                         }
                     </div>
-                    <p className='text-sm text-yellow-500 opacity-90'>Justicia</p>
+                    <p className='text-sm text-gray-500 opacity-90'>Justicia</p>
                 </div>
             </div>
         </div>

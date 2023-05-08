@@ -13,7 +13,7 @@ import { Subject } from '@/types/subject';
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ReviewCardList } from '@/components/ReviewCardList';
-import { CreateReviewForm } from '@/components/CreateReviewForm';
+import { CreateReviewForm } from '@/components/teacher/CreateReviewForm';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 export default function Teacher() {

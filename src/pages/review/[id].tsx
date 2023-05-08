@@ -12,11 +12,13 @@ import { Review } from '@/types/review';
 import { Comment } from '@/types/comment';
 //Hooks
 import { useApi } from '@/hooks/useApi';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 function Review() {
     const router = useRouter()
     const { id } = router.query
     const { data: review } = useApi<Review>(null, `/reviews/${id}`)
-    const { data: comments } = useApi<Comment[]>([], `/comments/review/${id}`)
+    const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>([], `/comments/review/${id}`)
+    useNavigationPath(['/home', `/teacher/${review ? review.teacherId: ''}`])
     return (
         <>
             <Head>
@@ -31,8 +33,8 @@ function Review() {
                     review && (
                         <>
                             <ReviewPageCard review={review}/>
-                            <CreateCommentForm reviewId={review._id}/>
-                            <CommentList comments={comments}/>
+                            <CreateCommentForm reviewId={review._id} refreshComments={()=>refreshComments(`/comments/review/${id}`,{})}/>
+                            <CommentList comments={comments} loading={commentsLoading}/>
                         </>
                     )
                 }

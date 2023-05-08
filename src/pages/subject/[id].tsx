@@ -1,13 +1,14 @@
 import Head from 'next/head'
 //Hooks
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { ResourceCard } from '@/components/ResourceCard';
+import { CreateResourceForm } from '@/components/subject/CreateResourceForm';
+import { ResourceCardList } from '@/components/subject/ResourceCardList';
 //Types
 import { Subject as SubjectType } from '@/types/subject';
 import {Resource} from '@/types/resource';
@@ -19,6 +20,7 @@ export default function Subject() {
     const { id } = router.query
     const {data: subject, error: subjectError, loading: subjectLoading, authFetch: subjectAuthFetch} = useApi<SubjectType>(null);
     const {data: resources, error: resourcesError, loading: resourcesLoading, authFetch: resourcesAuthFetch} = useApi<Resource[]>([]);
+    const [createMode, setCreateMode] = useState(false);
     const resourcesCount = useMemo(() => {
         return resources?.length;
     }, [resources])
@@ -77,32 +79,22 @@ export default function Subject() {
                                         <p className='text-md text-gray-700 ml-2'>{resourcesCount} recursos</p>
                                     </div>
                                     <button
-                                        className='px-2 py-2 text-sm font-semibold text-white bg-green-600 rounded-md sm:px-5'
+                                        className={`px-2 py-2 text-sm font-semibold text-white rounded-md sm:px-5 sm:py-3 ${createMode ? 'bg-gray-500' : 'bg-green-600'} hover:bg-opacity-90 transition-all duration-300`}
+                                        onClick={() => setCreateMode(!createMode)}
                                     >
-                                        Subir recurso
+                                        {
+                                            createMode ? 'Cancelar' : 'Crear recurso'
+                                        }
                                     </button>
                                 </div>
                             </div>
                         )
                     }
                     {
-                        resources && (
-                            <div className='flex flex-wrap justify-center gap-5 mt-5 w-full'>
-                                {
-                                    resources.length === 0 && (
-                                        <div className='flex justify-center items-center'>
-                                            <h1 className='text-xl font-semibold text-gray-500'>
-                                                No hay recursos
-                                            </h1>
-                                        </div>
-                                    )
-                                }
-                                {
-                                    resources.map(resource => (
-                                        <ResourceCard key={resource._id} resource={resource} />
-                                    ))
-                                }
-                            </div>
+                        createMode ? (
+                            <CreateResourceForm subjectId={id as string}/>
+                        ) : (
+                            <ResourceCardList resources={resources} />
                         )
                     }
                 </div>
