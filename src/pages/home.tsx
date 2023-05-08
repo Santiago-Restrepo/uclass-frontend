@@ -1,6 +1,6 @@
 import Head from 'next/head'
 //Hooks
-import { useAuthFetch } from '@/hooks/useAuthFetch'
+import { useApi } from '@/hooks/useApi'
 import { useEffect, useState } from 'react';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
@@ -8,17 +8,15 @@ import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { Searchers } from '@/components/Searchers';
 import { Best } from '@/components/Best';
-import { config } from '@/config';
 //Types
 import { Teacher } from '@/types/teacher';
 import { Resource } from '@/types/resource';
-const { API_URL } = config;
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 
 export default function Home() {
-  const { data: bestTeacherData, loading: bestTeacherLoading, error: bestTeacherError, authFetch: bestTeacherFetch } = useAuthFetch(null, `${API_URL}/teachers/best`);
-  const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useAuthFetch(null, `${API_URL}/resources/best`);
+  const { data: bestTeacherData, loading: bestTeacherLoading, error: bestTeacherError, authFetch: bestTeacherFetch } = useApi(null, `/teachers/best`);
+  const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useApi(null, `/resources/best`);
   const [bestTeachers, setBestTeachers] = useState<Teacher[]>([]);
   const [bestResources, setBestResources] = useState<Resource[]>([]);
   useNavigationPath([]);

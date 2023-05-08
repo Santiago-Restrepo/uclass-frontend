@@ -7,13 +7,10 @@ import Link from 'next/link';
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { Searcher } from '@/components/Searcher';
-//Others
-import { config } from '@/config';
 //Hooks
-import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
-const { API_URL } = config;
 import { Subject } from '@/types/subject';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
@@ -24,10 +21,10 @@ export default function Subjects() {
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');
-    const {data, error, loading, authFetch} = useAuthFetch<Subject[]>([]);
+    const {data, error, loading, authFetch} = useApi<Subject[]>([]);
     useNavigationPath(['/home' ]);
     useEffect(() => {
-            authFetch(`${API_URL}/subjects/populated`, {
+            authFetch(`/subjects/populated`, {
                 method: 'GET',
             });
     }, [token])

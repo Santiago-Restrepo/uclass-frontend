@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import { useAuthFetch } from '@/hooks/useAuthFetch'
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';

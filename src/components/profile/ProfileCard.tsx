@@ -5,7 +5,7 @@ import { User } from '@/types/user'
 import { Review } from '@/types/review'
 import { Resource } from '@/types/resource'
 //Hooks
-import { useAuthFetch } from '@/hooks/useAuthFetch'
+import { useApi } from '@/hooks/useApi'
 import { useDispatch } from 'react-redux'
 //Components
 import { ProfileReviewCardList } from '@/components/profile/ProfileReviewCardList'
@@ -16,7 +16,6 @@ import { setUser } from '@/features/userSlice'
 import {AiOutlineLoading} from 'react-icons/ai';
 //Config
 import { config } from '@/config';
-const { API_URL } = config;
 //Props
 interface ProfileCardProps {
     user: User
@@ -24,8 +23,8 @@ interface ProfileCardProps {
 export function ProfileCard({
     user
 }: ProfileCardProps) {
-    const { data: reviews, loading: reviewsLoading } = useAuthFetch<Review[]>([], `${API_URL}/reviews/user/${user.id}`);
-    const { data: resources, loading: resourcesLoading } = useAuthFetch<Resource[]>([], `${API_URL}/resources/user/${user.id}`);
+    const { data: reviews, loading: reviewsLoading } = useApi<Review[]>([], `/reviews/user/${user.id}`);
+    const { data: resources, loading: resourcesLoading } = useApi<Resource[]>([], `/resources/user/${user.id}`);
     const dispatch = useDispatch();
     const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
     const [pendingReviews, setPendingReviews] = useState<Review[]>([])

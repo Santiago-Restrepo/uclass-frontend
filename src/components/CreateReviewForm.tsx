@@ -24,26 +24,23 @@ interface CreateReviewFormValues {
 //Hooks
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useApi } from '@/hooks/useApi';
 //React Hook Form
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { createReviewSchema } from '@/schemas/reviewSchemas';
-//Others
-import { config } from '@/config';
-const {API_URL} = config;
 
 export function CreateReviewForm({
     subjects,
     teacherId
 }: CreateReviewFormProps) {
     const {id: userId} = useSelector((state: RootState) => state.user)
-    const {authFetch} = useAuthFetch();
+    const {authFetch} = useApi();
     const methods = useForm({
         resolver: yupResolver(createReviewSchema)
     });
     async function createReview (review: Review) {
-        const response = await authFetch(`${API_URL}/reviews`, {
+        const response = await authFetch(`/reviews`, {
             method: 'POST',
             body: JSON.stringify(review)
         })

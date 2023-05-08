@@ -2,18 +2,16 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { useAuthFetch } from './useAuthFetch';
+import { useApi } from './useApi';
 //Redux
 import {RootState} from '@/app/store';
 import { setUser } from '@/features/userSlice';
 //Others
-import { config } from '@/config';
 import { User } from '@/types/user';
-const { API_URL } = config;
 export const useUser = () => {
     const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
-    const {data: userResponse, authFetch} = useAuthFetch<User>();
+    const {data: userResponse, authFetch} = useApi<User>();
     const dispatch = useDispatch();
     const logout = useCallback(() => {
         dispatch(setUser({token: '', name: '', id: ''}))
@@ -52,7 +50,7 @@ export const useUser = () => {
                     roles: userResponse.roles
                 }))
             }else{
-                authFetch(`${API_URL}/users/logged`, {
+                authFetch(`/users/logged`, {
                     method: 'GET',
                 })
                 dispatch(setUser({

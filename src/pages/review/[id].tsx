@@ -4,10 +4,15 @@ import Head from 'next/head'
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-
+import { ReviewPageCard } from '@/components/review/ReviewPageCard';
+//types
+import { Review } from '@/types/review';
+//Hooks
+import { useApi } from '@/hooks/useApi';
 function Review() {
     const router = useRouter()
     const { id } = router.query
+    const { data: review } = useApi<Review>(null, `/api/reviews/${id}`)
     return (
         <>
             <Head>
@@ -18,7 +23,11 @@ function Review() {
             </Head>
             <Screen>
                 <NavBar />
-                <h1>Review: {id}</h1>
+                {
+                    review && (
+                        <ReviewPageCard review={review}/>
+                    )
+                }
             </Screen>
         </>
     )

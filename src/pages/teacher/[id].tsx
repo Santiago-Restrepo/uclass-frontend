@@ -3,7 +3,7 @@ import Image from 'next/image';
 //Hooks
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
@@ -14,9 +14,6 @@ import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ReviewCardList } from '@/components/ReviewCardList';
 import { CreateReviewForm } from '@/components/CreateReviewForm';
-//Others
-import { config } from '@/config';
-const { API_URL } = config;
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 export default function Teacher() {
@@ -24,20 +21,20 @@ export default function Teacher() {
     const [createMode, setCreateMode] = useState(false);
     useNavigationPath(['/home', '/teacher' ]);
     //Call authFetch hook with a generic type
-    const {data: teacher, error: teacherError, loading: teacherLoading, authFetch: teacherAuthFetch} = useAuthFetch<TeacherType>(null);
-    const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useAuthFetch<Review[]>([]);
-    const {data: subjects, error: subjectsError, loading: subjectsLoading, authFetch: subjectsAuthFetch} = useAuthFetch<Subject[]>([]);
+    const {data: teacher, error: teacherError, loading: teacherLoading, authFetch: teacherAuthFetch} = useApi<TeacherType>(null);
+    const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useApi<Review[]>([]);
+    const {data: subjects, error: subjectsError, loading: subjectsLoading, authFetch: subjectsAuthFetch} = useApi<Subject[]>([]);
     
     const { id } = router.query
     useEffect(() => {
         if(!id) return;
-        teacherAuthFetch(`${API_URL}/teachers/${id}`, {
+        teacherAuthFetch(`/teachers/${id}`, {
             method: 'GET',
         });
-        reviewsAuthFetch(`${API_URL}/reviews/teacher/${id}`, {
+        reviewsAuthFetch(`/reviews/teacher/${id}`, {
             method: 'GET',
         });
-        subjectsAuthFetch(`${API_URL}/subjects/teacher/${id}`, {
+        subjectsAuthFetch(`/subjects/teacher/${id}`, {
             method: 'GET',
         });
     }, [id])

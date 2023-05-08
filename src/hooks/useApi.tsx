@@ -1,8 +1,10 @@
 import { setUser } from '@/features/userSlice';
 import { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//Props
-export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?: any) => {
+//config
+import { config } from '@/config/index';
+const { API_URL } = config;
+export const useApi = <T,>(initialData: any = null, path?: string, options?: any) => {
     const dispatch = useDispatch();
     const { token } = useSelector((state: any) => state.user);
     const [data, setData] = useState<T>(initialData);
@@ -14,7 +16,7 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
             window.localStorage.removeItem('token')
         }
     }, [])
-    const authFetch = useCallback(async (url:any, options:any) => {
+    const authFetch = useCallback(async (path:any, options:any) => {
         setLoading(true);
         try {
             if(!token) {
@@ -23,7 +25,7 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
                 setLoading(false);
                 logout();
             }else{
-                const res = await fetch(url, {
+                const res = await fetch(`${API_URL}${path}`, {
                     ...options,
                     headers: {
                         ...options?.headers,
@@ -47,8 +49,8 @@ export const useAuthFetch = <T,>(initialData: any = null, url?: string, options?
     }, [token]);
 
     useEffect(() => {//Make fetch at the beginning if token and url are provided
-        if (token && url) {
-            authFetch(url, options);
+        if (token && path) {
+            authFetch(path, options);
         }
     }, [token]);
     

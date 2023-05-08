@@ -2,15 +2,12 @@ import Head from 'next/head'
 //Hooks
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
-import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ResourceCard } from '@/components/ResourceCard';
-//Others
-import { config } from '@/config';
-const { API_URL } = config;
 //Types
 import { Subject as SubjectType } from '@/types/subject';
 import {Resource} from '@/types/resource';
@@ -20,18 +17,18 @@ import { IoDocumentText } from 'react-icons/io5';
 export default function Subject() {
     const router = useRouter()
     const { id } = router.query
-    const {data: subject, error: subjectError, loading: subjectLoading, authFetch: subjectAuthFetch} = useAuthFetch<SubjectType>(null);
-    const {data: resources, error: resourcesError, loading: resourcesLoading, authFetch: resourcesAuthFetch} = useAuthFetch<Resource[]>([]);
+    const {data: subject, error: subjectError, loading: subjectLoading, authFetch: subjectAuthFetch} = useApi<SubjectType>(null);
+    const {data: resources, error: resourcesError, loading: resourcesLoading, authFetch: resourcesAuthFetch} = useApi<Resource[]>([]);
     const resourcesCount = useMemo(() => {
         return resources?.length;
     }, [resources])
     useNavigationPath(['/home', '/subject']);
     useEffect(() => {
         if(!id) return;
-        subjectAuthFetch(`${API_URL}/subjects/${id}`, {
+        subjectAuthFetch(`/subjects/${id}`, {
             method: 'GET',
         });
-        resourcesAuthFetch(`${API_URL}/resources/subject/${id}`, {
+        resourcesAuthFetch(`/resources/subject/${id}`, {
             method: 'GET',
         });
     }, [id])

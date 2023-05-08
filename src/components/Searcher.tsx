@@ -8,7 +8,7 @@ import {FaChalkboardTeacher} from 'react-icons/fa';
 import {BsBook} from 'react-icons/bs';
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 //Services
-import { useAuthFetch } from '@/hooks/useAuthFetch';
+import { useApi } from '@/hooks/useApi';
 import { config } from '@/config';
 //Components
 import { ResultsDropdown } from './ResultsDropdown';
@@ -31,7 +31,7 @@ export const Searcher = ({
 }: SearcherProps) => {
     const dispatch = useDispatch();
     const {activeSearcher} = useSelector((state: RootState) => state.searcher);
-    const {authFetch, data, error, loading: fetchLoading} = useAuthFetch();
+    const {authFetch, data, error, loading: fetchLoading} = useApi();
     const [loading, setLoading] = useState<boolean>(fetchLoading);
     //Define iterable data
     const [iterableData, setIterableData] = useState<(Subject | Teacher)[]>([]);
@@ -48,7 +48,7 @@ export const Searcher = ({
         if (query) {
             //TODO: Fetch results
             const delayDebounceFn = setTimeout(() => {
-                authFetch(`${API_URL}/${apiPath}`, {
+                authFetch(`/${apiPath}`, {
                     method: 'POST',
                     body: JSON.stringify({query})
                 })
