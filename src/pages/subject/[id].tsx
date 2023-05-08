@@ -1,7 +1,7 @@
 import Head from 'next/head'
 //Hooks
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useCallback } from 'react';
 import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
@@ -25,6 +25,12 @@ export default function Subject() {
         return resources?.length;
     }, [resources])
     useNavigationPath(['/home', '/subject']);
+    const refreshResources = useCallback(async () => {
+        setCreateMode(false);
+        await resourcesAuthFetch(`/resources/subject/${id}`, {
+            method: 'GET',
+        });
+    }, [id])
     useEffect(() => {
         if(!id) return;
         subjectAuthFetch(`/subjects/${id}`, {
@@ -92,7 +98,7 @@ export default function Subject() {
                     }
                     {
                         createMode ? (
-                            <CreateResourceForm subjectId={id as string}/>
+                            <CreateResourceForm subjectId={id as string} refreshResources={refreshResources}/>
                         ) : (
                             <ResourceCardList resources={resources} />
                         )

@@ -19,6 +19,7 @@ import { toast } from 'react-toastify';
 //Props
 interface CreateResourceFormProps {
     subjectId: string,
+    refreshResources: () => Promise<void>
 }
 interface CreateResourceFormValues {
     name: string,
@@ -26,7 +27,8 @@ interface CreateResourceFormValues {
     resourceUrl: string
 }
 export function CreateResourceForm({
-    subjectId
+    subjectId,
+    refreshResources
 }: CreateResourceFormProps) {
     const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch, error} = useApi();
@@ -53,6 +55,7 @@ export function CreateResourceForm({
             error: 'Error al crear el recurso',
         }).then(response =>{
             methods.reset();
+            refreshResources();
         })
     }
     function onError(errors: any) {
