@@ -51,7 +51,7 @@ export function CreateReviewForm({
         const review: Review = {
             ...data,
             teacherId,
-            subjectId: data.subject,
+            subject: data.subject,
             user: userId,
         }
         toast.promise(createReview(review), {

@@ -5,14 +5,18 @@ import Head from 'next/head'
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ReviewPageCard } from '@/components/review/ReviewPageCard';
+import { CreateCommentForm } from '@/components/review/CreateCommentForm';
+import { CommentList } from '@/components/review/CommentList';
 //types
 import { Review } from '@/types/review';
+import { Comment } from '@/types/comment';
 //Hooks
 import { useApi } from '@/hooks/useApi';
 function Review() {
     const router = useRouter()
     const { id } = router.query
-    const { data: review } = useApi<Review>(null, `/api/reviews/${id}`)
+    const { data: review } = useApi<Review>(null, `/reviews/${id}`)
+    const { data: comments } = useApi<Comment[]>([], `/comments/review/${id}`)
     return (
         <>
             <Head>
@@ -25,7 +29,11 @@ function Review() {
                 <NavBar />
                 {
                     review && (
-                        <ReviewPageCard review={review}/>
+                        <>
+                            <ReviewPageCard review={review}/>
+                            <CreateCommentForm reviewId={review._id}/>
+                            <CommentList comments={comments}/>
+                        </>
                     )
                 }
             </Screen>

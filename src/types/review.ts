@@ -1,9 +1,9 @@
 import { User } from "./user";
-
+import { Subject } from "./subject";
 export interface Review {
     _id?: string;
     content: string;
-    subjectId: string;
+    subject: string | Subject;
     teacherId: string;
     user: User | string;
     rating: {
