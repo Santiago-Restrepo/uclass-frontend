@@ -64,42 +64,42 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.clarity){
-                                    return <AiFillStar key={index} className='text-indigo-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-indigo-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-indigo-500'>Claridad</p>
+                    <p className='text-sm text-gray-500'>Claridad</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.demanding){
-                                    return <AiFillStar key={index} className='text-sky-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-sky-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-sky-500'>Exigencia</p>
+                    <p className='text-sm text-gray-500'>Exigencia</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.fairness){
-                                    return <AiFillStar key={index} className='text-pink-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-pink-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-pink-500'>Justicia</p>
+                    <p className='text-sm text-gray-500'>Justicia</p>
                 </div>
             </div>
         </div>

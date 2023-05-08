@@ -41,7 +41,7 @@ export function CreateCommentForm({
         if(!userId) return toast.error('Debes iniciar sesión para crear una reseña');
         const comment: Comment = {
             ...data,
-            userId,
+            user: userId,
             reviewId,
             resourceId
         }

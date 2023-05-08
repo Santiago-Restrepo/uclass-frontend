@@ -12,7 +12,6 @@ export function CommentList({
 }: CommentListProps) {
     return (
         <div className='flex flex-col gap-4 w-full mt-3'>
-            <h2 className='text-gray-500 font-semibold'>Comentarios</h2>
             <div className='flex flex-col gap-4'>
                 {
                     comments.map(comment => (
