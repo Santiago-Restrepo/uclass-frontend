@@ -27,8 +27,8 @@ export const BestCard = ({
                 <h1 className="text-xl text-center font-semibold text-gray-700 leading-none">{name}</h1>
                 <p className="text-sm text-center text-gray-500 leading-none">{description}</p>
                 <div className="flex items-center justify-center mt-4">
-                    <AiFillStar color={colors.yellow500} size={30}/>
-                    <span className="text-2xl font-semibold text-yellow-500">{rating}</span>
+                    <AiFillStar className='text-green-600' size={30}/>
+                    <span className="text-2xl font-semibold text-green-600">{rating}</span>
                 </div>
             </div>      
         </div>

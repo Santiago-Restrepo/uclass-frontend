@@ -44,9 +44,9 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < ratingAverage){
-                                    return <AiFillStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiFillStar key={index} className='text-green-600' size={20}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
+                                    return <AiOutlineStar key={index} className='text-green-600' size={20}/>
                                 }
                             })
                         }
@@ -64,42 +64,42 @@ export function ReviewPageCard({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.clarity){
-                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiFillStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-gray-500'>Claridad</p>
+                    <p className='text-sm text-yellow-500 opacity-90'>Claridad</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.demanding){
-                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiFillStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-gray-500'>Exigencia</p>
+                    <p className='text-sm text-yellow-500 opacity-90'>Exigencia</p>
                 </div>
                 <div className='flex items-center gap-2'>
                     <div className="flex">
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < rating.fairness){
-                                    return <AiFillStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiFillStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
+                                    return <AiOutlineStar key={index} className='text-yellow-500 opacity-90' size={15}/>
                                 }
                             })
                         }
                     </div>
-                    <p className='text-sm text-gray-500'>Justicia</p>
+                    <p className='text-sm text-yellow-500 opacity-90'>Justicia</p>
                 </div>
             </div>
         </div>

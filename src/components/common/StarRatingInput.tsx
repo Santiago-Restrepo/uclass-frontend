@@ -40,9 +40,9 @@ export function StarRatingInput({
                             >
                                 {
                                     rating >= value ? (
-                                        <AiFillStar className='text-yellow-500' size={25}/>
+                                        <AiFillStar className='text-green-600' size={25}/>
                                     ) : (
-                                        <AiOutlineStar className='text-yellow-500' size={25}/>
+                                        <AiOutlineStar className='text-green-600' size={25}/>
                                     )
                                 }
                             </label>

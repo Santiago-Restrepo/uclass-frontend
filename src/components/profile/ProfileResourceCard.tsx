@@ -24,10 +24,10 @@ export function ProfileResourceCard({
                     {
                         Array(5).fill(0).map((_, index) => {
                             if(index < resource.rating){
-                                return <AiFillStar key={index} className='text-gray-500' size={15}/>
+                                return <AiFillStar key={index} className='text-gray-600' size={15}/>
                             }else{
 
-                                return <AiOutlineStar key={index} className='text-gray-500' size={15}/>
+                                return <AiOutlineStar key={index} className='text-gray-600' size={15}/>
                             }
                         })
                     }

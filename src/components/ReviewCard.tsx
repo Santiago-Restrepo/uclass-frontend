@@ -50,9 +50,9 @@ export const ReviewCard = ({
                         {
                             Array(5).fill(0).map((_, index) => {
                                 if(index < ratingAverage){
-                                    return <AiFillStar key={index} className='text-yellow-500' size={15}/>
+                                    return <AiFillStar key={index} className='text-green-600' size={15}/>
                                 }else{
-                                    return <AiOutlineStar key={index} className='text-yellow-500' size={15}/>
+                                    return <AiOutlineStar key={index} className='text-green-600' size={15}/>
                                 }
                             })
                         }

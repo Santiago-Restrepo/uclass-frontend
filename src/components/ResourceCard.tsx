@@ -40,9 +40,9 @@ export const ResourceCard = ({
                 {
                     Array(5).fill(0).map((_, index) => {
                         if(index < resource.rating){
-                            return <AiFillStar key={index} className='text-yellow-500' size={20}/>
+                            return <AiFillStar key={index} className='text-green-600' size={20}/>
                         }else{
-                            return <AiOutlineStar key={index} className='text-yellow-500' size={20}/>
+                            return <AiOutlineStar key={index} className='text-green-600' size={20}/>
                         }
                     })
                 }
