@@ -26,23 +26,23 @@ export const NavBar = () => {
     }, [])
     const items = useMemo(() => [
         {
-            Icon: ({color}:iconProps) => <FiHome size={30} color={color}/>,
+            Icon: ({color}:iconProps) => <FiHome size={20} color={color}/>,
             label: 'Inicio',
             to: '/home'
         },
 
         {
-            Icon: ({color}:iconProps) => <GoSettings size={30} color={color}/>,
+            Icon: ({color}:iconProps) => <GoSettings size={20} color={color}/>,
             label: 'Ajustes',
             to: '/settings'
         },
         {
-            Icon: ({color}:iconProps) => <FiUser size={30} color={color}/>,
+            Icon: ({color}:iconProps) => <FiUser size={20} color={color}/>,
             label: 'Perfil',
             to: '/profile'
         },
         {
-            Icon: ({color}:iconProps) => <FiLogOut size={30} color={color}/>,
+            Icon: ({color}:iconProps) => <FiLogOut size={20} color={color}/>,
             label: 'Salir',
             onClick: logout
         }
@@ -61,7 +61,7 @@ export const NavBar = () => {
                                     <div className={`rounded-xl p-2`}>
                                         <Icon color={colors.gray500}/>
                                     </div>
-                                    <span className="text-md font-medium text-gray-500">{item.label}</span>
+                                    <span className="text-sm font-medium text-gray-500">{item.label}</span>
                                 </div>
                             </button>
                             :
@@ -70,7 +70,7 @@ export const NavBar = () => {
                                     <div className={`${active ? 'bg-green-500' : 'bg-transparent'} rounded-xl p-2`}>
                                         <Icon color={active ? colors.gray100 : colors.gray500}/>
                                     </div>
-                                    <span className={`text-md font-medium transition-colors ${active ? 'text-green-500' : 'text-gray-500'}`}>{item.label}</span>
+                                    <span className={`text-sm font-medium transition-colors ${active ? 'text-green-500' : 'text-gray-500'}`}>{item.label}</span>
                                 </div>
                             </Link>
                         )

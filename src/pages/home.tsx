@@ -6,7 +6,7 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { Searchers } from '@/components/Searchers';
+import { Searchers } from '@/components/searchers/Searchers';
 import { Best } from '@/components/Best';
 //Types
 import { Teacher } from '@/types/teacher';

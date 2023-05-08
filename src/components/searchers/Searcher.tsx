@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { IconName, Searcher as SearcherProps } from '@/types/searcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery, setActiveSearcher } from '@/features/searcherSlice';
-import { RootState } from '../app/store';
+import { RootState } from '../../app/store';
 import {FaChalkboardTeacher} from 'react-icons/fa';
 import {BsBook} from 'react-icons/bs';
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
@@ -11,11 +11,10 @@ import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 import { useApi } from '@/hooks/useApi';
 import { config } from '@/config';
 //Components
-import { ResultsDropdown } from './ResultsDropdown';
+import { ResultsDropdown } from '../ResultsDropdown';
 //Types
 import { Teacher } from '@/types/teacher';
 import { Subject } from '@/types/subject';
-const { API_URL } = config;
 const icons = {
     teacher: FaChalkboardTeacher,
     course: BsBook
@@ -30,7 +29,6 @@ export const Searcher = ({
     appPath
 }: SearcherProps) => {
     const dispatch = useDispatch();
-    const {activeSearcher} = useSelector((state: RootState) => state.searcher);
     const {authFetch, data, error, loading: fetchLoading} = useApi();
     const [loading, setLoading] = useState<boolean>(fetchLoading);
     //Define iterable data
@@ -78,7 +76,7 @@ export const Searcher = ({
                 <Icon className={`text-4xl text-${iconColor}-500`} color={iconColor}/>
                 <h1 className='ml-5 text-3xl text-gray-600 font-normal'>{title}</h1>
                 <Link href={appPath}>
-                    <span className='ml-5 text-gray-500 hover:text-gray-600 underline'>Ver todos</span>
+                    <span className='text-sm text-end leading-none ml-5 text-gray-500 hover:text-gray-600 underline'>Ver todos</span>
                 </Link>
             </div>
             <input 

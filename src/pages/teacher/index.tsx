@@ -1,8 +1,6 @@
 import { use, useEffect, useState } from 'react';
 import Head from 'next/head'
 import { RootState } from '@/app/store';
-import Link from 'next/link';
-import Image from 'next/image';
 //Hooks
 import { useSelector } from 'react-redux';
 import { useApi } from '@/hooks/useApi';
@@ -10,7 +8,8 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { Searcher } from '@/components/Searcher';
+import { Searcher } from '@/components/searchers/Searcher';
+import { TeacherCard } from '@/components/teacher/TeacherCard';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
 //Icons
@@ -60,31 +59,8 @@ export default function Teachers() {
                         data && (
                             <div className='flex flex-col justify-center items-center'>
                                 {
-                                    data.map((teacher:TeacherType) => (
-                                        <Link key={teacher._id} href={`/teacher/${teacher._id}`} className='w-full'>
-                                            <div className='flex justify-between items-center gap-2 w-full border-t-2 border-gray-200 py-4'>
-                                                <div className='flex gap-4'>
-                                                    <div className="flex justify-center items-center image__wrapper w-20 h-20 rounded-full overflow-hidden">
-                                                        <Image
-                                                            src={teacher.photo || '/jhon.jpg'}
-                                                            alt="Picture of the author"
-                                                            width={70}
-                                                            height={70}
-                                                            className='w-full rounded-full object-cover'
-                                                        />
-                                                    </div>
-                                                    <div className='flex flex-col justify-center items-start'>
-                                                        <h2 className='pb-1 text-lg font-semibold text-gray-800 leading-none'>{teacher.name}</h2>
-                                                        <h3 className='pb-1 text-lg font-normal text-gray-500 leading-none'>{teacher.description}</h3>
-                                                        <h4 className='text-md font-thin text-gray-400 break-all leading-none'>{teacher.email}</h4>
-                                                    </div>
-                                                </div>
-                                                <div className='flex flex-col justify-center items-center'>
-                                                    <AiFillStar className='text-yellow-500' size={50}/>
-                                                    <span className='text-2xl font-semibold text-yellow-500'>{teacher.rating}</span>
-                                                </div>
-                                            </div>
-                                        </Link>
+                                    data.map((teacher: TeacherType) => (
+                                        <TeacherCard key={teacher._id}  teacher={teacher}/>
                                     ))
                                 }
                             </div>

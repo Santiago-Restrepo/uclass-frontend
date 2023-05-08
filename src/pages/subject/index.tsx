@@ -6,7 +6,7 @@ import Link from 'next/link';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { Searcher } from '@/components/Searcher';
+import { Searcher } from '@/components/searchers/Searcher';
 //Hooks
 import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
