@@ -20,7 +20,7 @@ import { Comment } from '@/types/comment';
 function Resource() {
     const router = useRouter()
     const { id } = router.query
-    if(!id) return null
+    console.log(id)
     const { data: resource, loading: resourceLoading } = useApi<Resource>(null, `/resources/${id}`)
     const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>(null, `/comments/resource/${id}`)
     useNavigationPath(['/home', `/subject/${resource ? resource.subject : ''}`])
