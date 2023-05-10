@@ -17,6 +17,7 @@ export const ReviewCard = ({
 }: ReviewCardProps) => {
     const ratingAverage = useMemo(() => {
         const rating = review.rating;
+        if(!rating) return 0;
         const ratingAverage = Object.values(rating).reduce((acc, curr) => acc + curr, 0) / Object.values(rating).length;
         return ratingAverage;
     }, [review.rating]);

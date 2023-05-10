@@ -54,11 +54,13 @@ export const ResourceCard = ({
                 >
                     Ver
                 </Link>
-                <button 
-                    className='w-full mt-2 px-2 py-1 text-sm font-semibold border-2 border-yellow-500 rounded-md text-yellow-500 hover:bg-yellow-500 hover:text-white'
+                <Link
+                    href={`/resource/${resource._id}`}
+                    className='w-full text-center mt-2 px-2 py-1 text-sm font-semibold border-2 border-yellow-500 rounded-md text-yellow-500 hover:bg-yellow-500 hover:text-white'
+                    
                 >
                     Calificar
-                </button>
+                </Link>
                 <div className='ratingInputs'>
                 
                 </div>

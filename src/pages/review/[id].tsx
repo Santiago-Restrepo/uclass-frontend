@@ -5,8 +5,10 @@ import Head from 'next/head'
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ReviewPageCard } from '@/components/review/ReviewPageCard';
-import { CreateCommentForm } from '@/components/review/CreateCommentForm';
-import { CommentList } from '@/components/review/CommentList';
+import { CreateCommentForm } from '@/components/comment/CreateCommentForm';
+import { CommentList } from '@/components/comment/CommentList';
+//Icons
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 //types
 import { Review } from '@/types/review';
 import { Comment } from '@/types/comment';
@@ -16,9 +18,10 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 function Review() {
     const router = useRouter()
     const { id } = router.query
-    const { data: review } = useApi<Review>(null, `/reviews/${id}`)
+    const { data: review, loading: reviewLoading } = useApi<Review>(null, `/reviews/${id}`)
     const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>([], `/comments/review/${id}`)
     useNavigationPath(['/home', `/teacher/${review ? review.teacherId: ''}`])
+    
     return (
         <>
             <Head>
@@ -30,7 +33,9 @@ function Review() {
             <Screen>
                 <NavBar />
                 {
-                    review && (
+                    reviewLoading || !review ? (
+                        <AiOutlineLoading3Quarters className='animate-spin text-4xl' size={20} color='gray'/>
+                    ) : (
                         <>
                             <ReviewPageCard review={review}/>
                             <CreateCommentForm reviewId={review._id} refreshComments={()=>refreshComments(`/comments/review/${id}`,{})}/>

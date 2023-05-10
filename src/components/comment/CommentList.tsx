@@ -2,7 +2,7 @@ import React, { useMemo } from 'react'
 //Types
 import { Comment } from '@/types/comment';
 //Components
-import { CommentCard } from '@/components/review/CommentCard';
+import { CommentCard } from '@/components/comment/CommentCard';
 //Icons
 import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 //Props
@@ -15,6 +15,7 @@ export function CommentList({
     loading
 }: CommentListProps) {
     const sortedComments =  useMemo(() => {
+        if (!comments) return []
         return comments.sort((a, b) => {
             if (a.createdAt && b.createdAt) {
                 return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -22,7 +23,7 @@ export function CommentList({
             return 0
         })
     }, [comments])
-    if (loading) {
+    if (loading || !comments) {
         return (
             <div className='flex justify-center gap-4 w-full mt-3'>
                 <AiOutlineLoading3Quarters className='animate-spin text-green-600' size={30} />

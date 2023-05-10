@@ -2,6 +2,7 @@ import React from 'react'
 //Components
 import { Input } from '@/components/common/Input'
 import { toast } from 'react-toastify';
+import { StarRatingInput } from '../common/StarRatingInput';
 //Types
 import { Comment } from '@/types/comment';
 //props
@@ -20,7 +21,7 @@ import { useApi } from '@/hooks/useApi';
 //React Hook Form
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
-import { createCommentSchema } from '@/schemas/commentSchemas';
+import { createReviewCommentSchema, createResourceCommentSchema } from '@/schemas/commentSchemas';
 
 export function CreateCommentForm({
     reviewId,
@@ -30,7 +31,7 @@ export function CreateCommentForm({
     const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch} = useApi();
     const methods = useForm({
-        resolver: yupResolver(createCommentSchema)
+        resolver: yupResolver(resourceId ? createResourceCommentSchema : createReviewCommentSchema)
     });
     async function createComment (comment: Comment) {
         const response = await authFetch(`/comments`, {
@@ -86,6 +87,14 @@ export function CreateCommentForm({
                             name='content'
                             type='text'
                         />
+                        {
+                            resourceId && (
+                                <StarRatingInput 
+                                    label='Calificación'
+                                    name='rating'
+                                />
+                            )
+                        }
                     </div>
                     <button
                         type='submit'

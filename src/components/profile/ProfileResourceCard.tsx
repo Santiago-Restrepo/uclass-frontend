@@ -15,7 +15,7 @@ export function ProfileResourceCard({
     return (
         <Link 
             className='flex justify-between bg-white rounded-lg shadow-md px-3 py-2 w-full'
-            href={`/resources/${resource._id}`}
+            href={`/resource/${resource._id}`}
         >
             <div className='flex flex-col'>
                 <h1 className='text-md font-semibold text-gray-500 leading-none'>{resource.name}</h1>

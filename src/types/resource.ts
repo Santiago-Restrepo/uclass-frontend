@@ -1,7 +1,7 @@
 import { User } from "./user";
 import {Subject} from "./subject";
 export interface Resource {
-    _id: number;
+    _id: string;
     name: string;
     description: string;
     subject: string | Subject;
