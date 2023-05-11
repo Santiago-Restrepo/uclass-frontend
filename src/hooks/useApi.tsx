@@ -7,6 +7,7 @@ const { API_URL } = config;
 export const useApi = <T,>(initialData: any = null, path?: string, options?: any) => {
     const dispatch = useDispatch();
     const { token } = useSelector((state: any) => state.user);
+    
     const [data, setData] = useState<T>(initialData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -23,7 +24,7 @@ export const useApi = <T,>(initialData: any = null, path?: string, options?: any
                 console.log("no token")
                 setData(initialData);
                 setLoading(false);
-                logout();
+                // logout();
             }else{
                 const res = await fetch(`${API_URL}${path}`, {
                     ...options,

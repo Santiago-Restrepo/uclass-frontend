@@ -20,7 +20,9 @@ export default function Profile() {
         </Head>
         <Screen>
             <NavBar />
-            <ProfileCard user={user}/>
+            {
+                user && user.id && <ProfileCard user={user}/>
+            }
         </Screen>
         </>
     )
