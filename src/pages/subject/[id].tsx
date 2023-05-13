@@ -71,6 +71,7 @@ export default function Subject() {
                                 <h1 className='text-2xl text-start font-medium text-gray-700 leading-none'>{subject.name}</h1>
                                 <p className='mt-3 text-sm text-start text-gray-500 leading-none'>{subject.description}</p>
                                 <div className='mt-3 text-sm text-start text-gray-500 leading-none'>
+                                    
                                     {
                                         typeof subject.teacher === 'object' ? (
                                             <h3 className='text-md text-gray-400'>{subject.teacher.name}</h3>
