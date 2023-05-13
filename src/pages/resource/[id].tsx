@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useEffect, useMemo } from 'react'
 import Head from 'next/head'
 //Hooks
 import { useRouter } from 'next/router'
@@ -19,10 +19,15 @@ import { Resource } from '@/types/resource';
 import { Comment } from '@/types/comment';
 function Resource() {
     const router = useRouter()
-    const { id } = router.query
-    const { data: resource, loading: resourceLoading } = useApi<Resource>(null, `/resources/${id}`)
-    const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>(null, `/comments/resource/${id}`)
-    useNavigationPath(['/home', `/subject/${resource ? resource.subject : ''}`])
+    const { id } = router.query;
+    const { data: resource, loading: resourceLoading, authFetch: resourceFetch } = useApi<Resource>()
+    const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>()
+    useNavigationPath(['/home', `/subject/${resource ? typeof resource.subject === 'string' ? resource.subject : resource.subject._id : ''}`])
+    useEffect(() => {
+        if (!id) return;
+        resourceFetch(`/resources/${id}`, {})
+        refreshComments(`/comments/resource/${id}`, {})
+    }, [id])
     return (
         <>
             <Head>

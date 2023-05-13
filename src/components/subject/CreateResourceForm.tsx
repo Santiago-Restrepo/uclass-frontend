@@ -38,7 +38,7 @@ export function CreateResourceForm({
     async function createResource (resource: ResourceInput) {
         const response = await authFetch(`/resources`, {
             method: 'POST',
-            body: JSON.stringify(resource)
+            data: resource
         })
         return response
     }

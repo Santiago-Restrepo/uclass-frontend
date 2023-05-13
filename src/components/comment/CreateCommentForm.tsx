@@ -36,7 +36,7 @@ export function CreateCommentForm({
     async function createComment (comment: Comment) {
         const response = await authFetch(`/comments`, {
             method: 'POST',
-            body: JSON.stringify(comment)
+            data: comment
         })
         return response
     }
@@ -52,7 +52,10 @@ export function CreateCommentForm({
             pending: 'Creando comentario...',
             success: 'Comentario creado exitosamente',
             error: 'Error al crear el comentario',
+        }).catch(error =>{
+            console.log(error)
         }).then(response =>{
+            console.log(response)
             methods.reset();
             refreshComments();
         })

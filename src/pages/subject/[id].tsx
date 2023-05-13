@@ -70,7 +70,7 @@ export default function Subject() {
                             <div className='flex flex-col'>
                                 <h1 className='text-2xl text-start font-medium text-gray-700 leading-none'>{subject.name}</h1>
                                 <p className='mt-3 text-sm text-start text-gray-500 leading-none'>{subject.description}</p>
-                                <p className='mt-3 text-sm text-start text-gray-500 leading-none'>
+                                <div className='mt-3 text-sm text-start text-gray-500 leading-none'>
                                     {
                                         typeof subject.teacher === 'object' ? (
                                             <h3 className='text-md text-gray-400'>{subject.teacher.name}</h3>
@@ -78,7 +78,7 @@ export default function Subject() {
                                             <h3 className='text-md text-gray-400'>teacher {subject.teacher}</h3>
                                         )
                                     }
-                                </p>
+                                </div>
                                 <div className='flex justify-between items-center mt-5 border-b-2 border-gray-200 pb-5'>
                                     <div className='flex justify-between'>
                                         <IoDocumentText size={25} className='text-gray-700' />

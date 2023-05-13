@@ -42,7 +42,7 @@ export function CreateReviewForm({
     async function createReview (review: Review) {
         const response = await authFetch(`/reviews`, {
             method: 'POST',
-            body: JSON.stringify(review)
+            data: review
         })
         return response
     }

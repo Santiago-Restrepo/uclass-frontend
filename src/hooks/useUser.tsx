@@ -1,5 +1,4 @@
 //hooks
-import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { useApi } from './useApi';
@@ -9,62 +8,31 @@ import { setUser } from '@/features/userSlice';
 //Others
 import { User } from '@/types/user';
 export const useUser = () => {
-    const router = useRouter();
     const user = useSelector((state: RootState) => state.user);
     const {data: userResponse, authFetch} = useApi<User>();
     const dispatch = useDispatch();
     const logout = useCallback(() => {
-        dispatch(setUser({token: '', name: '', id: ''}))
-        if (window) {
-            window.localStorage.removeItem('token')
-        }
+        dispatch(setUser({token: '', name: '', id: ''}));
     }, [])
-    useEffect(() => {//Effect to check if user is logged in and if not redirect to login page
-        const token = localStorage.getItem('token') || user.token;
-        if (token) {
-            //Set token in redux
-            if (window) {
-                window.localStorage.setItem('token', token)
-            }
-            if(router.pathname === '/'){
-                router.push('/home')
-            }
-        }else{
-            if(router.pathname !== '/' && router.pathname !== '/signup'){
-                router.push('/')
-            }
-        }
-        return () => {
-            // cleanup
-        }
-    }, [user.token, router.pathname]);
     useEffect(() => {//Effect to get user data from token
-        const token = localStorage.getItem('token') || user.token;
-        if(token){
-            if(userResponse){
-                dispatch(setUser({
-                    name: userResponse.name,
-                    id: userResponse.id,
-                    email: userResponse.email,
-                    token,
-                    roles: userResponse.roles
-                }))
-            }else{
-                authFetch(`/users/logged`, {
-                    method: 'GET',
-                })
-                dispatch(setUser({
-                    token
-                }))
-            }
+        if(userResponse){
+            dispatch(setUser({
+                name: userResponse.name,
+                id: userResponse.id,
+                email: userResponse.email,
+                roles: userResponse.roles
+            }))
+        }else{
+            if(user.name) return;
+            authFetch(`/users/logged`, {
+                method: 'GET',
+            });
         }
+        
         return () => {
             // cleanup
         }
-    }, [user.token, userResponse])
-    // useEffect(()=>{
-    //     console.log("user", user)
-    // },[user])
+    }, [userResponse])
 
     return { ...user, logout }
 }

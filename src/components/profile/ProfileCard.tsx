@@ -25,15 +25,11 @@ export function ProfileCard({
 }: ProfileCardProps) {
     const { data: reviews, loading: reviewsLoading } = useApi<Review[]>([], `/reviews/user/${user.id}`);
     const { data: resources, loading: resourcesLoading } = useApi<Resource[]>([], `/resources/user/${user.id}`);
-    const dispatch = useDispatch();
     const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
     const [pendingReviews, setPendingReviews] = useState<Review[]>([])
 
     const logout = useCallback(() => {
-        dispatch(setUser({token: '', name: '', id: ''}))
-        if (window) {
-            window.localStorage.removeItem('token')
-        }
+        console.log('logout')
     }, [])
     useEffect(() => {
         if(reviews && reviews.length > 0){

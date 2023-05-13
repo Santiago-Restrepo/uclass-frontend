@@ -48,7 +48,9 @@ export const Searcher = ({
             const delayDebounceFn = setTimeout(() => {
                 authFetch(`/${apiPath}`, {
                     method: 'POST',
-                    body: JSON.stringify({query})
+                    data: {
+                        query
+                    }
                 })
             }, 300)
             return () => clearTimeout(delayDebounceFn)
@@ -92,13 +94,14 @@ export const Searcher = ({
             {
                 error && <p>{error}</p>
             }
-            <div className="results relative justify-center flex opacity-0 transition-opacity duration-300">
+            <div className="results relative justify-center opacity-0 transition-opacity hidden duration-300">
                 <ResultsDropdown iterableData={iterableData} appPath={appPath}/>
             </div>
             <style jsx>
                 {`                
                     input:focus + .results{
                         opacity: 1;
+                        display: flex;
                     }
                 `}
             </style>

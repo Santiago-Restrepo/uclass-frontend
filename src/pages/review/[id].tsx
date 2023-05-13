@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Head from 'next/head'
 //components
 import { Screen } from '@/components/layout/Screen';
@@ -18,10 +18,15 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 function Review() {
     const router = useRouter()
     const { id } = router.query
-    const { data: review, loading: reviewLoading } = useApi<Review>(null, `/reviews/${id}`)
-    const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>([], `/comments/review/${id}`)
+    const { data: review, loading: reviewLoading, authFetch: reviewFetch } = useApi<Review>()
+    const { data: comments, loading: commentsLoading, authFetch: refreshComments } = useApi<Comment[]>([])
     useNavigationPath(['/home', `/teacher/${review ? review.teacherId: ''}`])
-    
+    useEffect(() => {
+        if (!id) return;
+        reviewFetch(`/reviews/${id}`, {})
+        refreshComments(`/comments/review/${id}`, {})
+    }, [id]);
+
     return (
         <>
             <Head>
