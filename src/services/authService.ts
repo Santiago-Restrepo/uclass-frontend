@@ -2,7 +2,7 @@ import { config } from '../config';
 const { API_URL } = config;
 import axios from 'axios';
 const api = axios.create({
-    baseURL: "http://localhost:3000/api",
+    baseURL: API_URL,
     withCredentials: true,
 });
 export const login = async (email: string, password: string) => {
