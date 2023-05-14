@@ -8,7 +8,7 @@ type LayoutProps = {
 }
 
 export const Layout = ({children}: LayoutProps) => {
-    useUser();
+    // useUser();
     return (
         <>
             {children}

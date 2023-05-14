@@ -24,9 +24,13 @@ export const useUser = () => {
             }))
         }else{
             if(user.name) return;
-            authFetch(`/users/logged`, {
-                method: 'GET',
-            });
+            try {
+                authFetch(`/users/logged`, {
+                    method: 'GET',
+                });                
+            } catch (error) {
+                console.error(error);
+            }
         }
         
         return () => {

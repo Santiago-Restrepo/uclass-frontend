@@ -1,14 +1,24 @@
 import Head from 'next/head'
+import { GetServerSidePropsContext } from 'next';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { ProfileCard } from '@/components/profile/ProfileCard';
+
 //hooks
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
-export default function Profile() {
-    const user = useSelector((state: RootState) => state.user);
+//Props
+import { User } from '@/types/user';
+import { userFromToken } from '@/utils/userFromToken';
+interface ProfileProps {
+    user: User
+}
+export default function Profile({
+    user
+}: ProfileProps) {
+    // const user = useSelector((state: RootState) => state.user);
     useNavigationPath(['']);
     return (
         <>
@@ -26,4 +36,13 @@ export default function Profile() {
         </Screen>
         </>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }

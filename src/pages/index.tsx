@@ -8,6 +8,7 @@ import { Screen } from '@/components/layout/Screen'
 //Redux
 import { useDispatch } from 'react-redux'
 import { setUser } from '@/features/userSlice'
+import { useRouter } from 'next/router';
 //React hook form
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -18,6 +19,7 @@ import { config } from '@/config'
 const { API_URL } = config;
 export default function Login() {
     const dispatch = useDispatch();
+    const router = useRouter();
     const {
         register, 
         handleSubmit, 
@@ -29,6 +31,7 @@ export default function Login() {
         window.open(`${API_URL}/auth/google`, 'targetWindow', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=600,height=600')
         window.addEventListener('message', (event) => {
             const {token, name} = event.data
+            //Set token in cookie
             if (token) {
                 dispatch(setUser({token, name}))
             }
@@ -58,7 +61,8 @@ export default function Login() {
                     token,
                     name
                 } = response.data
-                dispatch(setUser({token, name}))
+                dispatch(setUser({token, name}));
+                router.push('/home')
             }).catch((error) => {
                 console.log(error)
             })

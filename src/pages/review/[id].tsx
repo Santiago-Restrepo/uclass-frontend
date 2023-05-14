@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+import { GetServerSidePropsContext } from 'next'
 import React, { useEffect } from 'react'
 import Head from 'next/head'
 //components
@@ -12,10 +13,20 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 //types
 import { Review } from '@/types/review';
 import { Comment } from '@/types/comment';
+import { User } from '@/types/user';
 //Hooks
 import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
-function Review() {
+//Functions
+import { userFromToken } from '@/utils/userFromToken';
+
+//Props
+interface ReviewProps {
+    user: User
+}
+function Review({
+    user
+}: ReviewProps) {
     const router = useRouter()
     const { id } = router.query
     const { data: review, loading: reviewLoading, authFetch: reviewFetch } = useApi<Review>()
@@ -51,6 +62,15 @@ function Review() {
             </Screen>
         </>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }
 
 export default Review

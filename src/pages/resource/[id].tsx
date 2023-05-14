@@ -1,6 +1,7 @@
 
 import React, { useEffect, useMemo } from 'react'
 import Head from 'next/head'
+import { GetServerSidePropsContext } from 'next';
 //Hooks
 import { useRouter } from 'next/router'
 import { useNavigationPath } from '@/hooks/useNavigationPath';
@@ -17,7 +18,17 @@ import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 //Types
 import { Resource } from '@/types/resource';
 import { Comment } from '@/types/comment';
-function Resource() {
+import { User } from '@/types/user';
+//Functions
+import { userFromToken } from '@/utils/userFromToken';
+
+//Props
+interface ResourceProps {
+    user: User
+}
+function Resource({
+    user
+}: ResourceProps) {
     const router = useRouter()
     const { id } = router.query;
     const { data: resource, loading: resourceLoading, authFetch: resourceFetch } = useApi<Resource>()
@@ -45,7 +56,7 @@ function Resource() {
                         <div className='w-full h-full py-5'>
                             <UserHeader user={resource.user} />
                             <ResourceHeader resource={resource}/>
-                            <CreateCommentForm resourceId={resource._id} refreshComments={()=>refreshComments(`/comments/resource/${id}`,{})}/>
+                            <CreateCommentForm resourceId={resource._id} refreshComments={()=>refreshComments(`/comments/resource/${id}`,{})} userId={user ? user.id : ''}/>
                             <CommentList comments={comments} loading={commentsLoading}/>
                         </div>
                     )
@@ -53,6 +64,15 @@ function Resource() {
             </Screen>
         </>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }
 
 export default Resource

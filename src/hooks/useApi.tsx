@@ -38,7 +38,6 @@ export const useApi = <T,>(initialData: any = null, path?: string, options?: any
             console.log("error", error)
             setError(error);
             setLoading(false);
-            throw error;
         }
     }, []);
 

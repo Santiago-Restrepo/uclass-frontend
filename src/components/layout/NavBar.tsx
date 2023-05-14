@@ -11,6 +11,7 @@ import { setUser } from '@/features/userSlice'
 import {colors} from '../../styles/colors'
 //Hooks
 import { RootState } from '../../app/store';
+import { useApi } from '@/hooks/useApi'
 interface iconProps {
     color: string
 }
@@ -18,11 +19,13 @@ export const NavBar = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const {navigation} = useSelector((state: RootState) => state.navigation);
+    const {data: userResponse, authFetch} = useApi();
     const logout = useCallback(() => {
+        authFetch(`/auth/logout`, {
+            method: 'GET',
+        });
         dispatch(setUser({token: '', name: '', id: ''}))
-        if (window) {
-            window.localStorage.removeItem('token')
-        }
+        router.push('/');
     }, [])
     const items = useMemo(() => [
         {

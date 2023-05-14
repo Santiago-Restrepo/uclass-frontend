@@ -9,7 +9,8 @@ import { Comment } from '@/types/comment';
 interface CreateCommentFormProps {
     reviewId?: string
     resourceId?: string,
-    refreshComments: () => Promise<void>
+    refreshComments: () => Promise<void>,
+    userId?: string
 }
 interface CreateCommentFormValues {
     content: string,
@@ -26,9 +27,9 @@ import { createReviewCommentSchema, createResourceCommentSchema } from '@/schema
 export function CreateCommentForm({
     reviewId,
     resourceId,
-    refreshComments
+    refreshComments,
+    userId
 }: CreateCommentFormProps) {
-    const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch} = useApi();
     const methods = useForm({
         resolver: yupResolver(resourceId ? createResourceCommentSchema : createReviewCommentSchema)
@@ -41,10 +42,9 @@ export function CreateCommentForm({
         return response
     }
     function onSubmit(data: CreateCommentFormValues) {
-        if(!userId) return toast.error('Debes iniciar sesión para crear una reseña');
         const comment: Comment = {
             ...data,
-            user: userId,
+            user: userId || "",
             reviewId,
             resourceId
         }
