@@ -1,8 +1,8 @@
 import { config } from '../config';
-const { API_URL } = config;
+const { BACKEND_URL } = config;
 import axios from 'axios';
 const api = axios.create({
-    baseURL: API_URL,
+    baseURL: BACKEND_URL,
     withCredentials: true,
 });
 export const login = async (email: string, password: string) => {

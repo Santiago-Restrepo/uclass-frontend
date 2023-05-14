@@ -1,7 +1,9 @@
 import axios from 'axios';
 import {serialize} from 'cookie';
+import { config } from '@/config'
+const { API_URL } = config;
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3000/api',
+    baseURL: API_URL,
     withCredentials: true,
 });
 
@@ -31,6 +33,7 @@ export default async function signinHandler(req, res) {
         sameSite: 'none',
         path: '/',
     });
+    
     res.setHeader('Set-Cookie', serializedToken);
     //Return user data
     return res.status(200).json(data);
