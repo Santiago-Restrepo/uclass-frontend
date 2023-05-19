@@ -46,6 +46,7 @@ export function CreateResourceForm({
             ...data,
             subject: subjectId
         }
+        
         toast.promise(createResource(resource), {
             pending: 'Creando recurso...',
             success: 'Recurso creado exitosamente',
