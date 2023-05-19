@@ -29,7 +29,6 @@ export const Best = ({
                 {
                     resource && (
                         <BestCard
-                            imgUrl={resource.imgUrl || "/formula.png"}
                             name={resource.name}
                             description={resource.description}
                             rating={resource.rating}

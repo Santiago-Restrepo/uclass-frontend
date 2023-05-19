@@ -103,6 +103,7 @@ export function CreateResourceForm({
                             label='Link al recurso'
                             name='resourceUrl'
                             type='text'
+                            className='border-t-0 border-l-0 border-r-0 border-b-2 border-blue-500 rounded-none focus:border-blue-600'
                         />
                     </div>
                     <button

@@ -64,7 +64,7 @@ export function ProfileResourceCard({
     }
     return (
         <div
-            className='flex justify-between bg-white rounded-lg shadow-md px-3 py-2 w-full'
+            className='relative flex justify-between bg-white rounded-lg shadow-md px-3 py-2 w-full'
         >
             <Link 
                 className='flex justify-between w-full'
@@ -72,20 +72,22 @@ export function ProfileResourceCard({
             >
                 <div className='flex flex-col'>
                     <h1 className='text-md font-semibold text-gray-500 leading-none'>{resource.name}</h1>
-                    <p className='text-sm text-gray-400 leading-none'>{resource.description}</p>
-                    <div className='flex items-center mt-2'>
-                        {
-                            Array(5).fill(0).map((_, index) => {
-                                if(index < resource.rating){
-                                    return <AiFillStar key={index} className='text-gray-600' size={15}/>
-                                }else{
+                    <p className='mt-2 text-sm text-gray-400 leading-none'>{resource.description}</p>
+                    <div className='flex justify-start items-center mt-2'>
+                        <div className='flex items-center'>
+                            {
+                                Array(5).fill(0).map((_, index) => {
+                                    if(index < resource.rating){
+                                        return <AiFillStar key={index} className='text-green-600' size={15}/>
+                                    }else{
 
-                                    return <AiOutlineStar key={index} className='text-gray-600' size={15}/>
-                                }
-                            })
-                        }
+                                        return <AiOutlineStar key={index} className='text-green-600' size={15}/>
+                                    }
+                                })
+                            }
+                        </div>
+                        <p className='ml-2 text-sm text-green-600'>De {resource.ratingCount} calificaciones</p>
                     </div>
-                    <p className='text-sm text-gray-400'>De {resource.ratingCount} calificaciones</p>
                 </div>
                 {/* <div className='flex flex-col items-center justify-center ml-2'>
                     <ImBook size={20} className='text-gray-500'/>
@@ -93,9 +95,9 @@ export function ProfileResourceCard({
             </Link>
             {
                 canBeDeleted && (
-                    <div className='flex justify-center'>
+                    <div className='absolute -top-2 -right-2 flex flex-col items-center justify-center'>
                         <button 
-                            className="group flex justify-center items-center ml-2 gap-2 px-2 py-1 text-sm font-semibold border-2 border-red-600 rounded-md text-red-600 hover:bg-red-600 hover:text-white"
+                            className="group ml-2 gap-2 px-2 py-1 text-sm font-semibold border-2 border-red-600 rounded-md text-red-600 hover:bg-red-600 hover:text-white"
                             onClick={handleDeleteResource}
                         >
                             <BsFillTrash2Fill size={15} className='text-red-600 group-hover:text-white'/>

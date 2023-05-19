@@ -6,12 +6,13 @@ import { Review } from '@/types/review'
 import { Resource } from '@/types/resource'
 //Hooks
 import { useApi } from '@/hooks/useApi'
-import { useDispatch } from 'react-redux'
 //Components
 import { ProfileReviewCardList } from '@/components/profile/ProfileReviewCardList'
 import { ProfileResourceCardList } from '@/components/profile/ProfileResourceCardList'
 //Icons
-import {AiOutlineLoading} from 'react-icons/ai';
+import {AiOutlineLoading, AiFillCheckSquare} from 'react-icons/ai';
+import {BsFillClockFill} from 'react-icons/bs';
+import {ImBooks} from 'react-icons/im';
 
 //Props
 interface ProfileCardProps {
@@ -43,7 +44,7 @@ export function ProfileCard({
         console.log('logout')
     }, [])
     return (
-        <div className='flex flex-col justify-start items-center pt-5'>
+        <div className='flex flex-col justify-start items-center pt-5 w-full'>
             <div className='flex justify-center flex-wrap gap-1'>
                 <div className="relative w-10 h-10 rounded-full overflow-hidden">
                     <Image
@@ -64,11 +65,12 @@ export function ProfileCard({
                 reviewsLoading || resourcesLoading ? (
                     <AiOutlineLoading className='animate-spin' size={20}/>
                 ) : (
-                    <div className='flex flex-col justify-center w-full mt-5'>
-                        <div className='flex flex-col justify-center p-3 rounded-md shadow-lg bg-white'>
-                            <h2 className='text-sm font-medium text-yellow-500'>Has realizado {reviews?.length} reseñas</h2>
+                    <div className='flex flex-col justify-start w-full mt-5'>
+                        <div className=''>
                             <div className='mt-2'>
-                                <h3 className='text-md font-medium text-gray-500'>Reseñas aprovadas ✔</h3>
+                                <h3 className='text-md font-normal text-gray-400'>
+                                    Reseñas aprobadas: {aprovedReviews?.length} reseñas
+                                </h3>
                                 <ProfileReviewCardList 
                                     reviews={aprovedReviews} 
                                     refresh={() => {
@@ -77,7 +79,9 @@ export function ProfileCard({
                                         })
                                     }}
                                 />
-                                <h3 className='text-md font-medium text-gray-500 mt-5'>Reseñas pendientes por aprovación ⏳</h3>
+                                <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
+                                    Reseñas pendientes por aprobación: {aprovedReviews?.length} reseñas
+                                </h3>
                                 <ProfileReviewCardList 
                                     reviews={pendingReviews}
                                     refresh={() => {
@@ -89,9 +93,10 @@ export function ProfileCard({
                                 />
                             </div>
                         </div>
-                        <div className='flex flex-col justify-center p-3 mt-3 rounded-md shadow-lg bg-white'>
-                            <h2 className='text-sm font-medium text-green-600'>Has publicado {resources?.length} recursos</h2>
-                            <h3 className='text-md font-medium text-gray-500 mt-5'>Recursos publicados 📚</h3>
+                        <div className='w-full'>
+                            <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
+                                Recursos publicados: {resources?.length} recurso
+                            </h3>
                             <div className='mt-2'>
                                 <ProfileResourceCardList 
                                     resources={resources} 

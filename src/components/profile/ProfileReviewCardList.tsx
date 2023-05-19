@@ -15,7 +15,7 @@ export function ProfileReviewCardList({
 }: ProfileReviewCardListProps){
     return (
         reviews && (
-            <div className='flex flex-wrap justify-center gap-5 mt-3 w-full'>
+            <div className='flex flex-wrap justify-start gap-5 mt-3 w-full'>
                 {
                     reviews.map((review, index) => (
                         <ReviewCard 

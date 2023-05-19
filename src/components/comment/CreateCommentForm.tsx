@@ -7,6 +7,8 @@ import { StarRatingInput } from '../common/StarRatingInput';
 import { Comment } from '@/types/comment';
 //Utils
 import { getErrorMessage } from '@/utils/formUtils';
+//Icons
+import { FaPaperPlane } from 'react-icons/fa';
 //props
 interface CreateCommentFormProps {
     reviewId?: string
@@ -86,9 +88,10 @@ export function CreateCommentForm({
                     </div>
                     <button
                         type='submit'
-                        className='bg-green-600 text-white font-semibold py-2 rounded-md'
+                        className='bg-green-600 text-white font-semibold py-2 rounded-md hover:bg-green-700 transition duration-300'
                     >
                         Publicar
+                        <FaPaperPlane className='inline ml-2' />
                     </button>
                 </form>
             </FormProvider>
