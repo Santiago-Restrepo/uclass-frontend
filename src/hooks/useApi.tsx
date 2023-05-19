@@ -1,6 +1,5 @@
-import { setUser } from '@/features/userSlice';
 import { useCallback, useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 const { API_URL } = config;
 const api = axios.create({
@@ -10,11 +9,15 @@ const api = axios.create({
 //config
 import { config } from '@/config/index';
 export const useApi = <T,>(initialData: any = null, path?: string, options?: any) => {
+    const router = useRouter();
     const [data, setData] = useState<T>(initialData);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const logout = useCallback(() => {
-        console.log("logout")
+        authFetch(`/auth/logout`, {
+            method: 'GET',
+        });
+        router.push('/');
     }, [])
     const authFetch = useCallback(async (path:any, options:any) => {
         setLoading(true);
@@ -52,6 +55,6 @@ export const useApi = <T,>(initialData: any = null, path?: string, options?: any
     }, []);
     
     
-    return { data, loading, error, authFetch };
+    return { data, loading, error, authFetch, logout };
     
 }

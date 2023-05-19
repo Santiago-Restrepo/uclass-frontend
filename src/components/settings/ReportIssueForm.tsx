@@ -40,7 +40,7 @@ export function ReportIssueForm({
                             label='Reportar un problema'
                             name='content'
                             type='text'
-                            className='h-32'
+                            className='h-32 text-gray-500'
                         />
                         <button
                             className='absolute flex justify-center items-center -right-2 -bottom-2 bg-green-600 text-white rounded-full p-2 hover:bg-green-500 transition-all duration-300'
