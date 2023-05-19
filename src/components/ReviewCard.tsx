@@ -2,6 +2,8 @@ import Image from 'next/image';
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import swal from '@/utils/swal';
+
 //Types
 import { Review } from '@/types/review';
 //Props
@@ -31,25 +33,44 @@ export const ReviewCard = ({
     }, [review.rating]);
     function handleDeleteReview(){
         const reviewId = review._id;
-        toast.promise(
-            authFetch(`/reviews/${reviewId}`, {
-                method: 'DELETE'
-            }).then(() => {
-                if(refresh){
-                    refresh();
-                }
-            }), 
-            {
-                pending: 'Eliminando reseña...',
-                success: 'Reseña eliminada exitosamente',
-                error: 'Error al eliminar la reseña',
-            }
-        )
-        .catch(error =>{
-            console.log(error)
+        const customSwal = swal.mixin({
+            customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded ml-3',
+                cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded'
+            },
+            buttonsStyling: false
         })
-        .then(response =>{
-            console.log(response)
+        customSwal.fire({
+            title: '¿Estás seguro?',
+            text: "No podrás revertir esta acción",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar reseña',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if(!result.isConfirmed) return;
+            toast.promise(
+                authFetch(`/reviews/${reviewId}`, {
+                    method: 'DELETE'
+                }).then((response) => {
+                    if(refresh){
+                        refresh();
+                    }
+                    return response;
+                }), 
+                {
+                    pending: 'Eliminando reseña...',
+                    success: 'Reseña eliminada exitosamente',
+                    error: 'Error al eliminar la reseña',
+                }
+            )
+            .catch(error =>{
+                console.log(error)
+            })
+            .then(response =>{
+                console.log(response)
+            })
         })
     }
     
@@ -65,7 +86,7 @@ export const ReviewCard = ({
                         className='relative w-10 h-10 rounded-full overflow-hidden'
                     >
                         <Image
-                            src={typeof review.user === 'string' ? '/user.png' : review.user.photo || '/user.png'}
+                            src={typeof review.user === 'string' ? '/user.png' : review.user ? review.user.photo || '/user.png' : '/user.png'}
                             alt="Picture of the author"
                             fill={true}
                             sizes='100%'
@@ -75,7 +96,7 @@ export const ReviewCard = ({
                     <div className='flex flex-col justify-center items-start ml-3 w-1/2'>
                         <h2 className='text-md font-medium text-gray-800'>
                             {
-                                typeof review.user === 'string' ? review.user : review.user.name
+                                typeof review.user === 'string' ? review.user : review.user ? review.user.name : 'Anónimo'
                             }
                         </h2>
                         <div className="flex">

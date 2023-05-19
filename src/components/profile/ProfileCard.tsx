@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, useMemo } from 'react'
 //Types
 import { User } from '@/types/user'
 import { Review } from '@/types/review'
@@ -22,20 +22,34 @@ export function ProfileCard({
 }: ProfileCardProps) {
     const { data: reviews, loading: reviewsLoading, authFetch: refetchReviews } = useApi<Review[]>([], `/reviews/user/${user.id}`);
     const { data: resources, loading: resourcesLoading, authFetch: refetchResources } = useApi<Resource[]>([], `/resources/user/${user.id}`);
-    const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
-    const [pendingReviews, setPendingReviews] = useState<Review[]>([])
+    // const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
+    // const [pendingReviews, setPendingReviews] = useState<Review[]>([])
+    const aprovedReviews = useMemo(() => {
+        if(reviews && reviews.length > 0) {
+            return reviews.filter(review => review.isApproved)
+        }else{
+            return []
+        }
+    }, [reviews])
+    const pendingReviews = useMemo(() => {
+        if(reviews && reviews.length > 0) {
+            return reviews.filter(review => !review.isApproved)
+        }else{
+            return []
+        }
+    }, [reviews])
 
     const logout = useCallback(() => {
         console.log('logout')
     }, [])
-    useEffect(() => {
-        if(reviews && reviews.length > 0){
-            const aprovedReviews = reviews.filter(review => review.isApproved)
-            const pendingReviews = reviews.filter(review => !review.isApproved)
-            setAprovedReviews(aprovedReviews)
-            setPendingReviews(pendingReviews)
-        }
-    }, [reviews])
+    // useEffect(() => {
+    //     if(reviews && reviews.length > 0){
+    //         const aprovedReviews = reviews.filter(review => review.isApproved)
+    //         const pendingReviews = reviews.filter(review => !review.isApproved)
+    //         setAprovedReviews(aprovedReviews)
+    //         setPendingReviews(pendingReviews)
+    //     }
+    // }, [reviews])
     return (
         <div className='flex flex-col justify-start items-center pt-5'>
             <div className='flex justify-center flex-wrap gap-1'>
