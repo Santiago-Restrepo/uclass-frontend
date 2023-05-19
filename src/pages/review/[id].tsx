@@ -47,7 +47,7 @@ function Review({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user} />
                 {
                     reviewLoading || !review ? (
                         <AiOutlineLoading3Quarters className='animate-spin text-4xl' size={20} color='gray'/>

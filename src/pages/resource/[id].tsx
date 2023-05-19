@@ -48,7 +48,7 @@ function Resource({
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user} />
                 {
                     resourceLoading || !resource ? (
                         <AiOutlineLoading3Quarters className='animate-spin text-4xl' size={20} color='gray'/>

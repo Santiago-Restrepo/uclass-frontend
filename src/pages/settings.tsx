@@ -26,7 +26,7 @@ export default function Settings({
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Screen>
-            <NavBar />
+            <NavBar user={user}/>
             <h1 className='text-2xl font-normal text-gray-500'>Configuración</h1>
             <ChangePasswordForm user={user}/>
             <ReportIssueForm user={user}/>

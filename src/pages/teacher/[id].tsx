@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image';
+import { GetServerSidePropsContext } from 'next';
 //Hooks
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -9,6 +10,9 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 import { Teacher as TeacherType } from '@/types/teacher';
 import { Review } from '@/types/review';
 import { Subject } from '@/types/subject';
+import { User } from '@/types/user';
+//Utils
+import { userFromToken } from '@/utils/userFromToken';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
@@ -16,7 +20,13 @@ import { ReviewCardList } from '@/components/teacher/ReviewCardList';
 import { CreateReviewForm } from '@/components/teacher/CreateReviewForm';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
-export default function Teacher() {
+//props
+interface TeacherProps {
+    user: User
+}
+export default function Teacher({
+    user
+}: TeacherProps) {
     const router = useRouter();
     const [createMode, setCreateMode] = useState(false);
     useNavigationPath(['/home', '/teacher' ]);
@@ -48,7 +58,7 @@ export default function Teacher() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user} />
                 <div className='w-full h-full py-5'>
                     {
                         teacherLoading || reviewsLoading && (
@@ -118,4 +128,12 @@ export default function Teacher() {
             </Screen>
         </>
     )
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }

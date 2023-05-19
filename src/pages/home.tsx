@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { GetServerSidePropsContext } from 'next';
 //Hooks
 import { useApi } from '@/hooks/useApi'
 import { useEffect, useState } from 'react';
@@ -8,13 +9,21 @@ import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { Searchers } from '@/components/searchers/Searchers';
 import { Best } from '@/components/Best';
+//Utils
+import { userFromToken } from '@/utils/userFromToken';
 //Types
 import { Teacher } from '@/types/teacher';
 import { Resource } from '@/types/resource';
+import { User } from '@/types/user';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
-
-export default function Home() {
+//Props
+interface HomeProps {
+  user: User
+}
+export default function Home({
+  user
+}: HomeProps) {
   const { data: bestTeacherData, loading: bestTeacherLoading, error: bestTeacherError, authFetch: bestTeacherFetch } = useApi(null, `/teachers/best`);
   const { data: bestResourceData, loading: bestResourceLoading, error: bestResourceError, authFetch: bestResourceFetch } = useApi(null, `/resources/best`);
   const [bestTeachers, setBestTeachers] = useState<Teacher[]>([]);
@@ -39,7 +48,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Screen>
-        <NavBar />
+        <NavBar user={user} />
         <div className='w-full h-full py-5'>
           <Searchers />
           {
@@ -51,4 +60,12 @@ export default function Home() {
       </Screen>
     </>
   )
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+  const token = context.req.cookies.token;
+  const user = await userFromToken(token);
+  if (!user) return { props: {} };
+  return {
+      props: { user }
+  };
 }

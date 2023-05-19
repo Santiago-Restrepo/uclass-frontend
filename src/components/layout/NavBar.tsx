@@ -4,22 +4,30 @@ import React, {useMemo, useCallback} from 'react'
 //Icons
 import {FiHome, FiUser, FiLogOut} from 'react-icons/fi'
 import {GoSettings} from 'react-icons/go'
+import {BsFillShieldLockFill} from 'react-icons/bs'
 //Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/features/userSlice'
 //Constants
 import {colors} from '../../styles/colors'
+//Types
+import {User} from '@/types/user'
 //Hooks
 import { RootState } from '../../app/store';
 import { useApi } from '@/hooks/useApi'
-interface iconProps {
+interface IconProps {
     color: string
 }
-export const NavBar = () => {
+interface NavBarProps {
+    user: User
+}
+export const NavBar = ({
+    user
+}: NavBarProps) => {
     const router = useRouter();
     const dispatch = useDispatch();
     const {navigation} = useSelector((state: RootState) => state.navigation);
-    const {data: userResponse, authFetch} = useApi();
+    const {authFetch} = useApi();
     const logout = useCallback(() => {
         authFetch(`/auth/logout`, {
             method: 'GET',
@@ -27,29 +35,44 @@ export const NavBar = () => {
         dispatch(setUser({token: '', name: '', id: ''}))
         router.push('/');
     }, [])
-    const items = useMemo(() => [
-        {
-            Icon: ({color}:iconProps) => <FiHome size={20} color={color}/>,
-            label: 'Inicio',
-            to: '/home'
-        },
-
-        {
-            Icon: ({color}:iconProps) => <GoSettings size={20} color={color}/>,
-            label: 'Ajustes',
-            to: '/settings'
-        },
-        {
-            Icon: ({color}:iconProps) => <FiUser size={20} color={color}/>,
-            label: 'Perfil',
-            to: '/profile'
-        },
-        {
-            Icon: ({color}:iconProps) => <FiLogOut size={20} color={color}/>,
-            label: 'Salir',
-            onClick: logout
-        }
-    ], [])
+    const items = useMemo(() => {
+        const allItems = [
+            {
+                Icon: ({color}:IconProps) => <FiHome size={20} color={color}/>,
+                label: 'Inicio',
+                to: '/home',
+                allowedRoles: ['user', 'admin']
+            },
+    
+            {
+                Icon: ({color}:IconProps) => <GoSettings size={20} color={color}/>,
+                label: 'Ajustes',
+                to: '/settings',
+                allowedRoles: ['user', 'admin']
+            },
+            {
+                Icon: ({color}:IconProps) => <FiUser size={20} color={color}/>,
+                label: 'Perfil',
+                to: '/profile',
+                allowedRoles: ['user', 'admin']
+            },
+            {
+                Icon: ({color}: IconProps) => <BsFillShieldLockFill size={20} color={color}/>,
+                label: 'Admin',
+                to: '/admin',
+                allowedRoles: ['admin']
+            },
+            {
+                Icon: ({color}:IconProps) => <FiLogOut size={20} color={color}/>,
+                label: 'Salir',
+                onClick: logout,
+                allowedRoles: ['user', 'admin']
+            }
+        ];
+        const userRoles = user.roles;
+        if(!userRoles) return allItems.filter(item => item.allowedRoles.includes('user'));    
+        return allItems.filter(item => item.allowedRoles.some(role => userRoles.includes(role)));
+    }, [])
     return (
         <>
             <div className="flex justify-between w-full px-5 py-2 bg-white shadow-md rounded-md">

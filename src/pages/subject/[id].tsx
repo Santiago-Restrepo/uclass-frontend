@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { GetServerSidePropsContext } from 'next';
 //Hooks
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState, useCallback } from 'react';
@@ -12,10 +13,19 @@ import { ResourceCardList } from '@/components/subject/ResourceCardList';
 //Types
 import { Subject as SubjectType } from '@/types/subject';
 import {Resource} from '@/types/resource';
+import { User } from '@/types/user';
+//Utils
+import { userFromToken } from '@/utils/userFromToken';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 import { IoDocumentText } from 'react-icons/io5';
-export default function Subject() {
+//Props
+interface SubjectProps {
+    user: User
+}
+export default function Subject({
+    user
+}: SubjectProps) {
     const router = useRouter()
     const { id } = router.query
     const {data: subject, error: subjectError, loading: subjectLoading, authFetch: subjectAuthFetch} = useApi<SubjectType>(null);
@@ -49,7 +59,7 @@ export default function Subject() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user}/>
                 <div className='w-full h-full py-5'>
                     {
                         subjectLoading || resourcesLoading && (
@@ -108,4 +118,13 @@ export default function Subject() {
             </Screen>
         </>
     )
+}
+
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }

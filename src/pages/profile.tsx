@@ -29,7 +29,7 @@ export default function Profile({
             <link rel="icon" href="/favicon.ico" />
         </Head>
         <Screen>
-            <NavBar />
+            <NavBar user={user}/>
             {
                 user && user.id && <ProfileCard user={user}/>
             }

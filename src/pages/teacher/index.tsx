@@ -1,4 +1,5 @@
-import { use, useEffect, useState } from 'react';
+import { GetServerSidePropsContext } from 'next';
+import { useEffect } from 'react';
 import Head from 'next/head'
 import { RootState } from '@/app/store';
 //Hooks
@@ -12,10 +13,18 @@ import { Searcher } from '@/components/searchers/Searcher';
 import { TeacherCard } from '@/components/teacher/TeacherCard';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
+import { User } from '@/types/user';
+//Utils
+import { userFromToken } from '@/utils/userFromToken';
 //Icons
-import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
-
-export default function Teachers() {
+import {AiOutlineLoading3Quarters} from 'react-icons/ai';
+//Props
+interface TeachersProps {
+    user: User
+}
+export default function Teachers({
+    user
+}: TeachersProps) {
     const {data, error, loading, authFetch} = useApi<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');
@@ -34,7 +43,7 @@ export default function Teachers() {
             <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user} />
                 <div className='w-full h-full py-5'>
                     {
                         teacherSearcher && (
@@ -70,4 +79,12 @@ export default function Teachers() {
             </Screen>
         </>
     )
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }

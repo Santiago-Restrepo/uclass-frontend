@@ -1,5 +1,7 @@
-import { useEffect, useLayoutEffect, useState } from 'react';
+import { GetServerSidePropsContext } from 'next';
+import { useEffect} from 'react';
 import Head from 'next/head'
+//Redux
 import { RootState } from '@/app/store';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
@@ -12,12 +14,20 @@ import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
 import { Subject } from '@/types/subject';
+import { User } from '@/types/user';
+//Utils
+import { userFromToken } from '@/utils/userFromToken';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 import {IoIosPaper} from 'react-icons/io';
 import { colors } from '@/styles/colors';
-
-export default function Subjects() {
+//Props
+interface SubjectsProps {
+    user: User
+}
+export default function Subjects({
+    user
+}: SubjectsProps) {
     const { searchers } = useSelector((state: RootState) => state.searcher);
     const {token} = useSelector((state: RootState) => state.user);
     const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject');
@@ -44,7 +54,7 @@ export default function Subjects() {
             <link rel="icon" href="/favicon.ico" />
             </Head>
             <Screen>
-                <NavBar />
+                <NavBar user={user} />
                 <div className='w-full h-full py-5'>
                     {
                         subjectSearcher && (
@@ -100,4 +110,12 @@ export default function Subjects() {
             </Screen>
         </>
     )
+}
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
 }
