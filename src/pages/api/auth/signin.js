@@ -1,9 +1,9 @@
 import axios from 'axios';
 import {serialize} from 'cookie';
 import { config } from '@/config'
-const { API_URL } = config;
+const { BACKEND_URL } = config;
 const api = axios.create({
-    baseURL: API_URL,
+    baseURL: BACKEND_URL,
     withCredentials: true,
 });
 
