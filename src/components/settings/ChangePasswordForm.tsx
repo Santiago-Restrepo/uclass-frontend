@@ -19,7 +19,7 @@ import { User } from '@/types/user';
 interface ChangePasswordFormProps {
     user: User
 }
-export  function ChangePasswordForm({
+export function ChangePasswordForm({
     user
 }: ChangePasswordFormProps) {
     const methods = useForm({

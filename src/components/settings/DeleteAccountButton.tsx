@@ -17,7 +17,7 @@ export function DeleteAccountButton({
     }
     return (
         <button 
-            className='px-2 py-2 rounded-md border-2 border-red-600 text-red-600 font-semibold focus:outline-none focus:border-red-700 w-full hover:bg-red-600 transition-colors hover:text-white'
+            className='mt-2 px-2 py-2 rounded-md border-2 border-red-600 text-red-600 font-semibold focus:outline-none focus:border-red-700 w-full hover:bg-red-600 transition-colors hover:text-white'
             onClick={handleDeleteAccount}
         >
             Eliminar cuenta

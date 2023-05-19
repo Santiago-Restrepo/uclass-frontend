@@ -7,6 +7,8 @@ import { ChangePasswordForm } from '@/components/settings/ChangePasswordForm';
 //utils
 import { userFromToken } from '@/utils/userFromToken';
 import { DeleteAccountButton } from '@/components/settings/DeleteAccountButton';
+import { ReportIssueForm } from '@/components/settings/ReportIssueForm';
+
 //Props
 import { User } from '@/types/user';
 interface SettingsProps {
@@ -27,6 +29,7 @@ export default function Settings({
             <NavBar />
             <h1 className='text-2xl font-normal text-gray-500'>Configuración</h1>
             <ChangePasswordForm user={user}/>
+            <ReportIssueForm user={user}/>
             <DeleteAccountButton user={user}/>
         </Screen>
         </>
