@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from 'next/server';
+import type { User } from '@/types/user';
 import {jwtVerify} from 'jose';
 
 export async function middleware(request: NextRequest) {
@@ -16,6 +17,16 @@ export async function middleware(request: NextRequest) {
         const {payload} = await jwtVerify(token, new TextEncoder().encode(secret));
         if (payload) {
             //Set user in request
+            const path = request.nextUrl.pathname;
+            const user : User = payload as User;
+            if (path.startsWith('/admin')) {
+                if(user.roles && user.roles.includes('admin')){
+                    return NextResponse.next();
+                }else{
+                    //Redirect to home
+                    return NextResponse.redirect(new URL('/home', request.url))
+                }
+            }
             return NextResponse.next();
         }
         return NextResponse.redirect(new URL('/', request.url))
@@ -27,5 +38,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/home', '/profile', '/settings', '/admin', '/resource/:path*', '/teacher/:path*', '/subject/:path*', '/review/:path*']
+    matcher: ['/home', '/profile', '/settings', '/admin', '/resource/:path*', '/teacher/:path*', '/subject/:path*', '/review/:path*', '/admin/:path*'],
 }
