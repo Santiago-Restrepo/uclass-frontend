@@ -22,6 +22,7 @@ export const Best = ({
                             imgUrl={teacher.photo || "/jhon.jpg"}
                             name={teacher.name}
                             rating={teacher.rating}
+                            url={`/teacher/${teacher._id}`}
                         />
                     )
                 }
@@ -32,6 +33,7 @@ export const Best = ({
                             name={resource.name}
                             description={resource.description}
                             rating={resource.rating}
+                            url={`/resource/${resource._id}`}
                         />
                     )
                 }

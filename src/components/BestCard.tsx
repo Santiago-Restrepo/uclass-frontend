@@ -1,5 +1,5 @@
-import { colors } from '@/styles/colors';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react'
 import { AiFillStar } from 'react-icons/ai';
 interface BestCardProps {
@@ -7,15 +7,20 @@ interface BestCardProps {
     name: string;
     description?: string;
     rating: number;
+    url: string;
 }
 export const BestCard = ({
     imgUrl,
     name,
     description,
-    rating
+    rating,
+    url
 }: BestCardProps) => {
     return (
-        <div className="flex flex-col items-center justify-center w-1/2 max-w-sm h-full p-5 bg-white rounded-md shadow-md">
+        <Link 
+            className="flex flex-col items-center justify-center w-1/2 max-w-sm h-full p-5 bg-white rounded-md shadow-md"
+            href={url}
+        >
             <Image
                 src={imgUrl}
                 alt={name}
@@ -31,6 +36,6 @@ export const BestCard = ({
                     <span className="text-2xl font-semibold text-green-600">{rating}</span>
                 </div>
             </div>      
-        </div>
+        </Link>
     )
 }

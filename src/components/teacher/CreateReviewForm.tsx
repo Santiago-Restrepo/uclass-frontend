@@ -10,7 +10,8 @@ import { Review } from '@/types/review'
 //props
 interface CreateReviewFormProps {
     subjects: Subject[],
-    teacherId: string
+    teacherId: string,
+    refresh: () => void
 }
 interface CreateReviewFormValues {
     subject: string,
@@ -22,8 +23,6 @@ interface CreateReviewFormValues {
     }
 }
 //Hooks
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
 import { useApi } from '@/hooks/useApi';
 //React Hook Form
 import { useForm, FormProvider } from 'react-hook-form'
@@ -32,9 +31,9 @@ import { createReviewSchema } from '@/schemas/reviewSchemas';
 
 export function CreateReviewForm({
     subjects,
-    teacherId
+    teacherId,
+    refresh
 }: CreateReviewFormProps) {
-    const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch} = useApi();
     const methods = useForm({
         resolver: yupResolver(createReviewSchema)
@@ -47,12 +46,11 @@ export function CreateReviewForm({
         return response
     }
     function onSubmit(data: CreateReviewFormValues) {
-        if(!userId) return toast.error('Debes iniciar sesión para crear una reseña');
         const review: Review = {
             ...data,
             teacherId,
             subject: data.subject,
-            user: userId,
+            // user: userId,
         }
         toast.promise(createReview(review), {
             pending: 'Creando reseña...',
@@ -60,7 +58,11 @@ export function CreateReviewForm({
             error: 'Error al crear la reseña',
         }).then(response =>{
             methods.reset();
-        })
+        }).catch(err => {
+            console.error(err)
+        }).finally(() => {
+            refresh();
+        });
     }
     function onError(errors: any) {
         const firstError = getErrorMessage(errors[Object.keys(errors)[0]])

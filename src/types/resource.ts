@@ -16,7 +16,7 @@ export interface ResourceInput {
     name: string;
     description: string;
     subject: string | Subject;
-    user: string | User;
+    user?: string | User;
     resourceUrl: string;
     imgUrl?: string;
 }

@@ -102,7 +102,13 @@ export default function Teacher() {
                     }
                     {
                         createMode ? (
-                            <CreateReviewForm  subjects={subjects} teacherId={id as string}/>
+                            <CreateReviewForm  
+                                subjects={subjects} 
+                                teacherId={id as string}
+                                refresh={() => {
+                                    setCreateMode(false);
+                                }}
+                            />
                         )
                         : (
                             <ReviewCardList reviews={reviews}/>

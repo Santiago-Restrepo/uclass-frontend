@@ -30,7 +30,6 @@ export function CreateResourceForm({
     subjectId,
     refreshResources
 }: CreateResourceFormProps) {
-    const {id: userId} = useSelector((state: RootState) => state.user)
     const {authFetch, error} = useApi();
     const methods = useForm({
         resolver: yupResolver(createResourceSchema)
@@ -43,10 +42,8 @@ export function CreateResourceForm({
         return response
     }
     function onSubmit(data: CreateResourceFormValues) {
-        if(!userId) return toast.error('Debes iniciar sesión para crear un recurso');
         const resource: ResourceInput = {
             ...data,
-            user: userId,
             subject: subjectId
         }
         toast.promise(createResource(resource), {
@@ -55,8 +52,12 @@ export function CreateResourceForm({
             error: 'Error al crear el recurso',
         }).then(response =>{
             methods.reset();
+        }).catch(error => {
+            console.log(error)
+        }).finally(() => {
             refreshResources();
-        })
+        });
+
     }
     function onError(errors: any) {
         const firstError = getErrorMessage(errors[Object.keys(errors)[0]])
