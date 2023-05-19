@@ -37,7 +37,11 @@ export const useApi = <T,>(initialData: any = null, path?: string, options?: any
         } catch (error: any) {
             setError(error);
             setLoading(false);
-            throw new Error(error);
+            if(error.response?.data?.message){
+                throw new Error(error.response.data.message);
+            }else{
+                throw new Error(error.data.message);
+            }
         }
     }, []);
 

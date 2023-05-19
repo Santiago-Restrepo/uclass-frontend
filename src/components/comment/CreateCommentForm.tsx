@@ -5,6 +5,8 @@ import { toast } from 'react-toastify';
 import { StarRatingInput } from '../common/StarRatingInput';
 //Types
 import { Comment } from '@/types/comment';
+//Utils
+import { getErrorMessage } from '@/utils/formUtils';
 //props
 interface CreateCommentFormProps {
     reviewId?: string
@@ -16,8 +18,6 @@ interface CreateCommentFormValues {
     content: string,
 }
 //Hooks
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
 import { useApi } from '@/hooks/useApi';
 //React Hook Form
 import { useForm, FormProvider } from 'react-hook-form'
@@ -64,22 +64,7 @@ export function CreateCommentForm({
         const firstError = getErrorMessage(errors[Object.keys(errors)[0]])
         toast.error(firstError)
     }
-    function getErrorMessage(error: any): string | null {
-        //Error can be nested so we need to check if it has a message property on any level
-        if (error.message) {
-            return error.message
-        }
-        //If not, we need to loop through the object and find the first message
-        for (const key in error) {
-            if (error.hasOwnProperty(key)) {
-                const message = getErrorMessage(error[key])
-                if (message) {
-                    return message
-                }
-            }
-        }
-        return null
-    }
+    
     return (
         <div className='w-full'>
             <FormProvider {...methods}>

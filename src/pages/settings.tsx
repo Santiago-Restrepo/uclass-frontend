@@ -1,8 +1,20 @@
 import Head from 'next/head'
+import { GetServerSidePropsContext } from 'next';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-export default function Settings() {
+import { ChangePasswordForm } from '@/components/settings/ChangePasswordForm';
+//utils
+import { userFromToken } from '@/utils/userFromToken';
+import { DeleteAccountButton } from '@/components/settings/DeleteAccountButton';
+//Props
+import { User } from '@/types/user';
+interface SettingsProps {
+    user: User
+}
+export default function Settings({
+    user
+}: SettingsProps) {
     return (
         <>
         <Head>
@@ -13,14 +25,19 @@ export default function Settings() {
         </Head>
         <Screen>
             <NavBar />
-            <ul>
-                <li>Soporte técnico</li>
-                <li>Política de privacidad</li>
-                <li>Terminos y condiciones</li>
-                <li>Normas de comportamiento</li>
-                <li>Eliminar cuenta</li>
-            </ul>
+            <h1 className='text-2xl font-normal text-gray-500'>Configuración</h1>
+            <ChangePasswordForm user={user}/>
+            <DeleteAccountButton user={user}/>
         </Screen>
         </>
     )
 }
+export async function getServerSideProps(context: GetServerSidePropsContext) {
+    const token = context.req.cookies.token;
+    const user = await userFromToken(token);
+    if (!user) return { props: {} };
+    return {
+        props: { user }
+    };
+}
+

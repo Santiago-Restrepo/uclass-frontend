@@ -1,5 +1,5 @@
 import withReactContent from 'sweetalert2-react-content'
 import Swal from 'sweetalert2'
-const MySwal = withReactContent(Swal)
+const swal = withReactContent(Swal)
 
-export default MySwal
+export default swal
