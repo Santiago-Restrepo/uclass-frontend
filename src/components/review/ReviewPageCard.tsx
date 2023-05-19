@@ -22,7 +22,7 @@ export function ReviewPageCard({
             <div className='flex gap-2 mb-2'>
                 <div className="relative w-20 h-20 rounded-full overflow-hidden">
                     <Image
-                        src={typeof user === 'string' ? '/user.png' : user.photo || '/user.png'}
+                        src={typeof user === 'string' ? '/user.png' : user ? user.photo || '/user.png': '/user.png'}
                         alt="Picture of the author"
                         fill={true}
                         sizes='100%'
@@ -31,7 +31,7 @@ export function ReviewPageCard({
                 <div className='flex flex-col items-start'>
                     <h2 className='text-md font-medium text-gray-800'>
                         {
-                            typeof user === 'string' ? user : user.name
+                            typeof user === 'string' ? user : user ? user.name : 'Anónimo'
                         }
                     </h2>
                     <p className='text-sm text-gray-400'>
