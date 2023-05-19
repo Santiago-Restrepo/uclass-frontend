@@ -18,7 +18,12 @@ export function ProfileResourceCardList({
             <div className='flex flex-wrap gap-5 mt-3 w-full'>
                 {
                     resources.map((review, index) => (
-                        <ProfileResourceCard key={index} resource={review} />
+                        <ProfileResourceCard 
+                            key={index} 
+                            resource={review} 
+                            canBeDeleted={true}
+                            refresh={refresh}
+                        />
                     ))
                 }
             </div>

@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useCallback, useEffect, useState, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 //Types
 import { User } from '@/types/user'
 import { Review } from '@/types/review'
@@ -42,14 +42,6 @@ export function ProfileCard({
     const logout = useCallback(() => {
         console.log('logout')
     }, [])
-    // useEffect(() => {
-    //     if(reviews && reviews.length > 0){
-    //         const aprovedReviews = reviews.filter(review => review.isApproved)
-    //         const pendingReviews = reviews.filter(review => !review.isApproved)
-    //         setAprovedReviews(aprovedReviews)
-    //         setPendingReviews(pendingReviews)
-    //     }
-    // }, [reviews])
     return (
         <div className='flex flex-col justify-start items-center pt-5'>
             <div className='flex justify-center flex-wrap gap-1'>

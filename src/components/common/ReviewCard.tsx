@@ -133,8 +133,7 @@ export const ReviewCard = ({
                             className="group flex justify-center items-center gap-2 mt-5 px-2 py-1 text-sm font-semibold border-2 border-red-600 rounded-md text-red-600 hover:bg-red-600 hover:text-white"
                             onClick={handleDeleteReview}
                         >
-                            Eliminar
-                            <BsFillTrash2Fill size={20} className='text-red-600 group-hover:text-white'/>
+                            <BsFillTrash2Fill size={15} className='text-red-600 group-hover:text-white'/>
                         </button>
                     </div>
                 )

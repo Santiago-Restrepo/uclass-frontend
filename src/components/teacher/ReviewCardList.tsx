@@ -2,7 +2,7 @@ import React from 'react'
 //Types
 import { Review } from '@/types/review';
 //Components
-import { ReviewCard } from '@/components/ReviewCard';
+import { ReviewCard } from '@/components/common/ReviewCard';
 //Props
 interface ReviewCardListProps {
     reviews: Review[]

@@ -12,7 +12,7 @@ import { Subject } from '@/types/subject';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { ReviewCardList } from '@/components/ReviewCardList';
+import { ReviewCardList } from '@/components/teacher/ReviewCardList';
 import { CreateReviewForm } from '@/components/teacher/CreateReviewForm';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';

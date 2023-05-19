@@ -5,12 +5,14 @@ import Link from 'next/link';
 import { Resource } from '@/types/resource';
 //Props
 interface ResourceProps {
-    resource: Resource
+    resource: Resource,
+    canBeDeleted?: boolean,
 }
 //Icons
 import {AiFillStar, AiOutlineStar} from 'react-icons/ai';
 export const ResourceCard = ({
     resource,
+    canBeDeleted
 }: ResourceProps) => {
     return (
         <div className='flex flex-col items-center justify-center w-full max-w-[12rem] shadow-sm rounded-md p-5 bg-white'>
