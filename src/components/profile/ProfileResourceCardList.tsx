@@ -5,11 +5,13 @@ import { Resource } from '@/types/resource';
 import { ProfileResourceCard } from '@/components/profile/ProfileResourceCard';
 //Props
 interface ProfileResourceCardListProps {
-    resources: Resource[]
+    resources: Resource[],
+    refresh: () => void
 }
 
 export function ProfileResourceCardList({
-    resources
+    resources,
+    refresh
 }: ProfileResourceCardListProps){
     return (
         resources && (

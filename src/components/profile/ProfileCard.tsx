@@ -10,12 +10,9 @@ import { useDispatch } from 'react-redux'
 //Components
 import { ProfileReviewCardList } from '@/components/profile/ProfileReviewCardList'
 import { ProfileResourceCardList } from '@/components/profile/ProfileResourceCardList'
-//Redux
-import { setUser } from '@/features/userSlice'
 //Icons
 import {AiOutlineLoading} from 'react-icons/ai';
-//Config
-import { config } from '@/config';
+
 //Props
 interface ProfileCardProps {
     user: User
@@ -23,8 +20,8 @@ interface ProfileCardProps {
 export function ProfileCard({
     user
 }: ProfileCardProps) {
-    const { data: reviews, loading: reviewsLoading } = useApi<Review[]>([], `/reviews/user/${user.id}`);
-    const { data: resources, loading: resourcesLoading } = useApi<Resource[]>([], `/resources/user/${user.id}`);
+    const { data: reviews, loading: reviewsLoading, authFetch: refetchReviews } = useApi<Review[]>([], `/reviews/user/${user.id}`);
+    const { data: resources, loading: resourcesLoading, authFetch: refetchResources } = useApi<Resource[]>([], `/resources/user/${user.id}`);
     const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
     const [pendingReviews, setPendingReviews] = useState<Review[]>([])
 
@@ -66,16 +63,38 @@ export function ProfileCard({
                             <h2 className='text-sm font-medium text-yellow-500'>Has realizado {reviews?.length} reseñas</h2>
                             <div className='mt-2'>
                                 <h3 className='text-md font-medium text-gray-500'>Reseñas aprovadas ✔</h3>
-                                <ProfileReviewCardList reviews={aprovedReviews}/>
+                                <ProfileReviewCardList 
+                                    reviews={aprovedReviews} 
+                                    refresh={() => {
+                                        refetchReviews(`/reviews/user/${user.id}`, {
+                                            method: 'GET'
+                                        })
+                                    }}
+                                />
                                 <h3 className='text-md font-medium text-gray-500 mt-5'>Reseñas pendientes por aprovación ⏳</h3>
-                                <ProfileReviewCardList reviews={pendingReviews}/>
+                                <ProfileReviewCardList 
+                                    reviews={pendingReviews}
+                                    refresh={() => {
+                                        refetchReviews(`/reviews/user/${user.id}`, {
+                                            method: 'GET'
+                                        })
+                                    }}
+                                    
+                                />
                             </div>
                         </div>
                         <div className='flex flex-col justify-center p-3 mt-3 rounded-md shadow-lg bg-white'>
                             <h2 className='text-sm font-medium text-green-600'>Has publicado {resources?.length} recursos</h2>
                             <h3 className='text-md font-medium text-gray-500 mt-5'>Recursos publicados 📚</h3>
                             <div className='mt-2'>
-                                <ProfileResourceCardList resources={resources}/>
+                                <ProfileResourceCardList 
+                                    resources={resources} 
+                                    refresh={() => {
+                                        refetchResources(`/resources/user/${user.id}`, {
+                                            method: 'GET'
+                                        })
+                                    }}
+                                />
                             </div>
                         </div>
                     </div>

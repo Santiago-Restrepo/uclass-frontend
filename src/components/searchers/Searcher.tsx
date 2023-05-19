@@ -94,14 +94,14 @@ export const Searcher = ({
             {
                 error && <p>{error}</p>
             }
-            <div className="results relative justify-center opacity-0 transition-opacity hidden duration-300">
+            <div className="results relative justify-center opacity-0 transition-all duration-300 scale-0">
                 <ResultsDropdown iterableData={iterableData} appPath={appPath}/>
             </div>
             <style jsx>
                 {`                
                     input:focus + .results{
                         opacity: 1;
-                        display: flex;
+                        transform: scale(1);
                     }
                 `}
             </style>
