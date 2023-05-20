@@ -21,7 +21,12 @@ interface AdminProps {
 export default function Admin({
     user
 }: AdminProps) {
-    const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useApi<Review[]>([], `/reviews`);
+    const {data: reviews, error: reviewsError, loading: reviewsLoading, authFetch: reviewsAuthFetch} = useApi<Review[]>([], `/reviews/pending`);
+    function refresh(){
+        reviewsAuthFetch(`/reviews/pending`, {
+            method: 'GET'
+        });
+    }
     return (
         <>
         <Head>
@@ -48,7 +53,7 @@ export default function Admin({
             </div>
             <div className='mt-5'>
                 <h1 className='text-xl font-normal text-gray-400'>Reseñas pendientes</h1>
-                <PendingReviewCardList reviews={reviews} />
+                <PendingReviewCardList reviews={reviews} refresh={refresh}/>
             </div>
         </Screen>
         </>

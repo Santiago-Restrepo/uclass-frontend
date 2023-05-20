@@ -15,5 +15,8 @@ export interface Review {
     originalReviewId?: string;
     isApproved?: boolean;
     isDeleted?: boolean;
+    isRejected?: boolean;
+    rejectedReason?: string;
     isEdited?: boolean;
+    createdAt: string;
 }

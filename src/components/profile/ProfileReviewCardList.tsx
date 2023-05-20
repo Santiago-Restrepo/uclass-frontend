@@ -2,7 +2,7 @@ import React from 'react'
 //Types
 import { Review } from '@/types/review';
 //Components
-import { ReviewCard } from '@/components/common/ReviewCard';
+import { ProfileReviewCard } from '@/components/profile/ProfileReviewCard';
 //Props
 interface ProfileReviewCardListProps {
     reviews: Review[],
@@ -18,7 +18,7 @@ export function ProfileReviewCardList({
             <div className='flex flex-wrap justify-start gap-5 mt-3 w-full'>
                 {
                     reviews.map((review, index) => (
-                        <ReviewCard 
+                        <ProfileReviewCard 
                             key={index} 
                             review={review} 
                             canBeDeleted={true}

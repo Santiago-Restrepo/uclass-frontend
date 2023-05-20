@@ -5,10 +5,12 @@ import { Review } from '@/types/review';
 import { PendingReviewCard } from './PendingReviewCard';
 //Props
 interface PendingReviewListProps {
-    reviews: Review[]
+    reviews: Review[],
+    refresh?: () => void
 }
 export function PendingReviewCardList({
-    reviews
+    reviews,
+    refresh
 }: PendingReviewListProps) {
     return (
         <div
@@ -16,7 +18,7 @@ export function PendingReviewCardList({
         >
             {
                 reviews.map((review, index) => (
-                    <PendingReviewCard key={index} review={review}/>
+                    <PendingReviewCard key={index} review={review} refresh={refresh}/>
                 ))
             }
         </div>

@@ -18,7 +18,7 @@ import {AiFillStar, AiOutlineStar} from 'react-icons/ai';
 import {BiCommentDetail} from 'react-icons/bi';
 import {BsFillTrash2Fill} from 'react-icons/bs';
 import { useApi } from '@/hooks/useApi';
-export const ReviewCard = ({
+export const ProfileReviewCard = ({
     review,
     comment = false,
     canBeDeleted = false,
@@ -75,44 +75,27 @@ export const ReviewCard = ({
     }
     
     return (
-        <div className='flex flex-col items-center justify-center w-full max-w-[11rem] shadow-sm rounded-md p-2 bg-white'>
+        <div className='relative flex w-full shadow-sm rounded-md p-3 bg-white'>
             <Link 
                 href={`/review/${review._id}`}
             >
                 <div
-                    className='flex justify-center items-center w-full'
+                    className='flex flex-col justify-start w-full'
                 >
-                    <div
-                        className='relative w-10 h-10 rounded-full overflow-hidden'
-                    >
-                        <Image
-                            src={typeof review.user === 'string' ? '/user.png' : review.user ? review.user.photo || '/user.png' : '/user.png'}
-                            alt="Picture of the author"
-                            fill={true}
-                            sizes='100%'
-                            style={{borderRadius: '100%', objectFit: 'contain', aspectRatio: '1/1'}}
-                        />
-                    </div>
-                    <div className='flex flex-col justify-center items-start ml-3 w-1/2'>
-                        <h2 className='text-md font-medium text-gray-800'>
-                            {
-                                typeof review.user === 'string' ? review.user : review.user ? review.user.name : 'Usuario elimiado'
-                            }
-                        </h2>
-                        <div className="flex">
-                            {
-                                Array(5).fill(0).map((_, index) => {
-                                    if(index < ratingAverage){
-                                        return <AiFillStar key={index} className='text-green-600' size={15}/>
-                                    }else{
-                                        return <AiOutlineStar key={index} className='text-green-600' size={15}/>
-                                    }
-                                })
-                            }
-                        </div>
+                    <span className='text-sm text-gray-400'>{new Date(review.createdAt).toLocaleDateString()}</span>
+                    <div className="flex">
+                        {
+                            Array(5).fill(0).map((_, index) => {
+                                if(index < ratingAverage){
+                                    return <AiFillStar key={index} className='text-green-600' size={15}/>
+                                }else{
+                                    return <AiOutlineStar key={index} className='text-green-600' size={15}/>
+                                }
+                            })
+                        }
                     </div>
                 </div>
-                <p className='text-sm font-normal text-gray-500 mt-3 text-center leading-tight'>
+                <p className='block text-sm font-normal text-gray-400 bg-gray-200 p-2 mt-3 w-full leading-tight'>
                     {review.content}
                 </p>
                 {
@@ -125,20 +108,18 @@ export const ReviewCard = ({
                         </div>
                     )
                 }
+                {
+                    review.rejectedReason && (
+                        <p className='text-sm font-normal text-gray-500 mt-3 leading-tight'><b>Razón del rechazo: </b> {review.rejectedReason}</p>
+                    )
+                }
             </Link>
-            {
-                review.rejectedReason && (
-                    <div className='flex justify-center items-center gap-2 mt-5 px-2 py-1 text-sm font-semibold border-2 border-red-600 rounded-md text-red-600'>
-                        <span className='text-red-600'>Rechazada</span>
-                        <span className='text-red-600'>{review.rejectedReason}</span>
-                    </div>
-                )
-            }
+            
             {
                 canBeDeleted && (
-                    <div className='flex justify-center'>
+                    <div className='absolute flex justify-center items-center gap-2 -top-2 -right-2'>
                         <button 
-                            className="group flex justify-center items-center gap-2 mt-5 px-2 py-1 text-sm font-semibold border-2 border-gray-600 rounded-md text-gray-600 hover:bg-gray-600 hover:text-white"
+                            className="group flex justify-center items-center gap-2 px-2 py-1 text-sm font-semibold border-2 border-gray-600 rounded-md text-gray-600 hover:bg-gray-600 hover:text-white"
                             onClick={handleDeleteReview}
                         >
                             <BsFillTrash2Fill size={15} className='text-gray-600 group-hover:text-white'/>

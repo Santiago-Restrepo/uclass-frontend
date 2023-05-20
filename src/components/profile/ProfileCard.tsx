@@ -34,7 +34,14 @@ export function ProfileCard({
     }, [reviews])
     const pendingReviews = useMemo(() => {
         if(reviews && reviews.length > 0) {
-            return reviews.filter(review => !review.isApproved)
+            return reviews.filter(review => !review.isApproved && !review.isRejected)
+        }else{
+            return []
+        }
+    }, [reviews])
+    const rejectedReviews = useMemo(() => {
+        if(reviews && reviews.length > 0) {
+            return reviews.filter(review => review.isRejected)
         }else{
             return []
         }
@@ -69,7 +76,7 @@ export function ProfileCard({
                         <div className=''>
                             <div className='mt-2'>
                                 <h3 className='text-md font-normal text-gray-400'>
-                                    Reseñas aprobadas: {aprovedReviews?.length} reseñas
+                                    Reseñas <b className='text-green-600'>aprobadas</b>:
                                 </h3>
                                 <ProfileReviewCardList 
                                     reviews={aprovedReviews} 
@@ -80,7 +87,7 @@ export function ProfileCard({
                                     }}
                                 />
                                 <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
-                                    Reseñas pendientes por aprobación: {aprovedReviews?.length} reseñas
+                                    Reseñas <b className='text-yellow-600'>pendientes por aprobación</b>:
                                 </h3>
                                 <ProfileReviewCardList 
                                     reviews={pendingReviews}
@@ -91,6 +98,18 @@ export function ProfileCard({
                                     }}
                                     
                                 />
+                                <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
+                                    Reseñas <b className='text-red-600'>rechazadas</b>:
+                                </h3>
+                                <ProfileReviewCardList
+                                    reviews={rejectedReviews}
+                                    refresh={() => {
+                                        refetchReviews(`/reviews/user/${user.id}`, {
+                                            method: 'GET'
+                                        })
+                                    }}
+                                />
+
                             </div>
                         </div>
                         <div className='w-full'>

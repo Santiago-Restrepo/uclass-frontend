@@ -31,7 +31,7 @@ export function ReviewPageCard({
                 <div className='flex flex-col items-start'>
                     <h2 className='text-md font-medium text-gray-800'>
                         {
-                            typeof user === 'string' ? user : user ? user.name : 'Anónimo'
+                            typeof user === 'string' ? user : user ? user.name : 'Usuario elimiado'
                         }
                     </h2>
                     <p className='text-sm text-gray-400'>

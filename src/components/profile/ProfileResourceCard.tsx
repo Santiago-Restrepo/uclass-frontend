@@ -97,10 +97,10 @@ export function ProfileResourceCard({
                 canBeDeleted && (
                     <div className='absolute -top-2 -right-2 flex flex-col items-center justify-center'>
                         <button 
-                            className="group ml-2 gap-2 px-2 py-1 text-sm font-semibold border-2 border-red-600 rounded-md text-red-600 hover:bg-red-600 hover:text-white"
+                            className="group ml-2 gap-2 px-2 py-1 text-sm font-semibold border-2 border-gray-600 rounded-md text-gray-600 hover:bg-red-600 hover:border-red-600 hover:text-white"
                             onClick={handleDeleteResource}
                         >
-                            <BsFillTrash2Fill size={15} className='text-red-600 group-hover:text-white'/>
+                            <BsFillTrash2Fill size={15} className='text-gray-600 group-hover:text-white'/>
                         </button>
                     </div>
                 )
