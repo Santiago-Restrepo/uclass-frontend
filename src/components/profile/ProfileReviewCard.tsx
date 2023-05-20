@@ -78,6 +78,7 @@ export const ProfileReviewCard = ({
         <div className='relative flex w-full shadow-sm rounded-md p-3 bg-white'>
             <Link 
                 href={`/review/${review._id}`}
+                className='w-full'
             >
                 <div
                     className='flex flex-col justify-start w-full'

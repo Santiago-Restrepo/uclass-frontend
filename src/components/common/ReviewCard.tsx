@@ -75,7 +75,7 @@ export const ReviewCard = ({
     }
     
     return (
-        <div className='flex flex-col items-center justify-center w-full max-w-[11rem] shadow-sm rounded-md p-2 bg-white'>
+        <div className='flex flex-col items-center justify-center w-full shadow-sm rounded-md p-2 bg-white sm:max-w-[11rem]'>
             <Link 
                 href={`/review/${review._id}`}
             >
