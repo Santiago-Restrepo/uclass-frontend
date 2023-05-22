@@ -7,12 +7,12 @@ import { NavBar } from '@/components/layout/NavBar';
 import { userFromToken } from '@/utils/userFromToken';
 //Props
 import { User } from '@/types/user';
-interface ResourcesDashboardProps {
+interface SubjectsDashboardProps {
     user: User
 }
-export default function ResourcesDashboard({
+export default function SubjectsDashboard({
     user
-}: ResourcesDashboardProps) {
+}: SubjectsDashboardProps) {
     return (
         <>
         <Head>
@@ -23,7 +23,7 @@ export default function ResourcesDashboard({
         </Head>
         <Screen>
             <NavBar user={user}/>
-            Resources dashboard
+            Subjects dashboard
         </Screen>
         </>
     )

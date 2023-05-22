@@ -110,7 +110,7 @@ export const NavBar = ({
                     })
                 }
             </div>
-            <div className='w-full mt-2 pl-5'>
+            <div className='w-full mt-2 pl-5 max-w-md'>
                 <div className='w-full flex justify-start'>
                     {
                         navigation.map((item, index) => {

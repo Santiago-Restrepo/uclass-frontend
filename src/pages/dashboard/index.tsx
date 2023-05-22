@@ -28,20 +28,23 @@ export default function Dashboard({
         <Screen>
             <NavBar user={user}/>
             <div>
-                <h1 className='text-xl text-center font-normal text-gray-400'>Dashboards</h1>
-                <div className='flex flex-wrap justify-center gap-5 mt-5 w-full'>
+                <h1 className='text-xl text-center font-normal text-gray-500'>Dashboards</h1>
+                <div className='flex flex-wrap justify-center gap-5 mt-2 w-full'>
+                    <p className='text-center text-gray-400 w-full leading-none'>
+                        El siguiente apartado es para acceder a los dashboards de profesores y recursos. Contiene información técnica por lo que puede ser complicado de entender.
+                    </p>
                     <div className='flex items-center w-full gap-2'>
                         <Link 
                             className='group text-center text-green-600 border-2 font-medium border-green-600 px-3 py-2 rounded-md leading-none transition-colors hover:bg-green-600 hover:text-white'
                             href='/dashboard/teachers'
                         >
-                            <RiDashboardFill className='inline-block mr-2 text-green-600 group-hover:text-white' size={20}/> Dashboard de profesores
+                            <RiDashboardFill className='inline-block mr-2 text-green-600 group-hover:text-white' size={20}/> Dashboard de profesores y reseñas
                         </Link>
                         <Link 
                             className='group text-center text-blue-600 border-2 font-medium border-blue-600 px-3 py-2 rounded-md leading-none transition-colors hover:bg-blue-600 hover:text-white'
-                            href='/dashboard/resources'
+                            href='/dashboard/subjects'
                         >
-                            <RiDashboardFill className='inline-block mr-2 text-blue-600 group-hover:text-white' size={20}/> Dashboard de recursos
+                            <RiDashboardFill className='inline-block mr-2 text-blue-600 group-hover:text-white' size={20}/> Dashboard de asignaturas y recursos
                         </Link>
                     </div>
                 </div>
