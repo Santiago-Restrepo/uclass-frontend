@@ -30,8 +30,8 @@ export default function Dashboard({
             <div>
                 <h1 className='text-xl text-center font-normal text-gray-500'>Dashboards</h1>
                 <div className='flex flex-wrap justify-center gap-5 mt-2 w-full'>
-                    <p className='text-center text-gray-400 w-full leading-none'>
-                        El siguiente apartado es para acceder a los dashboards de profesores y recursos. Contiene información técnica por lo que puede ser complicado de entender.
+                    <p className='text-center text-gray-500 w-full leading-none bg-gray-200 p-3 rounded-md'>
+                        El siguiente apartado es para acceder a los dashboards de profesores y recursos. Aquí encontraras información detallada sobre las reseñas y los recursos que se han subido a la plataforma así como también de los profesores que han sido reseñados.
                     </p>
                     <div className='flex items-center w-full gap-2'>
                         <Link 
