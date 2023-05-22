@@ -17,7 +17,11 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 //types
-import { IResourcesCount, ISubjectResourcesCount } from '@/types/analytics';
+import { 
+    IResourcesCount, 
+    ISubjectResourcesCount ,
+    ISubjectResourcesRatingCount
+} from '@/types/analytics';
 import { User } from '@/types/user';
 
 interface SubjectsDashboardProps {
@@ -38,6 +42,10 @@ export default function SubjectsDashboard({
         data: subjectResourceCommentsCount,
         loading: subjectResourceCommentsCountLoading,
     } = useApi<ISubjectResourcesCount[]>([], '/analytics/subjects/resources/comments/count');
+    const {
+        data: subjectResourceRatingCount,
+        loading: subjectResourceRatingCountLoading,
+    } = useApi<ISubjectResourcesRatingCount[]>([], '/analytics/subjects/resources/rating/count');
 
     const resourcesCountFilled = useMemo(() => {
         if (resourcesCount.length > 0) {
@@ -102,7 +110,7 @@ export default function SubjectsDashboard({
                         XdataKey='date'
                         LineDataKeys={["count"]}
                         label='Cantidad de recursos por fecha'
-                        fillOffset={5}
+                        fillOffset={4}
                     />
                 </div>
                 <div className='flex w-full h-2/4 mt-5 max-w-4xl gap-5'>
@@ -110,6 +118,7 @@ export default function SubjectsDashboard({
                         data={subjectResourcesCount.map((resource) => ({...resource, name: resource.subject.name}))} 
                         dataKey={"count"}
                         label='Cantidad de recursos por asignatura'
+                        fillOffset={3}
                     />
                     <CCountChart
                         count={subjectResourcesCount.reduce((acc, resource) => acc + resource.count, 0)}
@@ -121,11 +130,20 @@ export default function SubjectsDashboard({
                         data={subjectResourceCommentsCount.map((resource) => ({...resource, name: resource.subject.name}))} 
                         dataKey={"count"}
                         label='Cantidad de comentarios por recursos de asignatura'
-                        fillOffset={3}
+                        fillOffset={6}
                     />
                     <CCountChart
                         count={subjectResourceCommentsCount.reduce((acc, resource) => acc + resource.count, 0)}
                         label='Cantidad total de comentarios hasta la fecha'
+                    />
+                </div>
+                <div className='w-full h-2/5 mt-5'>
+                    <CBarChart 
+                        data={subjectResourceRatingCount} 
+                        XdataKey='subject.name'
+                        YdataKeys={["rating"]}
+                        label='Promedio de calificación de asignaturas por recursos'
+                        fillOffset={6}
                     />
                 </div>
             </div>

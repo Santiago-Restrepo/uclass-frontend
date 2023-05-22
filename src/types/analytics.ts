@@ -41,3 +41,11 @@ export interface ISubjectResourcesCount {
         name: string;
     }
 }
+
+export interface ISubjectResourcesRatingCount {
+    rating: number;
+    subject:{
+        _id: string;
+        name: string;
+    }
+}
