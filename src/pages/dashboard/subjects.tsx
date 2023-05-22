@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useMemo } from 'react';
 import { GetServerSidePropsContext } from 'next';
 //components
 import { Screen } from '@/components/layout/Screen';
@@ -7,6 +8,7 @@ import { NavBar } from '@/components/layout/NavBar';
 import CBarChart from '@/components/dashboard/CBarChart';
 import CPieChart from '@/components/dashboard/CPieChart';
 import CCountChart from '@/components/dashboard/CCountChart';
+import CLineChart from '@/components/dashboard/CLineChart';
 //utils
 import { userFromToken } from '@/utils/userFromToken';
 //Hooks
@@ -15,8 +17,9 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 //types
-import { ITeacherReviewsCount } from '@/types/analytics';
+import { IResourcesCount, ISubjectResourcesCount } from '@/types/analytics';
 import { User } from '@/types/user';
+
 interface SubjectsDashboardProps {
     user: User
 }
@@ -24,17 +27,50 @@ export default function SubjectsDashboard({
     user
 }: SubjectsDashboardProps) {
     const {
-        data: teachersReviewsCount,
-        loading: teachersReviewsCountLoading,
-    } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/count');
+        data: resourcesCount,
+        loading: reviewsCountLoading,
+    } = useApi<IResourcesCount[]>([], '/analytics/resources/count');
     const {
-        data: teachersReviewsRatingCount,
-        loading: teachersReviewsRatingCountLoading,
-    } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/rating/count');
+        data: subjectResourcesCount,
+        loading: subjectResourcesCountLoading,
+    } = useApi<ISubjectResourcesCount[]>([], '/analytics/subjects/resources/count');
     const {
-        data: teachersReviewsCommentsCount,
-        loading: teachersReviewsCommentsCountLoading,
-    } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/comments/count');
+        data: subjectResourceCommentsCount,
+        loading: subjectResourceCommentsCountLoading,
+    } = useApi<ISubjectResourcesCount[]>([], '/analytics/subjects/resources/comments/count');
+
+    const resourcesCountFilled = useMemo(() => {
+        if (resourcesCount.length > 0) {
+            const minDate = new Date(resourcesCount[0].date);
+            const maxDate = new Date(resourcesCount[resourcesCount.length - 1].date);
+            const diffTime = Math.abs(maxDate.getTime() - minDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const emptyDates : IResourcesCount[] = [];
+            for (let i = 0; i < diffDays; i++) {
+                const date = new Date(minDate);
+                date.setDate(date.getDate() + i);
+                const dateExist = resourcesCount.find((review) => new Date(review.date).toDateString() === date.toDateString());
+                if (!dateExist) {
+                    emptyDates.push({
+                        date: date.toISOString(),
+                        count: 0
+                    });
+
+                }
+            }
+            const allReviewsCount = [...resourcesCount, ...emptyDates].map(review => ({
+                ...review,
+                date: new Date(review.date).getTime()
+            }))
+            allReviewsCount.sort((a, b) => a.date - b.date);
+            return allReviewsCount.map(review => ({
+                ...review,
+                date: new Date(review.date).toLocaleDateString()
+            }));
+        }else{
+            return [];
+        }
+    }, [resourcesCount]);
     useNavigationPath([]);
     return (
         <>
@@ -53,45 +89,43 @@ export default function SubjectsDashboard({
                 Los siguientes gráficos muestran información sobre las asignaturas y recursos de la plataforma
             </p>
             {
-                teachersReviewsCountLoading || teachersReviewsRatingCountLoading || teachersReviewsCommentsCountLoading && (
+                reviewsCountLoading && (
                     <div className='flex w-full h-full items-center justify-center'>
                         <AiOutlineLoading3Quarters className='animate-spin text-4xl text-gray-400'/>
                     </div>
                 )
             }
             <div className='flex w-full h-full items-start justify-center flex-wrap gap-2'>
-                <div className='w-full h-2/4 mt-5 max-w-md'>
-                    <CPieChart 
-                        data={teachersReviewsCount.map((teacher) => ({...teacher, name: teacher.teacher.name}))} 
-                        dataKey={"count"}
-                        label='Cantidad de reseñas por profesor'
+                <div className='w-full h-2/5 mt-5'>
+                    <CLineChart 
+                        data={resourcesCountFilled} 
+                        XdataKey='date'
+                        LineDataKeys={["count"]}
+                        label='Cantidad de recursos por fecha'
+                        fillOffset={5}
                     />
                 </div>
-                <div className='w-full h-2/4 mt-5 max-w-md'>
+                <div className='flex w-full h-2/4 mt-5 max-w-4xl gap-5'>
                     <CPieChart 
-                        data={teachersReviewsCommentsCount.map((teacher) => ({...teacher, name: teacher.teacher.name}))} 
+                        data={subjectResourcesCount.map((resource) => ({...resource, name: resource.subject.name}))} 
                         dataKey={"count"}
-                        label='Cantidad de comentarios por reseñas por profesor'
+                        label='Cantidad de recursos por asignatura'
+                    />
+                    <CCountChart
+                        count={subjectResourcesCount.reduce((acc, resource) => acc + resource.count, 0)}
+                        label='Cantidad total de recursos hasta la fecha'
+                    />
+                </div>
+                <div className='flex w-full h-2/4 mt-5 max-w-4xl gap-5'>
+                    <CPieChart 
+                        data={subjectResourceCommentsCount.map((resource) => ({...resource, name: resource.subject.name}))} 
+                        dataKey={"count"}
+                        label='Cantidad de comentarios por recursos de asignatura'
                         fillOffset={3}
                     />
-                </div>
-                <div className='flex justify-between gap-2 w-full h-2/4 mt-5 max-w-4xl'>
                     <CCountChart
-                        count={teachersReviewsCount.reduce((acc, teacher) => acc + teacher.count, 0)}
-                        label='Cantidad total de reseñas'
-                    />
-                    <CCountChart
-                        count={teachersReviewsCommentsCount.reduce((acc, teacher) => acc + teacher.count, 0)}
-                        label='Cantidad total de comentarios'
-                    />
-                </div>
-                <div className='w-full h-2/5 mt-5'>
-                    <CBarChart 
-                        data={teachersReviewsRatingCount} 
-                        XdataKey='teacher.name'
-                        YdataKeys={["clarity", "demanding", "fairness"]}
-                        label='Promedio de calificación de claridad, exigencia y justicia por profesor'
-                        fillOffset={5}
+                        count={subjectResourceCommentsCount.reduce((acc, resource) => acc + resource.count, 0)}
+                        label='Cantidad total de comentarios hasta la fecha'
                     />
                 </div>
             </div>

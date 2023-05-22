@@ -27,3 +27,17 @@ export interface ITeachersReviewsCommentsCount {
         name: string;
     }
 }
+
+//Resources and subjects
+export interface IResourcesCount { //Same as IReviewsCount
+    count: number;
+    date: string;
+}
+
+export interface ISubjectResourcesCount {
+    count: number;
+    subject:{
+        _id: string;
+        name: string;
+    }
+}

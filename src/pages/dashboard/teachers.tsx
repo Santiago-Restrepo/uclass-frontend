@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useMemo } from 'react';
 import { GetServerSidePropsContext } from 'next';
 //components
 import { Screen } from '@/components/layout/Screen';
@@ -24,6 +25,7 @@ import {
 
 } from '@/types/analytics';
 import { User } from '@/types/user';
+import { all } from 'axios';
 //Props
 interface TeachersDashboardProps {
     user: User
@@ -47,6 +49,38 @@ export default function TeachersDashboard({
         data: teachersReviewsCommentsCount,
         loading: teachersReviewsCommentsCountLoading,
     } = useApi<ITeachersReviewsCommentsCount[]>([], '/analytics/teachers/reviews/comments/count');
+    const reviewsCountFilled = useMemo(() => {
+        if (reviewsCount.length > 0) {
+            const minDate = new Date(reviewsCount[0].date);
+            const maxDate = new Date(reviewsCount[reviewsCount.length - 1].date);
+            const diffTime = Math.abs(maxDate.getTime() - minDate.getTime());
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            const emptyDates : IReviewsCount[] = [];
+            for (let i = 0; i < diffDays; i++) {
+                const date = new Date(minDate);
+                date.setDate(date.getDate() + i);
+                const dateExist = reviewsCount.find((review) => new Date(review.date).toDateString() === date.toDateString());
+                if (!dateExist) {
+                    emptyDates.push({
+                        date: date.toISOString(),
+                        count: 0
+                    });
+
+                }
+            }
+            const allReviewsCount = [...reviewsCount, ...emptyDates].map(review => ({
+                ...review,
+                date: new Date(review.date).getTime()
+            }))
+            allReviewsCount.sort((a, b) => a.date - b.date);
+            return allReviewsCount.map(review => ({
+                ...review,
+                date: new Date(review.date).toLocaleDateString()
+            }));
+        }else{
+            return [];
+        }
+    }, [reviewsCount]);
     useNavigationPath([]);
     return (
         <>
@@ -65,7 +99,7 @@ export default function TeachersDashboard({
                 Los siguientes gráficos muestran información sobre las reseñas de los profesores y reseñas
             </p>
             {
-                teachersReviewsCountLoading || teachersReviewsRatingCountLoading || teachersReviewsCommentsCountLoading && (
+                teachersReviewsCountLoading || teachersReviewsRatingCountLoading || teachersReviewsCommentsCountLoading || reviewsCountLoading && (
                     <div className='flex w-full h-full items-center justify-center'>
                         <AiOutlineLoading3Quarters className='animate-spin text-4xl text-gray-400'/>
                     </div>
@@ -74,7 +108,7 @@ export default function TeachersDashboard({
             <div className='flex w-full h-full items-start justify-center flex-wrap gap-2'>
                 <div className='w-full h-2/5 mt-5'>
                     <CLineChart 
-                        data={reviewsCount} 
+                        data={reviewsCountFilled} 
                         XdataKey='date'
                         LineDataKeys={["count"]}
                         label='Cantidad de reseñas por fecha'
@@ -99,11 +133,11 @@ export default function TeachersDashboard({
                 <div className='flex justify-between gap-2 w-full h-2/4 mt-5 max-w-4xl'>
                     <CCountChart
                         count={teachersReviewsCount.reduce((acc, teacher) => acc + teacher.count, 0)}
-                        label='Cantidad total de reseñas'
+                        label='Cantidad total de reseñas hasta la fecha'
                     />
                     <CCountChart
                         count={teachersReviewsCommentsCount.reduce((acc, teacher) => acc + teacher.count, 0)}
-                        label='Cantidad total de comentarios'
+                        label='Cantidad total de comentarios hasta la fecha'
                     />
                 </div>
                 <div className='w-full h-2/5 mt-5'>
