@@ -32,10 +32,10 @@ export function PendingReviewCard({
         })
         customSwal.fire({
             title: '¿Estás seguro?',
-            text: "Esto aprovará la reseña y se mostrará en la aplicación para todos los usuarios",
+            text: "Esto aprobará la reseña y se mostrará en la aplicación para todos los usuarios",
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Aprovar reseña',
+            confirmButtonText: 'Aprobar reseña',
             cancelButtonText: 'Cancelar',
             reverseButtons: true
         }).then((result) => {
@@ -50,9 +50,9 @@ export function PendingReviewCard({
                     return response;
                 }), 
                 {
-                    pending: 'Aprovando reseña...',
-                    success: 'Reseña aprovada exitosamente',
-                    error: 'Error al aprovar reseña',
+                    pending: 'Aprobando reseña...',
+                    success: 'Reseña aprobada exitosamente',
+                    error: 'Error al aprobar reseña',
                 }
             )
             .catch(error =>{

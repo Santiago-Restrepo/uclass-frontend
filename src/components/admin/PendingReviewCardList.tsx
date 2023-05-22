@@ -17,6 +17,15 @@ export function PendingReviewCardList({
             className='flex flex-wrap justify-center gap-5 mt-5 w-full'
         >
             {
+                reviews.length === 0 && (
+                    <span
+                        className='text-sm text-gray-400'
+                    >
+                        No tienes reseñas pendientes por aprobar
+                    </span>
+                )
+            }
+            {
                 reviews.map((review, index) => (
                     <PendingReviewCard key={index} review={review} refresh={refresh}/>
                 ))

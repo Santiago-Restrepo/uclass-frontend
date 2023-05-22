@@ -5,6 +5,7 @@ import React, {useMemo, useCallback} from 'react'
 import {FiHome, FiUser, FiLogOut} from 'react-icons/fi'
 import {GoSettings} from 'react-icons/go'
 import {BsFillShieldLockFill} from 'react-icons/bs'
+import {RiDashboardFill} from 'react-icons/ri';
 //Redux
 import { useDispatch, useSelector } from 'react-redux'
 import { setUser } from '@/features/userSlice'
@@ -57,6 +58,12 @@ export const NavBar = ({
                 allowedRoles: ['user', 'admin']
             },
             {
+                Icon: ({color}: IconProps) => <RiDashboardFill size={20} color={color}/>,
+                label: 'Analítica',
+                to: '/dashboard',
+                allowedRoles: ['user', 'admin']
+            },
+            {
                 Icon: ({color}: IconProps) => <BsFillShieldLockFill size={20} color={color}/>,
                 label: 'Admin',
                 to: '/admin',
@@ -75,7 +82,7 @@ export const NavBar = ({
     }, [])
     return (
         <>
-            <div className="flex justify-between w-full px-5 py-2 bg-white shadow-md rounded-md">
+            <div className="flex justify-between w-full px-5 py-2 bg-white shadow-md rounded-md max-w-md">
                 {
                     items.map((item, index) => {
                         const Icon = item.Icon;
