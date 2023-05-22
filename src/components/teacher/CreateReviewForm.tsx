@@ -6,7 +6,7 @@ import { StarRatingInput } from '@/components/common/StarRatingInput'
 import { toast } from 'react-toastify';
 //Types
 import { Subject } from '@/types/subject'
-import { Review } from '@/types/review'
+import { ApiReview } from '@/types/review'
 //props
 interface CreateReviewFormProps {
     subjects: Subject[],
@@ -38,7 +38,7 @@ export function CreateReviewForm({
     const methods = useForm({
         resolver: yupResolver(createReviewSchema)
     });
-    async function createReview (review: Review) {
+    async function createReview (review: ApiReview) {
         const response = await authFetch(`/reviews`, {
             method: 'POST',
             data: review
@@ -46,7 +46,7 @@ export function CreateReviewForm({
         return response
     }
     function onSubmit(data: CreateReviewFormValues) {
-        const review: Review = {
+        const review: ApiReview = {
             ...data,
             teacherId,
             subject: data.subject,
