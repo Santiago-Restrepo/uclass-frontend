@@ -86,7 +86,7 @@ export const NavBar = ({
                 {
                     items.map((item, index) => {
                         const Icon = item.Icon;
-                        const active = router.pathname === item.to;
+                        const active = router.pathname.includes(item.to || '');
                         return (
                             item.onClick ?
                             <button onClick={item.onClick} key={`item ${index}`}>

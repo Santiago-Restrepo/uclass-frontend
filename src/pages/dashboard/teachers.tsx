@@ -3,16 +3,27 @@ import { GetServerSidePropsContext } from 'next';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
+//Dashboard components
+import CBarChart from '@/components/dashboard/CBarChart';
 //utils
 import { userFromToken } from '@/utils/userFromToken';
-//Props
+//Hooks
+import { useApi } from '@/hooks/useApi';
+//types
+import { ITeacherReviewsCount } from '@/types/analytics';
 import { User } from '@/types/user';
+//theme
+import { colors } from '@/styles/colors';
+//Props
 interface TeachersDashboardProps {
     user: User
 }
 export default function TeachersDashboard({
     user
 }: TeachersDashboardProps) {
+    const {
+        data: teachersReviewsCount,
+    } = useApi<ITeacherReviewsCount>([], '/analytics/teachers/reviews/count');
     return (
         <>
         <Head>
@@ -23,7 +34,14 @@ export default function TeachersDashboard({
         </Head>
         <Screen contentClassname={`max-w-none`}>
             <NavBar user={user}/>
-            Teachers dashboard
+            <div className='w-full h-1/4 mt-5'>
+                <CBarChart 
+                    data={teachersReviewsCount} 
+                    dataKey="count" 
+                    label='Cantidad de reseñas por profesor'
+                    // fill={colors.yellow500}
+                />
+            </div>
         </Screen>
         </>
     )
