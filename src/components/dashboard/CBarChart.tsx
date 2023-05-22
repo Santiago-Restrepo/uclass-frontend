@@ -27,7 +27,7 @@ export default function CBarChart({
     fillOffset = 0
 }: BarChartProps) {
     return (
-        <div className='relative w-full h-full bg-white pt-10'>
+        <div className='relative w-full h-full bg-white pt-16'>
             <h1 className='z-50 absolute top-0 left-0 right-0 text-start text-lg font-bold text-gray-800 my-3 ml-10 leading-none'>{label}</h1>
             <ResponsiveContainer width="100%" height="100%">
                 <BarChart

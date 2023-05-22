@@ -7,6 +7,7 @@ import { NavBar } from '@/components/layout/NavBar';
 import CBarChart from '@/components/dashboard/CBarChart';
 import CPieChart from '@/components/dashboard/CPieChart';
 import CCountChart from '@/components/dashboard/CCountChart';
+import CLineChart from '@/components/dashboard/CLineChart';
 //utils
 import { userFromToken } from '@/utils/userFromToken';
 //Hooks
@@ -15,10 +16,14 @@ import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 //types
-import { ITeacherReviewsCount } from '@/types/analytics';
+import { 
+    IReviewsCount, 
+    ITeacherReviewsCount,
+    ITeachersReviewsRatingCount,
+    ITeachersReviewsCommentsCount
+
+} from '@/types/analytics';
 import { User } from '@/types/user';
-//theme
-import { colors } from '@/styles/colors';
 //Props
 interface TeachersDashboardProps {
     user: User
@@ -27,18 +32,22 @@ export default function TeachersDashboard({
     user
 }: TeachersDashboardProps) {
     const {
+        data: reviewsCount,
+        loading: reviewsCountLoading,
+    } = useApi<IReviewsCount[]>([], '/analytics/reviews/count');
+    const {
         data: teachersReviewsCount,
         loading: teachersReviewsCountLoading,
     } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/count');
     const {
         data: teachersReviewsRatingCount,
         loading: teachersReviewsRatingCountLoading,
-    } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/rating/count');
+    } = useApi<ITeachersReviewsRatingCount[]>([], '/analytics/teachers/reviews/rating/count');
     const {
         data: teachersReviewsCommentsCount,
         loading: teachersReviewsCommentsCountLoading,
-    } = useApi<ITeacherReviewsCount[]>([], '/analytics/teachers/reviews/comments/count');
-    useNavigationPath(['/home','/dashboard']);
+    } = useApi<ITeachersReviewsCommentsCount[]>([], '/analytics/teachers/reviews/comments/count');
+    useNavigationPath([]);
     return (
         <>
         <Head>
@@ -62,7 +71,16 @@ export default function TeachersDashboard({
                     </div>
                 )
             }
-            <div className='flex w-full h-full items-start justify-start flex-wrap gap-2'>
+            <div className='flex w-full h-full items-start justify-center flex-wrap gap-2'>
+                <div className='w-full h-2/5 mt-5'>
+                    <CLineChart 
+                        data={reviewsCount} 
+                        XdataKey='date'
+                        LineDataKeys={["count"]}
+                        label='Cantidad de reseñas por fecha'
+                        fillOffset={5}
+                    />
+                </div>
                 <div className='w-full h-2/4 mt-5 max-w-md'>
                     <CPieChart 
                         data={teachersReviewsCount.map((teacher) => ({...teacher, name: teacher.teacher.name}))} 
@@ -78,7 +96,7 @@ export default function TeachersDashboard({
                         fillOffset={3}
                     />
                 </div>
-                <div className='flex flex-col justify-between gap-2 w-full h-2/4 mt-5 max-w-md'>
+                <div className='flex justify-between gap-2 w-full h-2/4 mt-5 max-w-4xl'>
                     <CCountChart
                         count={teachersReviewsCount.reduce((acc, teacher) => acc + teacher.count, 0)}
                         label='Cantidad total de reseñas'
@@ -97,6 +115,7 @@ export default function TeachersDashboard({
                         fillOffset={5}
                     />
                 </div>
+                
             </div>
         </Screen>
         </>
