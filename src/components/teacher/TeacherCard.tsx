@@ -7,13 +7,15 @@ import { Teacher } from '@/types/teacher';
 //Icons
 import {AiFillStar} from 'react-icons/ai';
 interface TeacherCardProps {
-    teacher: Teacher
+    teacher: Teacher,
+    basePath?: string
 }
 export const TeacherCard = ({
-    teacher
+    teacher,
+    basePath = '/teacher'
 }:TeacherCardProps) => {
     return (
-        <Link key={teacher._id} href={`/teacher/${teacher._id}`} className='w-full'>
+        <Link key={teacher._id} href={`${basePath}/${teacher._id}`} className='w-full'>
             <div className='flex justify-between items-center gap-2 w-full border-t-2 border-gray-200 py-4'>
                 <div className='flex gap-4'>
                     <div className="flex justify-center items-center image__wrapper w-20 h-20 rounded-full overflow-hidden">

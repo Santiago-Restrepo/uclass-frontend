@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import Link from 'next/link';
-import { IconName, Searcher as SearcherProps } from '@/types/searcher';
+import { IconName} from '@/types/searcher';
 import { useDispatch, useSelector } from 'react-redux';
 import { setQuery, setActiveSearcher } from '@/features/searcherSlice';
 import { RootState } from '../../app/store';
@@ -19,6 +19,18 @@ const icons = {
     teacher: FaChalkboardTeacher,
     course: BsBook
 }
+//Props
+interface SearcherProps {
+    title: string
+    iconName: IconName
+    iconColor: string
+    placeholder: string
+    query: string
+    apiPath: string
+    appPath: string
+    fetchOnQueryChange?: boolean
+}
+
 export const Searcher = ({
     title,
     iconName,
@@ -26,7 +38,8 @@ export const Searcher = ({
     placeholder,
     query,
     apiPath,
-    appPath
+    appPath,
+    fetchOnQueryChange = true
 }: SearcherProps) => {
     const dispatch = useDispatch();
     const {authFetch, data, error, loading: fetchLoading} = useApi();
@@ -42,18 +55,20 @@ export const Searcher = ({
     }
     const Icon = iconName === IconName.teacher ? icons.teacher : icons.course;
     useEffect(() => {
-        setLoading(true);
-        if (query) {
-            //TODO: Fetch results
-            const delayDebounceFn = setTimeout(() => {
-                authFetch(`/${apiPath}`, {
-                    method: 'POST',
-                    data: {
-                        query
-                    }
-                })
-            }, 300)
-            return () => clearTimeout(delayDebounceFn)
+        if (fetchOnQueryChange) {
+            setLoading(true);
+            if (query) {
+                //TODO: Fetch results
+                const delayDebounceFn = setTimeout(() => {
+                    authFetch(`/${apiPath}`, {
+                        method: 'POST',
+                        data: {
+                            query
+                        }
+                    })
+                }, 300)
+                return () => clearTimeout(delayDebounceFn)
+            }
         }
     }, [query])
 
@@ -70,7 +85,6 @@ export const Searcher = ({
         }else{
             setLoading(fetchLoading);
         }
-
     }, [fetchLoading, query])
     return (
         <div className={`flex flex-col w-full mb-5`}>

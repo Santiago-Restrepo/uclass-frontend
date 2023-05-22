@@ -1,64 +1,57 @@
 import { GetServerSidePropsContext } from 'next';
-import { useEffect, useState} from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
-//Redux
 import { RootState } from '@/app/store';
+//Hooks
 import { useSelector } from 'react-redux';
+import { useApi } from '@/hooks/useApi';
+import { useNavigationPath } from '@/hooks/useNavigationPath';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
 import { Searcher } from '@/components/searchers/Searcher';
-import { SubjectCard } from '@/components/subject/SubjectCard';
-//Hooks
-import { useApi } from '@/hooks/useApi';
-import { useNavigationPath } from '@/hooks/useNavigationPath';
+import { TeacherCard } from '@/components/teacher/TeacherCard';
 //Types
-import { Subject } from '@/types/subject';
+import { Teacher as TeacherType } from '@/types/teacher';
 import { User } from '@/types/user';
 //Utils
 import { userFromToken } from '@/utils/userFromToken';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
 //Props
-interface SubjectsProps {
+interface TeachersProps {
     user: User
 }
-export default function Subjects({
+export default function AdminTeachers({
     user
-}: SubjectsProps) {
+}: TeachersProps) {
+    const {data, error, loading, authFetch} = useApi<TeacherType[]>([]);
+    const [teachers, setTeachers] = useState<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
-    const subjectSearcher = searchers.find(searcher => searcher.appPath === '/subject') as typeof searchers[0];
+    const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher') as typeof searchers[0];
     const {
         query
-    } = subjectSearcher;
-    const [subjects, setSubjects] = useState<Subject[]>([]);
-    const {data, error, loading, authFetch} = useApi<Subject[]>([]);
-    useNavigationPath(['/home' ]);
+    } = teacherSearcher;
+    useNavigationPath(['/home', '/admin' ]);
     useEffect(() => {
-            authFetch(`/subjects/populated`, {
-                method: 'GET',
-            });
-    }, []);
-    useEffect(()=>{
-        if(data){
-            setSubjects(data);
+        authFetch(`/teachers`, {
+            method: 'GET',
+        });
+    }, [])
+    useEffect(() => {
+        if (data) {
+            setTeachers(data);
         }
     }, [data])
-    useEffect(()=>{
+    useEffect(() => {
         if(query){
-            const filteredSubjects = data.filter(subject => subject.name.toLowerCase().includes(query.toLowerCase()));
-            setSubjects(filteredSubjects);
+            const filteredTeachers = data.filter(teacher => teacher.name.toLowerCase().includes(query.toLowerCase()));
+            setTeachers(filteredTeachers);
         }else{
-            setSubjects(data);
+            setTeachers(data);
         }
     }, [query])
-    if(error){
-        return (
-            <div className='flex justify-center items-center'>
-                <h1>Error</h1>
-            </div>
-        )
-    }
     return (
         <>
             <Head>
@@ -71,10 +64,16 @@ export default function Subjects({
                 <NavBar user={user} />
                 <div className='w-full h-full py-5'>
                     {
-                        subjectSearcher && (
-                            <Searcher {...subjectSearcher} fetchOnQueryChange={false}/>
+                        teacherSearcher && (
+                            <Searcher {...teacherSearcher} fetchOnQueryChange={false}/>
                         )
                     }
+                    <Link
+                        href='/admin/teachers/create'
+                        className='flex justify-center items-center w-full h-10 bg-blue-500 text-white rounded-md font-semibold text-md hover:bg-blue-600 transition duration-300 ease-in-out'
+                    >
+                        Crear profesor
+                    </Link>
                     {
                         loading && (
                             <div className='flex justify-center items-center'>
@@ -90,14 +89,23 @@ export default function Subjects({
                         )
                     }
                     {
-                        subjects && (
+                        teachers && (
                             <div className='flex flex-col justify-center items-center'>
                                 {
-                                    
-                                    subjects.map((subject: Subject) => (
-                                        <SubjectCard key={subject._id} subject={subject}/>
+                                    teachers.map((teacher) => (
+                                        <TeacherCard 
+                                            key={teacher._id}  
+                                            teacher={teacher}
+                                            basePath='/admin/teachers'
+                                        />
                                     ))
-                                    
+                                }
+                                {
+                                    teachers.length === 0 && (
+                                        <div className='flex justify-center items-center'>
+                                            <h1 className='text-md text-gray-400'>Profesores no encontrados</h1>
+                                        </div>
+                                    )
                                 }
                             </div>
                         )

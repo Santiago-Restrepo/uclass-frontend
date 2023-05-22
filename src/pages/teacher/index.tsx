@@ -1,5 +1,5 @@
 import { GetServerSidePropsContext } from 'next';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Head from 'next/head'
 import { RootState } from '@/app/store';
 //Hooks
@@ -27,13 +27,31 @@ export default function Teachers({
 }: TeachersProps) {
     const {data, error, loading, authFetch} = useApi<TeacherType[]>([]);
     const { searchers } = useSelector((state: RootState) => state.searcher);
-    const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher');
+    const teacherSearcher = searchers.find(searcher => searcher.appPath === '/teacher') as typeof searchers[0];
+    const {
+        query
+    } = teacherSearcher;
+    const [teachers, setTeachers] = useState<TeacherType[]>([]);
+
     useNavigationPath(['/home' ]);
     useEffect(() => {
         authFetch(`/teachers`, {
             method: 'GET',
         });
     }, [])
+    useEffect(() => {
+        if (data) {
+            setTeachers(data);
+        }
+    }, [data])
+    useEffect(() => {
+        if(query){
+            const filteredTeachers = data.filter(teacher => teacher.name.toLowerCase().includes(query.toLowerCase()));
+            setTeachers(filteredTeachers);
+        }else{
+            setTeachers(data);
+        }
+    }, [query])
     return (
         <>
             <Head>
@@ -47,7 +65,7 @@ export default function Teachers({
                 <div className='w-full h-full py-5'>
                     {
                         teacherSearcher && (
-                            <Searcher {...teacherSearcher} />
+                            <Searcher {...teacherSearcher} fetchOnQueryChange={false}/>
                         )
                     }
                     {
@@ -65,12 +83,20 @@ export default function Teachers({
                         )
                     }
                     {
-                        data && (
+                        teachers && (
                             <div className='flex flex-col justify-center items-center'>
                                 {
-                                    data.map((teacher: TeacherType) => (
+                                    teachers.map((teacher: TeacherType) => (
                                         <TeacherCard key={teacher._id}  teacher={teacher}/>
                                     ))
+                                }
+                                {
+                                    teachers.length === 0 && (
+                                        <div className='flex justify-center items-center'>
+                                            <h1 className='text-md text-gray-400'>Profesores no encontrados</h1>
+
+                                        </div>
+                                    )
                                 }
                             </div>
                         )

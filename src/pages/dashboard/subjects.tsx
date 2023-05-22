@@ -142,7 +142,7 @@ export default function SubjectsDashboard({
                         data={subjectResourceRatingCount} 
                         XdataKey='subject.name'
                         YdataKeys={["rating"]}
-                        label='Promedio de calificación de asignaturas por recursos'
+                        label='Promedio de calificaciones de recursos por asignatura'
                         fillOffset={6}
                     />
                 </div>
