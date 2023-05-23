@@ -4,12 +4,14 @@ import { useFormContext } from 'react-hook-form'
 interface SelectProps {
     label: string,
     name: string,
-    options: any[]
+    options: any[],
+    defaultValue?: string
 }
 export function Select({
     label,
     name,
-    options
+    options,
+    defaultValue = ''
 }: SelectProps) {
     const { register, formState:{errors} } = useFormContext();
     return (
@@ -17,6 +19,7 @@ export function Select({
             <label className='text-gray-500 font-semibold' htmlFor={name}>{label}</label>
             <select
                 className='px-2 py-2 rounded-md border-2 border-gray-200 focus:outline-none focus:border-green-600'
+                defaultValue={defaultValue}
                 {...register(name)}
             >
                 {

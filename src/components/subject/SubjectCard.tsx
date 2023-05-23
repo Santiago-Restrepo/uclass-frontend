@@ -8,14 +8,16 @@ import { Subject } from '@/types/subject';
 import { colors } from '@/styles/colors';
 //Props
 interface SubjectCardProps {
-    subject: Subject
+    subject: Subject,
+    basePath?: string
 }
 
 export function SubjectCard({
-    subject
+    subject,
+    basePath = '/subject'
 }: SubjectCardProps) {
     return (
-        <Link href={`/subject/${subject._id}`} key={subject._id} className='mb-2 p-3 shadow-lg w-full'>
+        <Link href={`${basePath}/${subject._id}`} key={subject._id} className='mb-2 p-3 shadow-lg w-full'>
             <div className='flex justify-between items-center'>
                 <div className="flex flex-col w-2/3">
                     <h3 className='text-md font-semibold text-gray-900 leading-none'>{subject.name}</h3>
