@@ -8,8 +8,6 @@ import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
 //Types
 import { Teacher as TeacherType } from '@/types/teacher';
-import { Review } from '@/types/review';
-import { Subject } from '@/types/subject';
 import { User } from '@/types/user';
 //Utils
 import { userFromToken } from '@/utils/userFromToken';
@@ -19,6 +17,7 @@ import { NavBar } from '@/components/layout/NavBar';
 import { TeacherForm } from '@/components/admin/TeacherForm';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
+import { FaChalkboardTeacher } from 'react-icons/fa';
 //props
 interface TeacherProps {
     user: User
@@ -41,12 +40,14 @@ export default function AdminTeacher({
         }
     }, [id])
     const refresh = async () => {
-        await teacherAuthFetch(`/teachers/${id}`, {
-            method: 'GET',
-        });
+        if(id && id !== 'create'){
+            await teacherAuthFetch(`/teachers/${id}`, {
+                method: 'GET',
+            });
+        }else{
+            router.push('/admin/teachers');
+        }
     }
-
-
 
     return (
         <>
@@ -98,6 +99,15 @@ export default function AdminTeacher({
                                         <h1 className='text-2xl font-semibold text-yellow-500 ml-2'>{teacher.rating}</h1>
                                     </div>
                                 </div>
+                            </div>
+                        )
+                    }
+                    {
+                        id === 'create' && (
+                            <div className='flex justify-center items-center'>
+                                <h1 className='text-2xl font-semibold text-gray-800 leading-none mb-5'>
+                                    <FaChalkboardTeacher className='inline-block mr-2' size={30}/> Crea un nuevo profesor
+                                </h1>
                             </div>
                         )
                     }

@@ -19,6 +19,7 @@ import { User } from '@/types/user';
 import { userFromToken } from '@/utils/userFromToken';
 //Icons
 import {AiOutlineLoading3Quarters} from 'react-icons/ai';
+import { BsFillPencilFill } from 'react-icons/bs';
 //Props
 interface TeachersProps {
     user: User
@@ -71,7 +72,8 @@ export default function AdminTeachers({
                     <Link
                         href='/admin/teachers/create'
                         className='flex justify-center items-center w-full h-10 bg-blue-500 text-white rounded-md font-semibold text-md hover:bg-blue-600 transition duration-300 ease-in-out'
-                    >
+                    >   
+                        <BsFillPencilFill className='mr-2' size={20} color='white'/>
                         Crear profesor
                     </Link>
                     {

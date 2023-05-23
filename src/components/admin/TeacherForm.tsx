@@ -4,15 +4,19 @@ import { Teacher } from '@/types/teacher';
 //Hooks
 import { useApi } from '@/hooks/useApi';
 import { useNavigationPath } from '@/hooks/useNavigationPath';
+import { useRouter } from 'next/router';
 //React-hook-form
 import { useForm, FormProvider } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { editTeacherSchema } from '@/schemas/adminSchemas';
-//Redux
+//Icons
+import { BsFillPencilFill, BsFillTrash2Fill } from 'react-icons/bs'
+
 //Components
 import { Input } from '@/components/common/Input'
 //Others
 import { toast } from 'react-toastify';
+import swal from '@/utils/swal';
 //Props
 interface TeacherFormProps {
     teacher: Teacher | null,
@@ -21,7 +25,8 @@ interface TeacherFormProps {
 interface TeacherFormValues {
     name: string,
     description: string,
-    email: string
+    email: string,
+    photo: string,
 }
 export function TeacherForm({
     teacher,
@@ -31,7 +36,7 @@ export function TeacherForm({
     const methods = useForm({
         resolver: yupResolver(editTeacherSchema)
     });
-
+    const router = useRouter();
     async function updateTeacher (teacherFormData: TeacherFormValues) {
         if (!teacher) {
             return
@@ -41,6 +46,52 @@ export function TeacherForm({
             data: teacherFormData
         })
         return response
+    }
+    async function createTeacher (teacherFormData: TeacherFormValues) {
+        const response = await authFetch(`/teachers`, {
+            method: 'POST',
+            data: teacherFormData
+        })
+        return response
+    }
+    async function deleteTeacher() {
+        if(!teacher) return;
+        const response = await authFetch(`/teachers/${teacher._id}`, {
+            method: 'DELETE'
+        })
+        return response
+    }
+    async function handleDelete() {
+        if(!teacher) return;
+        const customSwal = swal.mixin({
+            customClass: {
+                confirmButton: 'bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded ml-3',
+                cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded'
+            },
+            buttonsStyling: false
+        })
+        customSwal.fire({
+            title: '¿Estás seguro?',
+            text: "Esto eliminará el profesor de la base de datos",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Eliminar profesor',
+            cancelButtonText: 'Cancelar',
+            reverseButtons: true
+        }).then((result) => {
+            if(!result.isConfirmed) return;
+            toast.promise(deleteTeacher(), {
+                pending: 'Eliminando profesor...',
+                success: 'Profesor eliminado exitosamente',
+                error: 'Error al eliminar el profesor',
+            }).then(response =>{
+                methods.reset();
+            }).catch(error => {
+                console.log(error)
+            }).finally(() => { 
+                router.push('/admin/teachers');
+            });
+        });
     }
 
     function onSubmit(data: TeacherFormValues) {
@@ -53,10 +104,40 @@ export function TeacherForm({
                 toast.info('No se han detectado cambios')
                 return
             }
-            toast.promise(updateTeacher(data), {
-                pending: 'Actualizando profesor...',
-                success: 'Profesor actualizado exitosamente',
-                error: 'Error al actualizar el profesor',
+            const customSwal = swal.mixin({
+                customClass: {
+                    confirmButton: 'bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded ml-3',
+                    cancelButton: 'bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded'
+                },
+                buttonsStyling: false
+            })
+            customSwal.fire({
+                title: '¿Estás seguro?',
+                text: "Esto actualizará el profesor de la base de datos",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Actualizar profesor',
+                cancelButtonText: 'Cancelar',
+                reverseButtons: true
+            }).then((result) => {
+                if(!result.isConfirmed) return;
+                toast.promise(updateTeacher(data), {
+                    pending: 'Actualizando profesor...',
+                    success: 'Profesor actualizado exitosamente',
+                    error: 'Error al actualizar el profesor',
+                }).then(response =>{
+                    methods.reset();
+                }).catch(error => {
+                    console.log(error)
+                }).finally(() => { 
+                    if (refresh) refresh();
+                });
+            });
+        }else{
+            toast.promise(createTeacher(data), {
+                pending: 'Creando profesor...',
+                success: 'Profesor creado exitosamente',
+                error: 'Error al crear el profesor',
             }).then(response =>{
                 methods.reset();
             }).catch(error => {
@@ -86,6 +167,7 @@ export function TeacherForm({
         }
         return null
     }
+    
     useEffect(() => {
         //Set default values
         if (teacher) {
@@ -93,6 +175,7 @@ export function TeacherForm({
                 name: teacher.name,
                 description: teacher.description,
                 email: teacher.email,
+                photo: teacher.photo,
             })
         }
     }, [teacher])
@@ -124,13 +207,34 @@ export function TeacherForm({
                             type='text'
                             defaultValue={teacher?.email || ''}
                         />
+                        <Input
+                            label='Url de la foto'
+                            name='photo'
+                            type='text'
+                            defaultValue={teacher?.photo || ''}
+                        />
                     </div>
                     <button
                         type='submit'
-                        className='bg-green-600 text-white font-semibold py-2 rounded-md disabled:opacity-50'
+                        className='border-2 border-green-600 text-green-600 font-semibold py-2 rounded-md transition-colors hover:bg-green-600 hover:text-white'
                     >
-                        Confirmar cambios
+                        <BsFillPencilFill className='inline-block mr-2' />
+                        {
+                            teacher ? 'Actualizar' : 'Crear'
+                        }
                     </button>
+                    {
+                        teacher && (
+                            <button 
+                                className='border-2 border-red-600 text-red-600 font-semibold py-2 rounded-md transition-colors hover:bg-red-600 hover:text-white'
+                                onClick={handleDelete}
+                                type='button'
+                            >
+                                <BsFillTrash2Fill className='inline-block mr-2' />
+                                Eliminar
+                            </button>
+                        )
+                    }
                 </form>
             </FormProvider>
         </div>
