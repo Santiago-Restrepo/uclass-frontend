@@ -16,8 +16,7 @@ import { userFromToken } from '@/utils/userFromToken';
 //components
 import { Screen } from '@/components/layout/Screen';
 import { NavBar } from '@/components/layout/NavBar';
-import { ReviewCardList } from '@/components/teacher/ReviewCardList';
-import { CreateReviewForm } from '@/components/teacher/CreateReviewForm';
+import { TeacherForm } from '@/components/admin/TeacherForm';
 //Icons
 import {AiOutlineLoading3Quarters, AiFillStar} from 'react-icons/ai';
 //props
@@ -41,6 +40,13 @@ export default function AdminTeacher({
             });
         }
     }, [id])
+    const refresh = async () => {
+        await teacherAuthFetch(`/teachers/${id}`, {
+            method: 'GET',
+        });
+    }
+
+
 
     return (
         <>
@@ -91,16 +97,14 @@ export default function AdminTeacher({
                                         <AiFillStar className='text-yellow-500' size={30}/>
                                         <h1 className='text-2xl font-semibold text-yellow-500 ml-2'>{teacher.rating}</h1>
                                     </div>
-                                    <button
-                                        className={`mt-5 px-2 py-2 text-sm font-semibold text-white rounded-md sm:px-5 ${true ? 'bg-gray-500' : 'bg-green-600'} hover:bg-opacity-90`}
-                                        
-                                    >
-                                        Guardar cambios   
-                                    </button>
                                 </div>
                             </div>
                         )
                     }
+                    <TeacherForm 
+                        teacher={teacher} 
+                        refresh={refresh}
+                    />
                 </div>
             </Screen>
         </>
