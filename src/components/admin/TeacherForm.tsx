@@ -93,7 +93,6 @@ export function TeacherForm({
             });
         });
     }
-
     function onSubmit(data: TeacherFormValues) {
         //Check if data has changed
         if (teacher) {
@@ -167,7 +166,6 @@ export function TeacherForm({
         }
         return null
     }
-    
     useEffect(() => {
         //Set default values
         if (teacher) {
