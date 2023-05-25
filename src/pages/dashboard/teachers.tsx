@@ -68,10 +68,13 @@ export default function TeachersDashboard({
 
                 }
             }
-            const allReviewsCount = [...reviewsCount, ...emptyDates].map(review => ({
-                ...review,
-                date: new Date(review.date).getTime()
-            }))
+            const allReviewsCount = [...reviewsCount, ...emptyDates].map(review => {
+                const date = new Date(review.date);
+                return {
+                    ...review,
+                    date: date.getTime()
+                }
+            })
             allReviewsCount.sort((a, b) => a.date - b.date);
             return allReviewsCount.map(review => ({
                 ...review,

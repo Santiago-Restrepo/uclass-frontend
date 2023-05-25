@@ -15,7 +15,7 @@ export function ProfileReviewCardList({
 }: ProfileReviewCardListProps){
     return (
         reviews && (
-            <div className='flex flex-wrap justify-start gap-5 mt-3 w-full'>
+            <div className='ReviewCardList flex justify-start gap-5 mt-3 w-full overflow-x-scroll overflow-y-visible pb-3'>
                 {
                     reviews.map((review, index) => (
                         <ProfileReviewCard 
@@ -26,6 +26,27 @@ export function ProfileReviewCardList({
                         />
                     ))
                 }
+                <style jsx>
+                    {`
+                        .ReviewCardList {
+                            scroll-snap-type: x mandatory;
+                        }
+                        .ReviewCardList::-webkit-scrollbar {
+                            height: .35rem;
+                        }
+
+                        .ReviewCardList::-webkit-scrollbar-track {
+                            background: #e2e2e2;
+                            border-radius: .3rem;
+                        }
+
+                        .ReviewCardList::-webkit-scrollbar-thumb {
+                            border-radius: .3rem;
+                            background: #afafaf;
+                            color: #f1f1f1;
+                        }
+                    `}
+                </style>
             </div>
         )
     )

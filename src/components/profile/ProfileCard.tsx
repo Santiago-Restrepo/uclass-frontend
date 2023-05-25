@@ -76,7 +76,7 @@ export function ProfileCard({
                         <div className=''>
                             <div className='mt-2'>
                                 <h3 className='text-md font-normal text-gray-400'>
-                                    Reseñas <b className='text-green-600'>aprobadas</b>:
+                                    Reseñas <b className='text-gray-600'>aprobadas</b>:
                                 </h3>
                                 <ProfileReviewCardList 
                                     reviews={aprovedReviews} 
@@ -87,7 +87,7 @@ export function ProfileCard({
                                     }}
                                 />
                                 <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
-                                    Reseñas <b className='text-yellow-600'>pendientes por aprobación</b>:
+                                    Reseñas <b className='text-gray-600'>pendientes por aprobación</b>:
                                 </h3>
                                 <ProfileReviewCardList 
                                     reviews={pendingReviews}
@@ -99,7 +99,7 @@ export function ProfileCard({
                                     
                                 />
                                 <h3 className='text-md font-normal text-gray-400 mt-5 leading-none'>
-                                    Reseñas <b className='text-red-600'>rechazadas</b>:
+                                    Reseñas <b className='text-gray-600'>rechazadas</b>:
                                 </h3>
                                 <ProfileReviewCardList
                                     reviews={rejectedReviews}

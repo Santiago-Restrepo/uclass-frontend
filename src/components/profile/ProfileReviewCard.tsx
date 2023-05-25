@@ -75,7 +75,7 @@ export const ProfileReviewCard = ({
     }
     
     return (
-        <div className='relative flex w-full shadow-sm rounded-md p-3 bg-white'>
+        <div className='ReviewCard flex flex-col items-center justify-between min-w-[10rem] shadow-sm rounded-md p-3 bg-white'>
             <Link 
                 href={`/review/${review._id}`}
                 className='w-full'
@@ -96,7 +96,7 @@ export const ProfileReviewCard = ({
                         }
                     </div>
                 </div>
-                <p className='block text-sm font-normal text-gray-400 bg-gray-200 p-2 mt-3 w-full leading-tight'>
+                <p className='block text-sm font-normal text-gray-400 bg-gray-200 p-2 mt-3 w-full leading-tight rounded-md'>
                     {review.content}
                 </p>
                 {
@@ -118,16 +118,24 @@ export const ProfileReviewCard = ({
             
             {
                 canBeDeleted && (
-                    <div className='absolute flex justify-center items-center gap-2 -top-2 -right-2'>
+                    <div className='flex justify-center items-center gap-2 -top-2 -right-2'>
                         <button 
-                            className="group flex justify-center items-center gap-2 px-2 py-1 text-sm font-semibold border-2 border-gray-600 rounded-md text-gray-600 hover:bg-gray-600 hover:text-white"
+                            className="group flex justify-center items-center gap-2 px-2 py-1 mt-2 text-sm font-semibold border-2 border-red-400 rounded-md text-red-400 hover:bg-red-400 hover:text-white"
                             onClick={handleDeleteReview}
                         >
-                            <BsFillTrash2Fill size={15} className='text-gray-600 group-hover:text-white'/>
+                            <BsFillTrash2Fill size={15} className='text-red-400 group-hover:text-white'/>
                         </button>
                     </div>
                 )
             }
+            <style jsx>
+                {`
+                    .ReviewCard{
+                        scroll-snap-align: start;
+                    }
+                `}
+
+            </style>
         </div>
     )
 }

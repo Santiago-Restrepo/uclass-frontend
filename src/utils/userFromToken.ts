@@ -1,6 +1,5 @@
 
 import { User } from '@/types/user';
-import type { NextRequest } from 'next/server';
 import {jwtVerify} from 'jose';
 // either on API routes or getServerSideProps
 export async function userFromToken(token: string | undefined): Promise<User | undefined> {
