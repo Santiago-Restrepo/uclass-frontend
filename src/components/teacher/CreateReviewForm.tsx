@@ -4,6 +4,7 @@ import { Select } from '@/components/common/Select'
 import { Input } from '@/components/common/Input'
 import { StarRatingInput } from '@/components/common/StarRatingInput'
 import { toast } from 'react-toastify';
+import { InformationDialog } from '@/components/common/InformationDialog'
 //Types
 import { Subject } from '@/types/subject'
 import { ApiReview } from '@/types/review'
@@ -107,18 +108,34 @@ export function CreateReviewForm({
                         <h2 className='text-2xl text-gray-500 font-semibold mb-2'>
                             Puntuación
                         </h2>
-                        <StarRatingInput
-                            label='Claridad'
-                            name='rating.clarity'
-                        />
-                        <StarRatingInput
-                            label='Exigencia'
-                            name='rating.demanding'
-                        />
-                        <StarRatingInput
-                            label='Justicia'
-                            name='rating.fairness'
-                        />
+                        <div className='flex items-center '>
+                            <StarRatingInput
+                                label='Claridad'
+                                name='rating.clarity'
+                            />
+                            <InformationDialog
+                                content='Se refiere a la claridad de las explicaciones del profesor, donde 1 es poco claro y 5 es muy claro'
+                            />
+                        </div>
+                        <div className='flex items-center '>
+                            <StarRatingInput
+                                label='Exigencia'
+                                name='rating.demanding'
+                            />
+                            <InformationDialog
+                                content='Se refiere a la exigencia del profesor, donde 1 es poco exigente y 5 es muy exigente'
+                            />
+                        </div>
+                        <div className='flex items-center'>
+                            <StarRatingInput
+                                label='Justicia'
+                                name='rating.fairness'
+                            />
+                            <InformationDialog
+                                content='Se refiere a la justicia del profesor, donde 1 es poco justo y 5 es muy justo'
+                            />
+                        </div>
+
                     </div>
                     <button
                         type='submit'
