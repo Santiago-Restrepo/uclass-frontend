@@ -9,9 +9,8 @@ import { PendingReviewCardList } from '@/components/admin/PendingReviewCardList'
 import { userFromToken } from '@/utils/userFromToken';
 //Icons
 import { FaLightbulb } from 'react-icons/fa';
-import { AiFillCheckSquare } from 'react-icons/ai';
-import { GiTeacher } from 'react-icons/gi';
-import { SiBookstack } from 'react-icons/si';
+import { AiFillCheckSquare, AiFillBook } from 'react-icons/ai';
+import {FaChalkboardTeacher} from 'react-icons/fa';
 //Hooks
 import { useApi } from '@/hooks/useApi';
 //Types
@@ -59,13 +58,13 @@ export default function Admin({
                     className='text-green-600 border-2 border-green-600 rounded-md px-3 py-2 mt-5 text-center font-medium transition-colors hover:bg-green-600 hover:text-white'
                     href='/admin/teachers'
                 >
-                    <GiTeacher className='inline-block mr-2' size={20}/> Administrar profesores
+                    <FaChalkboardTeacher className='inline-block mr-2' size={20}/> Administrar profesores
                 </Link>
                 <Link
                     className='text-yellow-600 border-2 border-yellow-600 rounded-md px-3 py-2 mt-5 text-center font-medium transition-colors hover:bg-yellow-600 hover:text-white'
                     href='/admin/subjects'
                 >
-                    <SiBookstack className='inline-block mr-2' size={20}/> Administrar asignaturas
+                    <AiFillBook className='inline-block mr-2' size={20}/> Administrar asignaturas
                 </Link>
             </div>
             <div className='mt-5 border-t border-gray-200 pt-5 w-full'>
