@@ -16,7 +16,7 @@ interface ReviewCardProps {
 //Icons
 import {AiFillStar, AiOutlineStar} from 'react-icons/ai';
 import {BiCommentDetail} from 'react-icons/bi';
-import {BsFillTrash2Fill} from 'react-icons/bs';
+import {BsFillTrashFill} from 'react-icons/bs';
 import { useApi } from '@/hooks/useApi';
 export const ProfileReviewCard = ({
     review,
@@ -123,7 +123,7 @@ export const ProfileReviewCard = ({
                             className="group flex justify-center items-center gap-2 px-2 py-1 mt-2 text-sm font-semibold border-2 border-red-400 rounded-md text-red-400 hover:bg-red-400 hover:text-white"
                             onClick={handleDeleteReview}
                         >
-                            <BsFillTrash2Fill size={15} className='text-red-400 group-hover:text-white'/>
+                            <BsFillTrashFill size={15} className='text-red-400 group-hover:text-white'/>
                         </button>
                     </div>
                 )

@@ -6,7 +6,7 @@ import { useApi } from '@/hooks/useApi';
 import { Resource } from '@/types/resource';
 //Icons
 import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-import {BsFillTrash2Fill} from 'react-icons/bs';
+import {BsFillTrashFill} from 'react-icons/bs';
 //Components
 import swal from '@/utils/swal';
 import { toast } from 'react-toastify';
@@ -100,7 +100,7 @@ export function ProfileResourceCard({
                             className="group ml-2 gap-2 px-2 py-1 text-sm font-semibold border-2 border-gray-600 rounded-md text-gray-600 hover:bg-red-600 hover:border-red-600 hover:text-white"
                             onClick={handleDeleteResource}
                         >
-                            <BsFillTrash2Fill size={15} className='text-gray-600 group-hover:text-white'/>
+                            <BsFillTrashFill size={15} className='text-gray-600 group-hover:text-white'/>
                         </button>
                     </div>
                 )
