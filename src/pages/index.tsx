@@ -14,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginSchema } from '@/schemas/authSchemas'
 //Services
-import { login } from '@/services/authService'
+import { login, signInWithToken } from '@/services/authService'
 import { config } from '@/config'
 const { API_URL } = config;
 export default function Login() {
@@ -33,7 +33,29 @@ export default function Login() {
             const {token, name} = event.data
             //Set token in cookie
             if (token) {
-                dispatch(setUser({token, name}))
+                toast.promise(
+                    signInWithToken(token),
+                    {
+                        pending: 'Iniciando sesión...',
+                        success: 'Sesión iniciada correctamente',
+                        error: {
+                            render({data}){
+                              // When the promise reject, data will contains the error
+                                const message = data instanceof Error ? data.message : "Error"
+                                return message
+                            }
+                        }
+                    }
+                ).then((response) => {
+                    const {
+                        token,
+                        name
+                    } = response.data
+                    dispatch(setUser({token, name}));
+                    router.push('/home')
+                }).catch((error) => {
+                    console.log(error)
+                })
             }
         }, false)
     }
