@@ -10,9 +10,11 @@ import { useApi } from '@/hooks/useApi'
 import { ProfileReviewCardList } from '@/components/profile/ProfileReviewCardList'
 import { ProfileResourceCardList } from '@/components/profile/ProfileResourceCardList'
 //Icons
-import {AiOutlineLoading, AiFillCheckSquare} from 'react-icons/ai';
-import {BsFillClockFill} from 'react-icons/bs';
-import {ImBooks} from 'react-icons/im';
+import { AiOutlineLoading } from 'react-icons/ai';
+
+import { useDispatch } from 'react-redux'
+import { setUser } from '@/features/userSlice'
+import { useRouter } from 'next/router'
 
 //Props
 interface ProfileCardProps {
@@ -21,6 +23,8 @@ interface ProfileCardProps {
 export function ProfileCard({
     user
 }: ProfileCardProps) {
+    const dispatch = useDispatch();
+    const router = useRouter();
     const { data: reviews, loading: reviewsLoading, authFetch: refetchReviews } = useApi<Review[]>([], `/reviews/user/${user.id}`);
     const { data: resources, loading: resourcesLoading, authFetch: refetchResources } = useApi<Resource[]>([], `/resources/user/${user.id}`);
     // const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
@@ -47,8 +51,13 @@ export function ProfileCard({
         }
     }, [reviews])
 
+    const {authFetch} = useApi();
     const logout = useCallback(() => {
-        console.log('logout')
+        authFetch(`/auth/logout`, {
+            method: 'GET',
+        });
+        dispatch(setUser({token: '', name: '', id: ''}))
+        router.push('/');
     }, [])
     return (
         <div className='flex flex-col justify-start items-center pt-5 w-full'>

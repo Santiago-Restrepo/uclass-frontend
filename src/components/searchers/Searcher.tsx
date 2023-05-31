@@ -15,6 +15,7 @@ import { ResultsDropdown } from '../ResultsDropdown';
 //Types
 import { Teacher } from '@/types/teacher';
 import { Subject } from '@/types/subject';
+import { useRouter } from 'next/router';
 const icons = {
     teacher: FaChalkboardTeacher,
     course: BsBook
@@ -42,6 +43,7 @@ export const Searcher = ({
     fetchOnQueryChange = true
 }: SearcherProps) => {
     const dispatch = useDispatch();
+    const router = useRouter();
     const {authFetch, data, error, loading: fetchLoading} = useApi();
     const [loading, setLoading] = useState<boolean>(fetchLoading);
     //Define iterable data
@@ -91,9 +93,14 @@ export const Searcher = ({
             <div className='flex justify-center items-end'>
                 <Icon className={`text-4xl text-${iconColor}-500`} color={iconColor}/>
                 <h1 className='ml-5 text-3xl text-gray-600 font-normal'>{title}</h1>
-                <Link href={appPath}>
-                    <span className='text-sm text-end leading-none ml-5 text-gray-500 hover:text-gray-600 underline'>Ver todos</span>
-                </Link>
+                {
+                    router.pathname.includes("home") && (
+                        <Link href={appPath}>
+                            <span className='text-sm text-end leading-none ml-5 text-gray-500 hover:text-gray-600 underline'>Ver todos</span>
+                        </Link>
+                    )
+
+                }
             </div>
             <input 
                 type="text" 
