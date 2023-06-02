@@ -17,6 +17,7 @@ export const BestCard = ({
     rating,
     url
 }: BestCardProps) => {
+    const shortRating = Math.round(rating);
     return (
         <Link 
             className="flex flex-col items-center justify-center w-1/2 max-w-sm h-full p-5 bg-white rounded-md shadow-md"
