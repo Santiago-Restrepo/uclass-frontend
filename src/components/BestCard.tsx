@@ -41,7 +41,7 @@ export const BestCard = ({
                 <p className="mt-2 text-sm text-center text-gray-500 leading-none">{description}</p>
                 <div className="flex items-center justify-center mt-4">
                     <AiFillStar className='text-green-600' size={30}/>
-                    <span className="text-2xl font-semibold text-green-600">{rating}</span>
+                    <span className="text-2xl font-semibold text-green-600">{shortRating}</span>
                 </div>
             </div>      
         </Link>
