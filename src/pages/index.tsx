@@ -54,7 +54,7 @@ export default function Login() {
                     dispatch(setUser({token, name}));
                     router.push('/home')
                 }).catch((error) => {
-                    console.log(error)
+                    console.error(error)
                 })
             }
         }, false)
@@ -86,10 +86,10 @@ export default function Login() {
                 dispatch(setUser({token, name}));
                 router.push('/home')
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }    
     }
     return (

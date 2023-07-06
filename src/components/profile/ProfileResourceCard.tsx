@@ -55,9 +55,8 @@ export function ProfileResourceCard({
             .catch(error =>{
                 console.error(error)
             })
-            .then(response =>{
+            .then(() =>{
                 if(refresh) refresh()
-                console.log(response)
             })
         })
 

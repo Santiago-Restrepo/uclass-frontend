@@ -51,10 +51,10 @@ export function CreateResourceForm({
             pending: 'Creando recurso...',
             success: 'Recurso creado exitosamente',
             error: 'Error al crear el recurso',
-        }).then(response =>{
+        }).then(() =>{
             methods.reset();
         }).catch(error => {
-            console.log(error)
+            console.error(error)
         }).finally(() => {
             refreshResources();
         });

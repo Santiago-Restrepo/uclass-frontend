@@ -84,10 +84,10 @@ export function TeacherForm({
                 pending: 'Eliminando profesor...',
                 success: 'Profesor eliminado exitosamente',
                 error: 'Error al eliminar el profesor',
-            }).then(response =>{
+            }).then(() =>{
                 methods.reset();
             }).catch(error => {
-                console.log(error)
+                console.error(error)
             }).finally(() => { 
                 router.push('/admin/teachers');
             });
@@ -124,10 +124,10 @@ export function TeacherForm({
                     pending: 'Actualizando profesor...',
                     success: 'Profesor actualizado exitosamente',
                     error: 'Error al actualizar el profesor',
-                }).then(response =>{
+                }).then(() =>{
                     methods.reset();
                 }).catch(error => {
-                    console.log(error)
+                    console.error(error)
                 }).finally(() => { 
                     if (refresh) refresh();
                 });
@@ -137,10 +137,10 @@ export function TeacherForm({
                 pending: 'Creando profesor...',
                 success: 'Profesor creado exitosamente',
                 error: 'Error al crear el profesor',
-            }).then(response =>{
+            }).then(() =>{
                 methods.reset();
             }).catch(error => {
-                console.log(error)
+                console.error(error)
             }).finally(() => {
                 if (refresh) refresh();
             });

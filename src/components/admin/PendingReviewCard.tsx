@@ -56,10 +56,7 @@ export function PendingReviewCard({
                 }
             )
             .catch(error =>{
-                console.log(error)
-            })
-            .then(response =>{
-                console.log(response)
+                console.error(error)
             })
         })
     }
@@ -103,11 +100,9 @@ export function PendingReviewCard({
                 }
             )
             .catch(error =>{
-                console.log(error)
+                console.error(error)
             })
-            .then(response =>{
-                console.log(response)
-            })
+
         })
     }
     return (

@@ -17,7 +17,6 @@ export function ReviewPageCard({
         const ratingAverage = Object.values(rating).reduce((acc, curr) => acc + curr, 0) / Object.values(rating).length;
         return Math.round(ratingAverage);
     }, [review.rating]);
-    console.log(ratingAverage)
     return (
         <div className='w-full mt-3'>
             <div className='flex gap-2 mb-2'>

@@ -88,10 +88,10 @@ export function SubjectForm({
                 pending: 'Eliminando asignatura...',
                 success: 'Asignatura eliminado exitosamente',
                 error: 'Error al eliminar el asignatura',
-            }).then(response =>{
+            }).then(() =>{
                 methods.reset();
             }).catch(error => {
-                console.log(error)
+                console.error(error)
             }).finally(() => { 
                 router.push('/admin/subjects');
             });
@@ -128,10 +128,10 @@ export function SubjectForm({
                     pending: 'Actualizando asignatura...',
                     success: 'Asignatura actualizado exitosamente',
                     error: 'Error al actualizar el asignatura',
-                }).then(response =>{
+                }).then(() =>{
                     methods.reset();
                 }).catch(error => {
-                    console.log(error)
+                    console.error(error)
                 }).finally(() => { 
                     if (refresh) refresh();
                 });
@@ -141,10 +141,10 @@ export function SubjectForm({
                 pending: 'Creando asignatura...',
                 success: 'Asignatura creado exitosamente',
                 error: 'Error al crear el asignatura',
-            }).then(response =>{
+            }).then(() =>{
                 methods.reset();
             }).catch(error => {
-                console.log(error)
+                console.error(error)
             }).finally(() => {
                 if (refresh) refresh();
             });

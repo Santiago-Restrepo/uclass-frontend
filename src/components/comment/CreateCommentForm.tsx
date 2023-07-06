@@ -55,9 +55,8 @@ export function CreateCommentForm({
             success: 'Comentario creado exitosamente',
             error: 'Error al crear el comentario',
         }).catch(error =>{
-            console.log(error)
+            console.error(error)
         }).then(response =>{
-            console.log(response)
             methods.reset();
             refreshComments();
         })

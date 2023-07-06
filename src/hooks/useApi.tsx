@@ -32,7 +32,6 @@ export const useApi = <T,>(initialData: any = null, path?: string, options?: any
             
             if(data.message === "jwt expired"){
                 logout();
-                console.log("logout")
             }
             setData(data);
             setLoading(false);

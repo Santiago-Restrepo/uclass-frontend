@@ -66,10 +66,7 @@ export const ReviewCard = ({
                 }
             )
             .catch(error =>{
-                console.log(error)
-            })
-            .then(response =>{
-                console.log(response)
+                console.error(error)
             })
         })
     }

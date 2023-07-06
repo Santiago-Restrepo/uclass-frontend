@@ -43,10 +43,10 @@ export default function Signup() {
             ).then((response) => {
                 router.push('/')
             }).catch((error) => {
-                console.log(error)
+                console.error(error)
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
         
     }

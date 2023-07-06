@@ -27,8 +27,6 @@ export function ProfileCard({
     const router = useRouter();
     const { data: reviews, loading: reviewsLoading, authFetch: refetchReviews } = useApi<Review[]>([], `/reviews/user/${user.id}`);
     const { data: resources, loading: resourcesLoading, authFetch: refetchResources } = useApi<Resource[]>([], `/resources/user/${user.id}`);
-    // const [aprovedReviews, setAprovedReviews] = useState<Review[]>([])
-    // const [pendingReviews, setPendingReviews] = useState<Review[]>([])
     const aprovedReviews = useMemo(() => {
         if(reviews && reviews.length > 0) {
             return reviews.filter(review => review.isApproved)
